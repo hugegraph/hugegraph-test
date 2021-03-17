@@ -24,13 +24,14 @@ branches:
 
 ### 搭建python 3.7.6环境
 before_install:
-  - sudo apt-get -y install python-3.7
+  - sudo apt-get update
+  - sudo apt-get -y install python-3.7.6
 
 ### 安装依赖
 install:
   - pwd
-  - java -version
   - python --version
+  - python3 --version
   - pip install -r requirements.txt
 
 ### 获取graph测试服务
