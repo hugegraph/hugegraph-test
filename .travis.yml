@@ -1,11 +1,19 @@
-language: java
+# language: java
 
-jdk:
-  - openjdk8
+# jdk:
+#   - openjdk8
 
 dist: xenial
-
 sudo: required
+
+job:
+  include:
+    - language: java
+      jdk:
+        - openjdk8      
+        
+    - language: python
+      ptthon: 3.7.6
 
 cache:
   directories:
@@ -20,9 +28,9 @@ branches:
     - /^individual-.*$/
     - ci_test
  
-before_install:
-    - java -version
-    - python3 --version
+# before_install:
+#     - java -version
+#     - python3 --version
 
 # ### 搭建python 3.7.6环境
 # before_install:
@@ -32,34 +40,45 @@ before_install:
 #   - sudo apt-get -y install python-3.7
 #   - python --version
   
-# ### 安装相关依赖
-# install:
-#   - pwd
+### 安装相关依赖
+install:
+  - pwd
+  - java -version
+  - python3 --version
 
-# ### 获取graph测试服务
-# before_script:
-#   - cd tempTest
-#   - python testGraph/deploy_start.py all
+### 获取graph测试服务
+before_script:
+  - python testGraph/deploy_start.py all
 
-# ### 执行测试脚本
-# script:
-#   - pytest testGraph/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
+### 执行测试脚本
+script:
+  - pytest testGraph/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
 
 
-job:
-  include:
-    - language: python
-      ptthon: 3.7.6
+
+# job:
+#   include:
+#     - language: java
+#       jdk:
+#         - openjdk8
+        
+        
+#     - language: python
+#       ptthon: 3.7.6
+#       
+#       install:
+#         - pwd
+#         - java -version
+#         - python3 --version
       
-      install:
-        - pwd
-        - java -version
-        - python3 --version
-      
-      before_script:
-        - cd tempTest
-        - ls
-        - python testGraph/deploy_start.py all
+#       before_script:
+#         - cd tempTest
+#         - ls
+#         - python testGraph/deploy_start.py all
           
-      script:
-        - pytest testGraph/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
+#       script:
+#         - pytest testGraph/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
+        
+        
+        
+        
