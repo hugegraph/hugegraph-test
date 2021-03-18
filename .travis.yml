@@ -23,7 +23,7 @@ branches:
 job:
   include:
     - language: python
-      ptthon: 3.7
+      ptthon: 3.7.6
       
       install:
         - pwd
