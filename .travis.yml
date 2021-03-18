@@ -16,9 +16,6 @@ cache:
 branches:
   only:
     - master
-    - /^integration-.*$/
-    - /^individual-.*$/
-    - ci_test
 
 ### 搭建python 3.7环境
 before_install:
@@ -37,8 +34,9 @@ before_install:
 install:
   - pwd
   - python --version
+  - whereis pip
+  - whereis pip3
   - sudo apt-get -y install python3-pip
-  - pip -V
   - pip3 -V
   - pip install -r ./requirements.txt 
 
