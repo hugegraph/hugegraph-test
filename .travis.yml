@@ -37,6 +37,9 @@ before_install:
 install:
   - pwd
   - python --version
+  - sudo apt-get -y install python3-pip
+  - pip -V
+  - pip3 -V
   - pip install -r ./requirements.txt 
 
 ### 获取graph测试服务
