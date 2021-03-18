@@ -37,7 +37,6 @@ before_install:
 install:
   - pwd
   - python --version
-  - cd hugegraph-test
   - pip install -r ./requirements.txt 
 
 ### 获取graph测试服务
