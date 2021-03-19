@@ -16,6 +16,8 @@ cache:
 branches:
   only:
     - master
+    - /^release-.*$/
+    - /^test-.*$/
 
 ### 搭建python 3.7环境
 before_install:
@@ -40,11 +42,11 @@ install:
 
 ### 获取graph测试服务
 before_script:
-  - python testGraph/deploy_start.py all
+  - python src/deploy_start.py all
 
 ### 执行测试脚本
 script:
-  - pytest testGraph/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
+  - pytest src/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
 
 
 
