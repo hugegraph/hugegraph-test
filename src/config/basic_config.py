@@ -5,10 +5,10 @@ note       : properties
 create_time: 2020/4/22 5:17 下午
 """
 # hugegraph deploy
-server_git = {'branch': 'master', 'url': 'git@github.com:hugegraph/hugegraph.git'}
-hubble_git = {'branch': 'master', 'url': 'git@github.com:hugegraph/hugegraph-hubble.git'}
-loader_git = {'branch': 'master', 'url': 'git@github.com:hugegraph/hugegraph-loader.git'}
-tools_git = {'branch': 'master', 'url': 'git@github.com:hugegraph/hugegraph-tools.git'}
+server_git = {'branch': 'master', 'url': 'https://github.com/hugegraph/hugegraph.git'}
+hubble_git = {'branch': 'master', 'url': 'https://github.com/hugegraph/hugegraph-hubble.git'}
+loader_git = {'branch': 'master', 'url': 'https://github.com/hugegraph/hugegraph-loader.git'}
+tools_git = {'branch': 'master', 'url': 'https://github.com/hugegraph/hugegraph-tools.git'}
 deploy_path = '/home'
 code_path = '/home'
 graph_host = '127.0.0.1'
