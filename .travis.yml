@@ -42,6 +42,7 @@ install:
 
 ### 获取graph测试服务
 before_script:
+  - mvn -version
   - sudo python src/deploy_start.py all
 
 ### 执行测试脚本
