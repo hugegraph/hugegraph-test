@@ -34,19 +34,17 @@ before_install:
   
 ### 安装相关依赖
 install:
-  - pwd
-  - python --version
   - sudo apt-get -y install python3-pip
-  - pip3 -V
   - pip3 install -r ./requirements.txt 
 
-### 获取graph测试服务
-before_script:
-  - mvn -version
-  - sudo python src/deploy_start.py all
+# ### 获取graph测试服务
+# before_script:
+#   - sudo python src/deploy_start.py all
 
 ### 执行测试脚本
 script:
+  - pwd
+  - ls
   - sudo pytest src/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
 
 
