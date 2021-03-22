@@ -48,7 +48,7 @@ def is_exists_path(dir_name):
     if os.path.exists(dir_name):
         return True
     else:
-        os.system('sudo mkdir %s' % dir_name)
+        os.makedirs(dir_name)
         return False
 
 
