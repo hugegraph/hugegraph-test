@@ -37,18 +37,16 @@ def compile_package(dir_code_path):
     :return:
     """
     g_name = dir_code_path.split('/')[-1]
-    if g_name == 'hugegraph':
-        os.system('cd %s && mvn clean package -Dmaven.graphTest.skip=true | grep -v \"Downloading\|Downloaded\"' % dir_code_path)
-    elif g_name == 'hugegraph-hubble':
-        os.system('cd %s && mvn clean package -Dmaven.test.skip=true | grep -v \"Downloading\|Downloaded\"' % dir_code_path)
-    elif g_name == 'hugegraph-loader':
-        os.system('cd %s && mvn install:install-file -Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=12.2.0.1 -Dpackaging=jar && mvn clean package -Dmaven.test.skip=true | grep -v \"Downloading\|Downloaded\"' % dir_code_path)
-    elif g_name == 'hugegraph-tools':
-        os.system('cd %s && mvn clean package -Dmaven.test.skip=true | grep -v \"Downloading\|Downloaded\"' % dir_code_path)
+    if g_name == 'hugegraph-loader':
+        os.system('cd %s && 
+                  /usr/local/maven-3.6.3/bin/mvn install:install-file -Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=12.2.0.1 -Dpackaging=jar && 
+                  mvn clean package -Dmaven.test.skip=true | 
+                  grep -v \"Downloading\|Downloaded\"' % dir_code_path
+                 )
     else:
-        pass
-   
+        os.system('cd %s && /usr/local/maven-3.6.3/bin/mvn clean package -Dmaven.test.skip=true | grep -v \"Downloading\|Downloaded\"' % dir_code_path)
 
+   
 def copy_decompression(source_path, target_path, re_name):
     """
     复制包到目的路径并解压
