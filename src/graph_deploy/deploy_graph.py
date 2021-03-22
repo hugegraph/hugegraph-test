@@ -6,7 +6,6 @@ create_time: 2020/4/22 5:17 下午
 """
 import os
 import sys
-import subprocess
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../')
 
@@ -26,9 +25,9 @@ def get_code(pwd, git_obj, code_dir):
         branch = git_obj['branch']
         url = git_obj['url']
         print('cd %s && git clone -b %s %s' % (pwd, branch, url))
-        subprocess.check_call('cd %s && git clone -b %s %s' % (pwd, branch, url))
+        os.system('cd %s && git clone -b %s %s' % (pwd, branch, url))
     else:
-        subprocess.check_call('cd %s/%s && git pull' % (pwd, code_dir))
+        os.system('cd %s/%s && git pull' % (pwd, code_dir))
 
 
 def compile_package(dir_code_path):
@@ -37,7 +36,7 @@ def compile_package(dir_code_path):
     :param dir_code_path: 本地代码库路径
     :return:
     """
-    subprocess.check_call('cd %s && mvn clean && mvn install -Dmaven.src.skip=true' % dir_code_path)
+    os.system('cd %s && mvn clean && mvn install -Dmaven.src.skip=true' % dir_code_path)
 
 
 def copy_decompression(source_path, target_path, re_name):
@@ -50,7 +49,7 @@ def copy_decompression(source_path, target_path, re_name):
     """
     tar_name = is_match_re(source_path, re_name)
     if tar_name:
-        subprocess.check_call(
+        os.system(
             'cp -rf %s %s && cd %s && tar xzvf %s' % (source_path, target_path, target_path, tar_name))
     else:
         print('compile_package is failed')
@@ -94,13 +93,13 @@ def start_graph(package_dir_path, graph_type):
     启动graph包
     """
     if graph_type == 'server':
-        subprocess.check_call(
+        os.system(
             'cd %s '
             '&& ./bin/stop-hugegraph.sh '
             '&& ./bin/init-store.sh '
             '&& ./bin/start-hugegraph.sh' % package_dir_path)
     else:
-        subprocess.check_call(
+        os.system(
             'cd %s '
             '&& ./bin/stop-hubble '
             '&& ./bin/start-hubble' % package_dir_path)
