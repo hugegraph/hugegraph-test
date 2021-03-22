@@ -38,11 +38,7 @@ def compile_package(dir_code_path):
     """
     g_name = dir_code_path.split('/')[-1]
     if g_name == 'hugegraph-loader':
-        os.system('cd %s && 
-                  /usr/local/maven-3.6.3/bin/mvn install:install-file -Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=12.2.0.1 -Dpackaging=jar && 
-                  mvn clean package -Dmaven.test.skip=true | 
-                  grep -v \"Downloading\|Downloaded\"' % dir_code_path
-                 )
+        os.system('cd %s && /usr/local/maven-3.6.3/bin/mvn install:install-file -Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=12.2.0.1 -Dpackaging=jar && mvn clean package -Dmaven.test.skip=true | grep -v \"Downloading\|Downloaded\"' % dir_code_path)
     else:
         os.system('cd %s && /usr/local/maven-3.6.3/bin/mvn clean package -Dmaven.test.skip=true | grep -v \"Downloading\|Downloaded\"' % dir_code_path)
 
