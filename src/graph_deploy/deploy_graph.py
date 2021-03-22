@@ -25,10 +25,10 @@ def get_code(pwd, git_obj, code_dir):
     if not is_match_re(pwd, code_dir):
         branch = git_obj['branch']
         url = git_obj['url']
-        print('cd %s && git clone -b %s %s' % (pwd, branch, url))
-        subprocess.check_call('cd %s && git clone -b %s %s' % (pwd, branch, url))
+        print('sudo cd %s && git clone -b %s %s' % (pwd, branch, url))
+        subprocess.check_call('sudo cd %s && git clone -b %s %s' % (pwd, branch, url))
     else:
-        subprocess.check_call('cd %s/%s && git pull' % (pwd, code_dir))
+        subprocess.check_call('sudo cd %s/%s && git pull' % (pwd, code_dir))
 
 
 def compile_package(dir_code_path):
@@ -37,7 +37,7 @@ def compile_package(dir_code_path):
     :param dir_code_path: 本地代码库路径
     :return:
     """
-    subprocess.check_call('cd %s && mvn clean && mvn install -Dmaven.src.skip=true' % dir_code_path)
+    subprocess.check_call('sudo cd %s && mvn clean && mvn install -Dmaven.src.skip=true' % dir_code_path)
 
 
 def copy_decompression(source_path, target_path, re_name):
@@ -51,7 +51,7 @@ def copy_decompression(source_path, target_path, re_name):
     tar_name = is_match_re(source_path, re_name)
     if tar_name:
         subprocess.check_call(
-            'cp -rf %s %s && cd %s && tar xzvf %s' % (source_path, target_path, target_path, tar_name))
+            'sudo cp -rf %s %s && sudo cd %s && tar xzvf %s' % (source_path, target_path, target_path, tar_name))
     else:
         print('compile_package is failed')
 
