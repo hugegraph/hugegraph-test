@@ -6,6 +6,7 @@ create_time: 2020/4/22 5:17 下午
 """
 import os
 import sys
+
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../')
 
@@ -30,17 +31,32 @@ def get_code(pwd, git_obj, code_dir):
         os.system('cd %s/%s && git pull' % (pwd, code_dir))
 
 
-def compile_package(dir_code_path):
+def compile_package(mvn_path, dir_code_path):
     """
     编译包
+    :param mvn_path: 添加mvn_path
     :param dir_code_path: 本地代码库路径
     :return:
     """
     g_name = dir_code_path.split('/')[-1]
     if g_name == 'hugegraph-loader':
-        os.system('cd %s && /usr/local/maven-3.6.3/bin/mvn install:install-file -Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=12.2.0.1 -Dpackaging=jar && mvn clean package -Dmaven.test.skip=true | grep -v \"Downloading\|Downloaded\"' % dir_code_path)
+        os.system(
+            'cd %s && '
+            '%smvn install:install-file '
+            '-Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar '
+            '-DgroupId=com.oracle '
+            '-DartifactId=ojdbc8 '
+            '-Dversion=12.2.0.1 '
+            '-Dpackaging=jar && '
+            '%smvn clean package -Dmaven.test.skip=true | '
+            'grep -v \"Downloading\|Downloaded\"' % (dir_code_path, mvn_path, mvn_path)
+        )
     else:
-        os.system('cd %s && /usr/local/maven-3.6.3/bin/mvn clean package -Dmaven.test.skip=true | grep -v \"Downloading\|Downloaded\"' % dir_code_path)
+        os.system(
+            'cd %s && '
+            '%smvn clean package -Dmaven.test.skip=true | '
+            'grep -v \"Downloading\|Downloaded\"' % (dir_code_path, mvn_path)
+        )
 
 
 def set_server_properties(package_dir_path, host, server_port, gremlin_port):
@@ -83,26 +99,27 @@ def start_graph(package_dir_path, graph_type):
     if graph_type == 'server':
         os.system(
             'cd %s '
-            '&& ./bin/stop-hugegraph.sh '
             '&& ./bin/init-store.sh '
-            '&& ./bin/start-hugegraph.sh' % package_dir_path)
+            '&& ./bin/start-hugegraph.sh' % package_dir_path
+        )
     else:
         os.system(
             'cd %s '
-            '&& ./bin/stop-hubble '
-            '&& ./bin/start-hubble' % package_dir_path)
+            '&& ./bin/start-hubble' % package_dir_path
+        )
 
 
 class Deploy:
     """
     图库组件部署
     """
+
     def __init__(self, obj):
         self.graph_host = obj.graph_host
         self.server_port = obj.server_port
         self.gremlin_port = obj.gremlin_port
         self.hubble_port = obj.hubble_port
-        self.deploy_path = obj.deploy_path
+        self.mvn_path = obj.mvn_path
         self.code_path = obj.code_path
         self.server_git = obj.server_git
         self.loader_git = obj.loader_git
@@ -118,19 +135,14 @@ class Deploy:
         code_dir_path = self.code_path + '/' + code_dir
         re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
 
-        flag_deploy_path = is_exists_path(self.deploy_path)
-        match_re = is_match_re(self.deploy_path, re_dir)
-        if flag_deploy_path and match_re:
-            # server组件已经存在
-            start_graph(self.code_path + '/' + match_re, 'server')
-        else:
-            get_code(self.code_path, self.server_git, code_dir)
-            compile_package(code_dir_path)
-            #  start graph_server
-            package_dir_name = is_match_re(code_dir_path, re_dir)
-            package_dir_path = self.code_path + '/' + package_dir_name
-            set_server_properties(package_dir_path, self.graph_host, self.server_port, self.gremlin_port)
-            start_graph(package_dir_path, 'server')
+        is_exists_path(self.code_path)
+        get_code(self.code_path, self.server_git, code_dir)
+        compile_package(self.mvn_path, code_dir_path)
+        #  start graph_server
+        package_dir_name = is_match_re(code_dir_path, re_dir)
+        package_dir_path = code_dir_path + '/' + package_dir_name
+        set_server_properties(package_dir_path, self.graph_host, self.server_port, self.gremlin_port)
+        start_graph(package_dir_path, 'server')
 
     @staticmethod
     def hubble(self):
@@ -141,18 +153,14 @@ class Deploy:
         code_dir_path = self.code_path + '/' + code_dir
         re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
 
-        flag_deploy_path = is_exists_path(self.deploy_path)
-        match_re = is_match_re(self.deploy_path, re_dir)
-        if flag_deploy_path and match_re:
-            start_graph(self.code_path + '/' + match_re, 'hubble')
-        else:
-            get_code(self.code_path, self.hubble_git, code_dir)
-            compile_package(code_dir_path)
-            # 修改配置并启动
-            package_dir_name = is_match_re(code_dir_path, re_dir)
-            package_dir_path = self.code_path + '/' + package_dir_name
-            set_hubble_properties(package_dir_path, self.graph_host, self.hubble_port)
-            start_graph(package_dir_path, 'hubble')
+        is_exists_path(self.code_path)
+        get_code(self.code_path, self.hubble_git, code_dir)
+        compile_package(self.mvn_path, code_dir_path)
+        # set properties && start hubble
+        package_dir_name = is_match_re(code_dir_path, re_dir)
+        package_dir_path = code_dir_path + '/' + package_dir_name
+        set_hubble_properties(package_dir_path, self.graph_host, self.hubble_port)
+        start_graph(package_dir_path, 'hubble')
 
     @staticmethod
     def loader(self):
@@ -161,15 +169,9 @@ class Deploy:
         """
         code_dir = 'hugegraph-loader'
         code_dir_path = self.code_path + '/' + code_dir
-        re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
-
-        flag_deploy_path = is_exists_path(self.deploy_path)
-        match_re = is_match_re(self.deploy_path, re_dir)
-        if flag_deploy_path and match_re:
-            pass  # loader 组件已经存在
-        else:
-            get_code(self.code_path, self.loader_git, code_dir)
-            compile_package(code_dir_path)
+        is_exists_path(self.code_path)
+        get_code(self.code_path, self.loader_git, code_dir)
+        compile_package(self.mvn_path, code_dir_path)
 
     @staticmethod
     def tools(self):
@@ -178,15 +180,9 @@ class Deploy:
         """
         code_dir = 'hugegraph-tools'
         code_dir_path = self.code_path + '/' + code_dir
-        re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
-
-        flag_deploy_path = is_exists_path(self.deploy_path)
-        match_re = is_match_re(self.deploy_path, re_dir)
-        if flag_deploy_path and match_re:
-            pass  # tools 组件已经存在
-        else:
-            get_code(self.code_path, self.tools_git, code_dir)
-            compile_package(code_dir_path)
+        is_exists_path(self.code_path)
+        get_code(self.code_path, self.tools_git, code_dir)
+        compile_package(self.mvn_path, code_dir_path)
 
 
 if __name__ == "__main__":
