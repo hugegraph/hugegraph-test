@@ -42,22 +42,6 @@ def compile_package(dir_code_path):
     else:
         os.system('cd %s && /usr/local/maven-3.6.3/bin/mvn clean package -Dmaven.test.skip=true | grep -v \"Downloading\|Downloaded\"' % dir_code_path)
 
-   
-def copy_decompression(source_path, target_path, re_name):
-    """
-    复制包到目的路径并解压
-    :param source_path: 源路径
-    :param target_path: 目的路径
-    :param re_name: 正则
-    :return:
-    """
-    tar_name = is_match_re(source_path, re_name)
-    if tar_name:
-        os.system(
-            'cp -rf %s %s && cd %s && tar xzvf %s' % (source_path, target_path, target_path, tar_name))
-    else:
-        print('compile_package is failed')
-
 
 def set_server_properties(package_dir_path, host, server_port, gremlin_port):
     """
@@ -133,20 +117,18 @@ class Deploy:
         code_dir = 'hugegraph'
         code_dir_path = self.code_path + '/' + code_dir
         re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
-        re_tar = '^%s-(\d).(\d{1,2}).(\d).tar.gz$' % code_dir
 
         flag_deploy_path = is_exists_path(self.deploy_path)
         match_re = is_match_re(self.deploy_path, re_dir)
         if flag_deploy_path and match_re:
             # server组件已经存在
-            start_graph(self.deploy_path + '/' + match_re, 'server')
+            start_graph(self.code_path + '/' + match_re, 'server')
         else:
             get_code(self.code_path, self.server_git, code_dir)
             compile_package(code_dir_path)
-            copy_decompression(code_dir_path, self.deploy_path, re_tar)
             #  start graph_server
-            package_dir_name = is_match_re(self.deploy_path, re_dir)
-            package_dir_path = self.deploy_path + '/' + package_dir_name
+            package_dir_name = is_match_re(code_dir_path, re_dir)
+            package_dir_path = self.code_path + '/' + package_dir_name
             set_server_properties(package_dir_path, self.graph_host, self.server_port, self.gremlin_port)
             start_graph(package_dir_path, 'server')
 
@@ -158,19 +140,17 @@ class Deploy:
         code_dir = 'hugegraph-hubble'
         code_dir_path = self.code_path + '/' + code_dir
         re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
-        re_tar = '^%s-(\d).(\d{1,2}).(\d).tar.gz$' % code_dir
 
         flag_deploy_path = is_exists_path(self.deploy_path)
         match_re = is_match_re(self.deploy_path, re_dir)
         if flag_deploy_path and match_re:
-            start_graph(self.deploy_path + '/' + match_re, 'hubble')
+            start_graph(self.code_path + '/' + match_re, 'hubble')
         else:
             get_code(self.code_path, self.hubble_git, code_dir)
             compile_package(code_dir_path)
-            copy_decompression(code_dir_path, self.deploy_path, re_tar)
             # 修改配置并启动
-            package_dir_name = is_match_re(self.deploy_path, re_dir)
-            package_dir_path = self.deploy_path + '/' + package_dir_name
+            package_dir_name = is_match_re(code_dir_path, re_dir)
+            package_dir_path = self.code_path + '/' + package_dir_name
             set_hubble_properties(package_dir_path, self.graph_host, self.hubble_port)
             start_graph(package_dir_path, 'hubble')
 
@@ -182,7 +162,6 @@ class Deploy:
         code_dir = 'hugegraph-loader'
         code_dir_path = self.code_path + '/' + code_dir
         re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
-        re_tar = '^%s-(\d).(\d{1,2}).(\d).tar.gz$' % code_dir
 
         flag_deploy_path = is_exists_path(self.deploy_path)
         match_re = is_match_re(self.deploy_path, re_dir)
@@ -191,7 +170,6 @@ class Deploy:
         else:
             get_code(self.code_path, self.loader_git, code_dir)
             compile_package(code_dir_path)
-            copy_decompression(code_dir_path, self.deploy_path, re_tar)
 
     @staticmethod
     def tools(self):
@@ -201,7 +179,6 @@ class Deploy:
         code_dir = 'hugegraph-tools'
         code_dir_path = self.code_path + '/' + code_dir
         re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
-        re_tar = '^%s-(\d).(\d{1,2}).(\d).tar.gz$' % code_dir
 
         flag_deploy_path = is_exists_path(self.deploy_path)
         match_re = is_match_re(self.deploy_path, re_dir)
@@ -210,7 +187,6 @@ class Deploy:
         else:
             get_code(self.code_path, self.tools_git, code_dir)
             compile_package(code_dir_path)
-            copy_decompression(code_dir_path, self.deploy_path, re_tar)
 
 
 if __name__ == "__main__":
