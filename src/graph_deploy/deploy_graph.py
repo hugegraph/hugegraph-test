@@ -161,7 +161,7 @@ class Deploy:
         os.system(
             'cd %s && '
             'wget https://github.com/hugegraph/hugegraph-hubble/releases/download/v1.5.0/hugegraph-hubble-1.5.0.tar.gz && '
-            'tar xzvf hugegraph-hubble-1.5.0.tar.gz'
+            'tar xzvf hugegraph-hubble-1.5.0.tar.gz' % code_dir_path
         )
         # set properties && start hubble
         package_dir_name = is_match_re(code_dir_path, re_dir)
