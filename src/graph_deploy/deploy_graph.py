@@ -152,10 +152,17 @@ class Deploy:
         code_dir = 'hugegraph-hubble'
         code_dir_path = self.code_path + '/' + code_dir
         re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
-
-        is_exists_path(self.code_path)
-        get_code(self.code_path, self.hubble_git, code_dir)
-        compile_package(self.mvn_path, code_dir_path)
+#         # get code && compile
+#         is_exists_path(self.code_path)
+#         get_code(self.code_path, self.hubble_git, code_dir)
+#         compile_package(self.mvn_path, code_dir_path)
+        # wget tar
+        is_exists_path(code_dir_path)
+        os.system(
+            'cd %s && '
+            'wget https://github.com/hugegraph/hugegraph-hubble/releases/download/v1.5.0/hugegraph-hubble-1.5.0.tar.gz && '
+            'tar xzvf hugegraph-hubble-1.5.0.tar.gz'
+        )
         # set properties && start hubble
         package_dir_name = is_match_re(code_dir_path, re_dir)
         package_dir_path = code_dir_path + '/' + package_dir_name
