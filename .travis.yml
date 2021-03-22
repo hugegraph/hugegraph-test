@@ -42,11 +42,11 @@ install:
 
 ### 获取graph测试服务
 before_script:
-  - python src/deploy_start.py all
+  - sudo python src/deploy_start.py all
 
 ### 执行测试脚本
 script:
-  - pytest src/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
+  - sudo pytest src/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
 
 
 
