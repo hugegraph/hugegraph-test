@@ -49,8 +49,18 @@ before_script:
   - sudo python src/deploy_start.py all
 
 ### 执行测试脚本
-script:
-  - sudo pytest src/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
+jobs:
+  include:
+    - script:
+        - sudo pytest src/test_start.py -m 'caseL0' -s --html=test_server.html --capture=tee-sys
+      after_success:
+        - sudo lynx -dump ./test.html
+        
+    - sudo pytest src/loader.py -m 'caseL0' -s --html=test_loader.html --capture=tee-sys
+    - sudo pytest src/tools.py -m 'caseL0' -s --html=tools_loader.html --capture=tee-sys
+    - 
+# script:
+#   - sudo pytest src/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
   
 after_success:
   - sudo lynx -dump ./test.html
