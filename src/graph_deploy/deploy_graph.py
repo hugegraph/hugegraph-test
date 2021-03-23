@@ -105,7 +105,7 @@ def start_graph(package_dir_path, graph_type):
     else:
         os.system(
             'cd %s '
-            '&& ./bin/start-hubble' % package_dir_path
+            '&& ./bin/start-hubble.sh' % package_dir_path
         )
 
 
