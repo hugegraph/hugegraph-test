@@ -19,6 +19,7 @@ branches:
     - /^release-.*$/
     - /^test-.*$/
 
+
 ### 搭建python 3.7环境
 before_install:
   # 安装python环境
@@ -36,7 +37,12 @@ before_install:
 install:
   - sudo apt-get -y install python3-pip
   - sudo pip3 install -r ./requirements.txt 
-  - sudo pip3 install codecov
+#   - sudo pip3 install codecov
+
+addons:
+  apt:
+    packages:
+      - lynx
 
 ### 获取graph测试服务
 before_script:
@@ -47,5 +53,6 @@ script:
   - sudo pytest src/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
   
 after_success:
-  - codecov
+  - lynx -dump home/travis/build/hugegraph/hugegraph-test/test.html
+#   - codecov
         
