@@ -36,6 +36,7 @@ before_install:
 install:
   - sudo apt-get -y install python3-pip
   - sudo pip3 install -r ./requirements.txt 
+  - sudo pip3 install codecov
 
 ### 获取graph测试服务
 before_script:
@@ -44,4 +45,7 @@ before_script:
 ### 执行测试脚本
 script:
   - sudo pytest src/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
+  
+after_success:
+  - codecov
         
