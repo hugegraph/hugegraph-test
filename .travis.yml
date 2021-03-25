@@ -47,7 +47,7 @@ jobs:
     - script:
       - sudo python src/test_start.py hubble
     - srcipt:
-      - sudo python src/test_start.py server
+      - sudo python src/test_start.py tools
 
 # push report_html to my repos
 #after_failure:
