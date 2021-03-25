@@ -7,12 +7,6 @@ language: java
 jdk:
   - openjdk8
 
-cache:
-  directories:
-    - $HOME/.m2
-    - $HOME/.cache/pip
-    - $HOME/downloads
-
 branches:
   only:
     - master
@@ -32,27 +26,31 @@ before_install:
   # 修改python默认使用的版本
   - sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
   - sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
-  
+
 ### 安装相关依赖
 install:
   - sudo apt-get -y install python3-pip
-  - sudo pip3 install -r ./requirements.txt 
-#   - sudo pip3 install codecov
-
-addons:
-  apt:
-    packages:
-      - lynx
+  - sudo pip3 install -r ./requirements.txt
 
 ### 获取graph测试服务
 before_script:
   - sudo python src/deploy_start.py all
+  - cd src/config && unzip dataset.zip && cd ../..
 
 ### 执行测试脚本
-script:
-  - sudo pytest src/test_start.py -m 'caseL0' -s --html=test.html --capture=tee-sys
-  
-after_success:
-  - sudo lynx -dump ./test.html
-#   - codecov
-        
+jobs:
+  include:
+    - script:
+      - sudo python src/test_start.py loader
+    - script:
+      - sudo python src/test_start.py server
+    - script:
+      - sudo python src/test_start.py hubble
+    - srcipt:
+      - sudo python src/test_start.py server
+
+# push report_html to my repos
+#after_failure:
+#  - git add *.html
+#  - git commit -m 'fail report detail'
+#  - git push

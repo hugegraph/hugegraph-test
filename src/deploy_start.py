@@ -38,7 +38,7 @@ def graph_deploy(param, conf_obj):
 if __name__ == "__main__":
     param_size = len(sys.argv)
     if param_size == 2 \
-       and sys.argv[1] in ['all', 'server', 'loader', 'tools', 'hubble']:
+            and sys.argv[1] in ['all', 'server', 'loader', 'tools', 'hubble']:
         graph_deploy(sys.argv[1], basic_config)
     else:
         print('---> 执行脚本参数为1个,param为[all,server,loader,tools,hubble]')
