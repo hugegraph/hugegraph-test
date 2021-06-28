@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
 author     : lxb
-note       : 
+note       : tools工具类
 create_time:  
 """
 import os
@@ -18,11 +18,20 @@ tools_name = is_match_re(_cfg.code_path + '/hugegraph-tools', "^hugegraph-tools-
 tools_path = _cfg.code_path + '/hugegraph-tools' + '/' + tools_name
 
 
-def run_shell(cmd):
+def run_shell(cmd, graph_name=None, graph_host=None, graph_port=None):
     """
     执行脚本
     :return:
     """
+    if graph_name is None:
+        graph_name = _cfg.graph_name
+
+    if graph_port is None:
+        graph_port = _cfg.server_port
+
+    if graph_host is None:
+        graph_host = _cfg.graph_host
+
     ### source graph
     protocol = 'http'
     protocol_cmd = ""
@@ -36,7 +45,7 @@ def run_shell(cmd):
     auth_cmd = ''
     if _cfg.is_auth:
         auth_cmd = ' --user admin --password %s ' % _cfg.admin_password['admin']
-    url = protocol + '://' + _cfg.graph_host + ':' + str(_cfg.server_port)
+    url = protocol + '://' + graph_host + ':' + str(graph_port)
 
     ### target graph
     run_cmd = ""
@@ -52,13 +61,13 @@ def run_shell(cmd):
 
         target_auth_cmd = ''
         if _cfg.tools_is_auth:
-            target_auth_cmd = ' --target-username admin --target-password %s ' % _cfg.tools_target_auth['admin']
+            target_auth_cmd = ' --target-user admin --target-password %s ' % _cfg.tools_target_auth['admin']
         target_url = target_protocol + "://" + _cfg.tools_target_host + ":" + str(_cfg.tools_target_port)
-        run_cmd = cmd % (url, _cfg.graph_name, protocol_cmd, auth_cmd,
+        run_cmd = cmd % (url, graph_name, protocol_cmd, auth_cmd,
                          target_url, _cfg.tools_target_graph, target_protocol_cmd, target_auth_cmd)
     else:
         print(cmd)
-        run_cmd = cmd % (url, _cfg.graph_name, protocol_cmd, auth_cmd)
+        run_cmd = cmd % (url, graph_name, protocol_cmd, auth_cmd)
 
     print("run_cmd: " + run_cmd)
     res = subprocess.Popen('cd %s && %s' % (tools_path, run_cmd),
@@ -100,8 +109,8 @@ def tools_assert():
     :return:
     """
     if _cfg.is_auth:
-        code_v, res_v = Gremlin().gremlin_post("g.V().count()", _cfg.admin_password)
-        code_e, res_e = Gremlin().gremlin_post("g.E().count()", _cfg.admin_password)
+        code_v, res_v = Gremlin().gremlin_post("g.V().count()", auth=_cfg.admin_password)
+        code_e, res_e = Gremlin().gremlin_post("g.E().count()", auth=_cfg.admin_password)
         return res_v['result']["data"][0], res_e['result']["data"][0]
     else:
         code_v, res_v = Gremlin().gremlin_post("g.V().count()")
@@ -109,17 +118,24 @@ def tools_assert():
         return res_v['result']["data"][0], res_e['result']["data"][0]
 
 
-def clear_graph():
+def clear_graph(graph_name=None, graph_host=None, graph_port=None):
     """
     清空图操作
     :return:
     """
-    res = run_shell("./bin/hugegraph --url %s --graph %s %s %s graph-clear --confirm-message "
-                    "\"I'm sure to delete all data\" ")
+    if graph_name is None:
+        graph_name = _cfg.graph_name
+
+    res = run_shell(
+        "./bin/hugegraph --url %s --graph %s %s %s graph-clear --confirm-message \"I'm sure to delete all data\" ",
+        graph_name=graph_name,
+        graph_host=graph_host,
+        graph_port=graph_port
+    )
     stdout, stderr = res.communicate()
     print(' ---> ' + str(stdout) + ' === ' + str(stderr))
     assert res.returncode == 0 and \
-           str(stdout, 'utf-8').startswith("Graph '%s' is cleared" % _cfg.graph_name)
+           str(stdout, 'utf-8').startswith("Graph '%s' is cleared" % graph_name)
 
 
 def target_insert_data():
@@ -176,12 +192,14 @@ def target_clear_graph():
     target_auth_cmd = ''
     if _cfg.is_auth:
         target_auth_cmd = ' --user admin --password %s ' % _cfg.admin_password['admin']
+
     url = target_protocol + '://' + _cfg.tools_target_host + ':' + str(_cfg.tools_target_port)
 
     run_cmd = "./bin/hugegraph --url %s --graph %s %s %s graph-clear --confirm-message " \
               "\"I'm sure to delete all data\" " \
               % (url, _cfg.tools_target_graph, target_protocol_cmd, target_auth_cmd)
-
+    print('cd %s' % tools_path)
+    print('run_cmd: ' + run_cmd)
     res = subprocess.Popen('cd %s && %s' % (tools_path, run_cmd),
                            shell=True,
                            stdout=subprocess.PIPE,
@@ -193,5 +211,5 @@ def target_clear_graph():
 
 
 if __name__ == "__main__":
-    pass
+    target_clear_graph()
 

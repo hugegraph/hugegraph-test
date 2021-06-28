@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
 author     : lxb
-note       :
+note       : server的api请求
 create_time: 2020/4/22 5:17 下午
 """
 import os
@@ -12,6 +12,251 @@ sys.path.append(current_path + '/../..')
 
 from src.config import basic_config as _cfg
 from src.common.request_cls import Request
+
+
+class Traverser:
+    """
+    oltp接口
+    """
+    def all_shortest_path(self, param=None, auth=None):
+        """
+        全最短路径
+        :param param:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/allshortestpaths" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param)
+        return code, res
+
+    def get_k_out(self, param_json, auth=None):
+        """
+        通过get方法进行 k_out
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/kout" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
+
+    def get_k_neighbor(self, param_json, auth=None):
+        """
+        通过get方法进行 k_neighbor
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/kneighbor" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
+
+    def get_shortestPath(self, param_json, auth=None):
+        """
+        通过get方法进行 shortestPath
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/shortestpath" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
+
+    def get_weighted_shortestPath(self, param_json, auth=None):
+        """
+        通过get方法进行 weighted shortestPath
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/weightedshortestpath" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
+
+    def get_single_source_shortestPath(self, param_json, auth=None):
+        """
+        通过get方法进行 single source shortestPath
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/singlesourceshortestpath" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
+
+    def post_template_paths(self, json, auth=None):
+        """
+        通过post方法进行 template paths
+        :param json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/templatepaths" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='post', path=url, json=json)
+        return code, res
+
+    def post_multi_node_shortestPath(self, json, auth=None):
+        """
+        通过post方法进行 multi node shortest path
+        :param json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/multinodeshortestpath" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='post', path=url, json=json)
+        return code, res
+
+    def get_paths(self, param_json, auth=None):
+        """
+        通过get方法获取两个点间的所有路径
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/paths" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
+
+    def post_paths(self, body, auth=None):
+        """
+        通过post方法获取两个点间的所有路径
+        :param body:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/paths" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='post', path=url, json=body)
+        return code, res
+
+    def post_customized_paths(self, json, auth=None):
+        """
+        通过post方法进行 customized paths
+        :param json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/customizedpaths" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='post', path=url, json=json)
+        return code, res
+
+    def get_vertices(self, part_url, auth=None):
+        """
+        根据批量ID获取顶点
+        :param auth:
+        :param part_url:
+        :return:
+        """
+        url = "/graphs/%s/traversers/vertices%s" % (_cfg.graph_name, part_url)
+        code, res = Request(auth=auth).request(method='get', path=url)
+        return code, res
+
+    def get_edges(self, part_url, auth=None):
+        """
+        :param auth:
+        :param part_url:
+        :return:
+        """
+        url = "/graphs/%s/traversers/edges%s" % (_cfg.graph_name, part_url)
+        code, res = Request(auth=auth).request(method='get', path=url)
+        return code, res
+
+    def get_rings(self, param_json, auth=None):
+        """
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/rings" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
+
+    def get_rays(self, param_json, auth=None):
+        """
+        根据起始顶点、方向、边的类型（可选）和最大深度等条件查找发散到边界顶点的路径
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/rays" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
+
+    def get_crosspoints(self, param_json, auth=None):
+        """
+        根据起始顶点、目的顶点、方向、边的类型（可选）和最大深度等条件查找相交点
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/crosspoints" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
+
+    def post_customized_crosspoints(self, body, auth=None):
+        """
+        根据一批起始顶点、多种边规则（包括方向、边的类型和属性过滤）和最大深度等条件查找符合条件的所有的路径终点的交集
+        :param body:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/customizedcrosspoints" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='post', path=url, json=body)
+        return code, res
+
+    def post_fusiform_similarity(self, body, auth=None):
+        """
+        按照条件查询一批顶点对应的"梭形相似点"
+        :param body:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/fusiformsimilarity" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='post', path=url, json=body)
+        return code, res
+
+    def get_vertex_shard(self, param_json, auth=None):
+        """
+        通过指定的分片大小split_size，获取顶点分片信息（可以与 Scan 配合使用来获取顶点）
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/vertices/shards" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
+
+    def get_shard_vertex(self, param_json, auth=None):
+        """
+        通过指定的分片信息批量查询顶点
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/vertices/scan" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
+
+    def get_edge_shard(self, param_json, auth=None):
+        """
+        通过指定的分片大小split_size，获取边分片信息（可以与 Scan 配合使用来获取边）
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/edges/shards" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
+
+    def get_shard_edge(self, param_json, auth=None):
+        """
+        通过指定的分片信息批量查询边
+        :param param_json:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/traversers/edges/scan" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url, params=param_json)
+        return code, res
 
 
 class Task:
@@ -72,14 +317,24 @@ class Schema:
         code, res = Request(auth=auth).request(method='post', path=url, json=body)
         return code, res
 
-    def get_property(self, auth=None):
+    def get_all_properties(self, auth=None):
         """
         :param auth:
         """
-        code, res = Request(auth=auth).request(method="get", path="/graphs/hugegraph/schema/propertykeys")
+        url = "/graphs/%s/schema/propertykeys" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method="get", path=url)
         return code, res
 
-    def delete_property(self, name, auth=None):
+    def get_property_by_name(self, name, auth=None):
+        """
+        :param name:
+        :param auth:
+        """
+        url = "/graphs/%s/schema/propertykeys/%s" % (_cfg.graph_name, name)
+        code, res = Request(auth=auth).request(method="get", path=url)
+        return code, res
+
+    def delete_property_by_name(self, name, auth=None):
         """
         :param name:
         :param auth:
@@ -87,6 +342,18 @@ class Schema:
         """
         url = "/graphs/%s/schema/propertykeys/%s" % (_cfg.graph_name, name)
         code, res = Request(auth=auth).request(method='delete', path=url)
+        return code, res
+
+    def deal_property_userdata(self, name, param, body, auth=None):
+        """
+        :param body:
+        :param param:
+        :param name:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/schema/propertykeys/%s" % (_cfg.graph_name, name)
+        code, res = Request(auth=auth).request(params=param, json=body, method='put', path=url)
         return code, res
 
     def create_vertexLabel(self, body, auth=None):
@@ -99,12 +366,33 @@ class Schema:
         code, res = Request(auth=auth).request(method='post', path=url, json=body)
         return code, res
 
+    def update_vertexLabel(self, property_name, param_json, body, auth=None):
+        """
+        :param param_json:
+        :param property_name:
+        :param body:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/schema/vertexlabels/%s" % (_cfg.graph_name, property_name)
+        code, res = Request(auth=auth).request(method='put', params=param_json, path=url, json=body)
+        return code, res
+
     def get_vertexLabel(self, auth=None):
         """
-        查看VertexLabel
+        查看所有 vertexLabel
         :return:
         """
         url = "/graphs/%s/schema/vertexlabels" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url)
+        return code, res
+
+    def get_vertexLabel_by_name(self, name, auth=None):
+        """
+        查看某个 vertexLabel
+        :return:
+        """
+        url = "/graphs/%s/schema/vertexlabels/%s" % (_cfg.graph_name, name)
         code, res = Request(auth=auth).request(method='get', path=url)
         return code, res
 
@@ -127,12 +415,33 @@ class Schema:
         code, res = Request(auth=auth).request(method='post', path=url, json=body)
         return code, res
 
+    def update_edgeLabel(self, property_name, param_json, body, auth=None):
+        """
+        :param property_name:
+        :param param_json:
+        :param body:
+        :param auth:
+        :return:
+        """
+        url = "/graphs/%s/schema/edgelabels/%s" % (_cfg.graph_name, property_name)
+        code, res = Request(auth=auth).request(method='put', params=param_json, path=url, json=body)
+        return code, res
+
     def get_edgeLabel(self, auth=None):
         """
-        验证:EdgeLabel读权限
+        查看所有EdgeLabel
         :return:
         """
         url = "/graphs/%s/schema/edgelabels" % _cfg.graph_name
+        code, res = Request(auth=auth).request(method='get', path=url)
+        return code, res
+
+    def get_edgeLabel_by_name(self, property_name, auth=None):
+        """
+        根据name查看EdgeLabel
+        :return:
+        """
+        url = "/graphs/%s/schema/edgelabels/%s" % (_cfg.graph_name, property_name)
         code, res = Request(auth=auth).request(method='get', path=url)
         return code, res
 
@@ -164,12 +473,21 @@ class Schema:
         code, res = Request(auth=auth).request(method='get', path=url)
         return code, res
 
-    def delete_index(self, name, auth=None):
+    def get_index_by_name(self, name, auth=None):
         """
-        删除indexLabel删除
+        通过name查看IndexLabel
         :return:
         """
-        url = "/graphs/%s/schema/indexlabels/" % _cfg.graph_name + name
+        url = "/graphs/%s/schema/indexlabels/%s" % (_cfg.graph_name, name)
+        code, res = Request(auth=auth).request(method='get', path=url)
+        return code, res
+
+    def delete_index(self, name, auth=None):
+        """
+        删除indexLabel
+        :return:
+        """
+        url = "/graphs/%s/schema/indexlabels/%s" % (_cfg.graph_name, name)
         code, res = Request(auth=auth).request(method='delete', path=url)
         return code, res
 
@@ -663,6 +981,7 @@ class Auth:
         code, res = Request(auth=auth).request(method='put', path=url, json=body)
         return code, res
 
+
 class Graph:
     """
     图的基本接口
@@ -747,7 +1066,6 @@ class Vertex:
         :return:
         """
         url = "/graphs/%s/graph/vertices" % _cfg.graph_name
-        print(url)
         code, res = Request(auth=auth).request(method='post', path=url, json=body)
         return code, res
 
@@ -757,7 +1075,6 @@ class Vertex:
         :return:
         """
         url = "/graphs/%s/graph/vertices/batch" % _cfg.graph_name
-        print(url)
         code, res = Request(auth=auth).request(method='post', path=url, json=body)
         return code, res
 
@@ -767,17 +1084,15 @@ class Vertex:
         :return:
         """
         url = "/graphs/%s/graph/vertices/batch" % _cfg.graph_name
-        print(url)
         code, res = Request(auth=auth).request(method='put', path=url, json=body)
         return code, res
 
-    def change_vertex_property(self, v_id, action, body, auth=None):
+    def update_vertex_property(self, v_id, action, body, auth=None):
         """
         删除||增加||更新 顶点属性
         :return:
         """
         url = "/graphs/%s/graph/vertices/%s" % (_cfg.graph_name, v_id)
-        print(url)
         code, res = Request(auth=auth).request(method='put', path=url, params=action, json=body)
         return code, res
 
@@ -787,7 +1102,6 @@ class Vertex:
         :return:
         """
         url = "/graphs/%s/graph/vertices" % _cfg.graph_name
-        print(url)
         code, res = Request(auth=auth).request(method='get', path=url, params=condition)
         return code, res
 
@@ -799,7 +1113,6 @@ class Vertex:
         :return:
         """
         url = "/graphs/%s/graph/vertices/%s" % (_cfg.graph_name, v_id)
-        print(url)
         code, res = Request(auth=auth).request(method='get', path=url)
         return code, res
 
