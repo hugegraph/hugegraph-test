@@ -6,6 +6,8 @@ assets/
 graph/
 venv/
 __pycache__
+.idea
 
 # 文件过滤
 *.pyc
+.DS_S*

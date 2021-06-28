@@ -118,6 +118,7 @@ class Deploy:
         self.graph_host = obj.graph_host
         self.server_port = obj.server_port
         self.gremlin_port = obj.gremlin_port
+        self.hubble_host = obj.hubble_host
         self.hubble_port = obj.hubble_port
         self.mvn_path = obj.mvn_path
         self.code_path = obj.code_path

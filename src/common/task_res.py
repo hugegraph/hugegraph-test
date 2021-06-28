@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
 author     : lxb
-note       : 
+note       : 通过异步任务获取执行结果
 create_time:  
 """
 import os

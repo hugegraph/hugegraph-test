@@ -119,8 +119,8 @@ class InsertData:
         :return:
         """
         if self.is_auth:
-            code_v, res_v = Gremlin().gremlin_post("g.V().count()", self.auth)
-            code_e, res_e = Gremlin().gremlin_post("g.E().count()", self.auth)
+            code_v, res_v = Gremlin().gremlin_post("g.V().count()", auth=self.auth)
+            code_e, res_e = Gremlin().gremlin_post("g.E().count()", auth=self.auth)
             return res_v['result']["data"][0], res_e['result']["data"][0]
         else:
             code_v, res_v = Gremlin().gremlin_post("g.V().count()")

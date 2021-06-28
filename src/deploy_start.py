@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
 author     : lxb
-note       : Component deployment begins
+note       : hugegraph 各组件部署
 create_time: 2020/4/22 5:17 下午
 """
 import sys

@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
 """
 author     : lxb
-note       : 
-create_time:  
+note       : 文件的基本操作
+create_time: 2021/03/12
 """
 import re
 import os
