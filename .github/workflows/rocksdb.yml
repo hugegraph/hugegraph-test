@@ -51,7 +51,6 @@ jobs:
       - name: checkout python scripts
         uses: actions/checkout@v2
         with:
-          ref: master
           fetch-depth: 2
 
       - name: install python dependencies
