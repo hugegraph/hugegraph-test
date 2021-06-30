@@ -57,6 +57,10 @@ jobs:
       - name: install python dependencies
         if: steps.cache-pip.outputs.cache-hit != 'true'
         run: |
+          pip -V
+          pip3 -V
+          python -V
+          python3 -V
           pwd
           ls
           pip install -r requirements.txt
