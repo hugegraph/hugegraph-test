@@ -1,0 +1,13 @@
+### Ignore hugegraph-test temporary files, build results, dataset
+
+# 目录过滤
+src/config/dataset/
+assets/
+graph/
+venv/
+__pycache__
+.idea
+
+# 文件过滤
+*.pyc
+.DS_S*
