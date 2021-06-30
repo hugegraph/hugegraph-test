@@ -62,10 +62,10 @@ jobs:
 
       - name: edit config and install hugegraph components
         run: |
-          python src/deploy_start.py
+          sudo python src/deploy_start.py all
 
       - name: run test cases
-        run: pytest src/test_start.py
+        run: sudo pytest src/test_start.py
 
 
 #  # job: openSource and exist auth
