@@ -65,7 +65,7 @@ jobs:
 
       - name: edit config and install hugegraph components
         run: |
-          python src/deploy_start.py
+          python src/deploy_start.py all
 
       - name: run test cases
         run: pytest src/test_start.py
