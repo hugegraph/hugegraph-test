@@ -62,6 +62,7 @@ jobs:
 
       - name: edit config and install hugegraph components
         run: |
+          mvn --version
           python src/deploy_start.py all
 
       - name: run test cases
