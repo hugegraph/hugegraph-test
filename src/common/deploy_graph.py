@@ -43,7 +43,7 @@ def compile_package(dir_code_path):
     g_name = dir_code_path.split('/')[-1]
     if g_name == 'hugegraph-loader':
         cmd = 'cd %s && '
-            'install:install-file '
+            'mvn install:install-file '
             '-Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar '
             '-DgroupId=com.oracle '
             '-DartifactId=ojdbc8 '
