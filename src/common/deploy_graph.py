@@ -42,19 +42,18 @@ def compile_package(dir_code_path):
     """
     g_name = dir_code_path.split('/')[-1]
     if g_name == 'hugegraph-loader':
-        cmd = 'cd %s && '
-            'mvn install:install-file '
-            '-Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar '
-            '-DgroupId=com.oracle '
-            '-DartifactId=ojdbc8 '
-            '-Dversion=12.2.0.1 '
-            '-Dpackaging=jar && '
-            'clean package -Dmaven.test.skip=true -q | grep \"tar.gz\"' % dir_code_path
+        cmd = 'cd %s && ' \
+              'mvn install:install-file ' \
+              '-Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar ' \
+              '-DgroupId=com.oracle ' \
+              '-DartifactId=ojdbc8 ' \
+              '-Dversion=12.2.0.1 ' \
+              '-Dpackaging=jar && ' \
+              'clean package -Dmaven.test.skip=true -q | grep \"tar.gz\"' % dir_code_path
         print(cmd)
         os.system(cmd)
     else:
-        cmd = 'cd %s && '
-            'mvn clean package -Dmaven.test.skip=true -q | grep \"tar.gz\"' % dir_code_path
+        cmd = 'cd %s && mvn clean package -Dmaven.test.skip=true -q | grep \"tar.gz\"' % dir_code_path
         print(cmd)
         os.system(cmd)
 
