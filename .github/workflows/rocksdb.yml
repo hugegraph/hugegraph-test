@@ -56,17 +56,15 @@ jobs:
       - name: install python dependencies
         if: steps.cache-pip.outputs.cache-hit != 'true'
         run: |
-          tree
           python -m pip install --upgrade pip
           pip install -r ./requirements.txt
 
-      - name: edit config and install hugegraph components
+      - name: get hugegraph
         run: |
-          mvn --version
           python src/deploy_start.py all
-
+          
       - name: run test cases
-        run: pytest src/test_start.py
+        run: pytest src/test_start.py all
 
 
 #  # job: openSource and exist auth
