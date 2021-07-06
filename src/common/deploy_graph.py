@@ -41,13 +41,13 @@ def compile_package(dir_code_path):
     if g_name == 'hugegraph-loader':
         os.system(
             'cd %s && '
-            'mvn install:install-file '
+            'install:install-file '
             '-Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar '
             '-DgroupId=com.oracle '
             '-DartifactId=ojdbc8 '
             '-Dversion=12.2.0.1 '
             '-Dpackaging=jar && '
-            'mvn clean package -Dmaven.test.skip=true | '
+            'clean package -Dmaven.test.skip=true | '
             'grep -v \"Downloading\|Downloaded\"' % dir_code_path
         )
     else:
@@ -119,7 +119,6 @@ class Deploy:
         self.gremlin_port = obj.gremlin_port
         self.hubble_host = obj.hubble_host
         self.hubble_port = obj.hubble_port
-        self.mvn_path = obj.mvn_path
         self.code_path = obj.code_path
         self.server_git = obj.server_git
         self.loader_git = obj.loader_git
@@ -137,7 +136,7 @@ class Deploy:
 
         is_exists_path(self.code_path)
         get_code(self.code_path, self.server_git, code_dir)
-        compile_package(self.mvn_path)
+        compile_package(code_dir_path)
         #  start graph_server
         package_dir_name = is_match_re(code_dir_path, re_dir)
         package_dir_path = code_dir_path + '/' + package_dir_name
