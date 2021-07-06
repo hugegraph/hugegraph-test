@@ -134,26 +134,44 @@ class TestFusiformSimilarity:
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'2:lop': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+            res_assert = {
+                '2:lop': [
+                    {'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
                     {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
                     {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                    {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                '1:vadas': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}
+                ],
+                '1:vadas': [
+                    {'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
                     {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
                     {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                    {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                '2:ripple': [{'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                             {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                             {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                             {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                '1:josh': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                           {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                           {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                           {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                '1:peter': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                            {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                            {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                            {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}]}
+                    {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}
+                ],
+                '2:ripple': [
+                    {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}
+                ],
+                '1:josh': [
+                    {'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}
+                ],
+                '1:peter': [
+                    {'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}
+                ]
+            }
+
+            assert len(result) == 5
+            for k, v in result.items():
+                assert k in res_assert
+                for obj in v:
+                    assert obj in res_assert[k]
         else:
             assert 0
 
@@ -223,7 +241,8 @@ class TestFusiformSimilarity:
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {}
+            str_res = result.split("'task_result': ")[1].replace('}', '')
+            assert str_res == "\"java.lang.IllegalArgumentException: The group property can't be empty\""
         else:
             assert 0
 
@@ -294,26 +313,31 @@ class TestFusiformSimilarity:
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'1:peter': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '2:lop': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '1:josh': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                         {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                         {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                         {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '1:vadas': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '2:ripple': [{'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                           {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                           {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                           {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}]}
+            res_assert = {'1:peter': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '2:lop': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                    {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                    {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                    {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '1:josh': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                     {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                     {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                     {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '1:vadas': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '2:ripple': [{'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                       {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                       {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                       {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}]}
+            assert len(result) == 5
+            for k, v in result.items():
+                assert k in res_assert
+                for obj in v:
+                    assert obj in res_assert[k]
         else:
             assert 0
 
@@ -328,26 +352,31 @@ class TestFusiformSimilarity:
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'1:peter': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '1:josh': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                         {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                         {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                         {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '2:lop': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '1:vadas': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '2:ripple': [{'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                           {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                           {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                           {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}]}
+            res_assert = {'1:peter': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '1:josh': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                     {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                     {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                     {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '2:lop': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                    {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                    {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                    {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '1:vadas': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '2:ripple': [{'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                       {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                       {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                       {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}]}
+            assert len(result) == 5
+            for k, v in result.items():
+                assert k in res_assert
+                for obj in v:
+                    assert obj in res_assert[k]
         else:
             assert 0
 
@@ -362,10 +391,14 @@ class TestFusiformSimilarity:
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'2:lop': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}]}
+            assert result == {
+                '1:peter': [
+                    {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                    {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}
+                ]
+            }
         else:
             assert 0
 
@@ -395,26 +428,31 @@ class TestFusiformSimilarity:
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'1:peter': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '1:vadas': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '2:ripple': [{'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                           {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                           {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                           {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '2:lop': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '1:josh': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                         {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                         {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                         {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}]}
+            res_assert = {'1:peter': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '1:vadas': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '2:ripple': [{'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                       {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                       {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                       {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '2:lop': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                    {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                    {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                    {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '1:josh': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                     {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                     {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                     {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}]}
+            assert len(result) == 5
+            for k, v in result.items():
+                assert k in res_assert
+                for obj in v:
+                    assert obj in res_assert[k]
         else:
             assert 0
 
@@ -475,26 +513,31 @@ class TestFusiformSimilarity:
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'2:lop': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                        {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '1:josh': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                         {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                         {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                         {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '1:peter': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '1:vadas': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                          {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
-                              '2:ripple': [{'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                           {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                           {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
-                                           {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}]}
+            res_assert = {'2:lop': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                    {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                    {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                    {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '1:josh': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                     {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                     {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                     {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '1:peter': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '1:vadas': [{'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                      {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}],
+                          '2:ripple': [{'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                       {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                       {'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                                       {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}]}
+            assert len(result) == 5
+            for k, v in result.items():
+                assert k in res_assert
+                for obj in v:
+                    assert obj in res_assert[k]
         else:
             assert 0
 

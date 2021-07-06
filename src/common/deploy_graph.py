@@ -31,10 +31,9 @@ def get_code(pwd, git_obj, code_dir):
         os.system('cd %s/%s && git pull' % (pwd, code_dir))
 
 
-def compile_package(mvn_path, dir_code_path):
+def compile_package(dir_code_path):
     """
     编译包
-    :param mvn_path: 添加mvn_path
     :param dir_code_path: 本地代码库路径
     :return:
     """
@@ -42,20 +41,20 @@ def compile_package(mvn_path, dir_code_path):
     if g_name == 'hugegraph-loader':
         os.system(
             'cd %s && '
-            '%smvn install:install-file '
+            'mvn install:install-file '
             '-Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar '
             '-DgroupId=com.oracle '
             '-DartifactId=ojdbc8 '
             '-Dversion=12.2.0.1 '
             '-Dpackaging=jar && '
-            '%smvn clean package -Dmaven.test.skip=true | '
-            'grep -v \"Downloading\|Downloaded\"' % (dir_code_path, mvn_path, mvn_path)
+            'mvn clean package -Dmaven.test.skip=true | '
+            'grep -v \"Downloading\|Downloaded\"' % dir_code_path
         )
     else:
         os.system(
             'cd %s && '
-            '%smvn clean package -Dmaven.test.skip=true | '
-            'grep -v \"Downloading\|Downloaded\"' % (dir_code_path, mvn_path)
+            'mvn clean package -Dmaven.test.skip=true | '
+            'grep -v \"Downloading\|Downloaded\"' % dir_code_path
         )
 
 
@@ -138,7 +137,7 @@ class Deploy:
 
         is_exists_path(self.code_path)
         get_code(self.code_path, self.server_git, code_dir)
-        compile_package(self.mvn_path, code_dir_path)
+        compile_package(self.mvn_path)
         #  start graph_server
         package_dir_name = is_match_re(code_dir_path, re_dir)
         package_dir_path = code_dir_path + '/' + package_dir_name
@@ -153,10 +152,10 @@ class Deploy:
         code_dir = 'hugegraph-hubble'
         code_dir_path = self.code_path + '/' + code_dir
         re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
-#         # get code && compile
-#         is_exists_path(self.code_path)
-#         get_code(self.code_path, self.hubble_git, code_dir)
-#         compile_package(self.mvn_path, code_dir_path)
+        # # get code && compile
+        # is_exists_path(self.code_path)
+        # get_code(self.code_path, self.hubble_git, code_dir)
+        # compile_package(code_dir_path)
         # wget tar
         is_exists_path(code_dir_path)
         os.system(
@@ -179,7 +178,7 @@ class Deploy:
         code_dir_path = self.code_path + '/' + code_dir
         is_exists_path(self.code_path)
         get_code(self.code_path, self.loader_git, code_dir)
-        compile_package(self.mvn_path, code_dir_path)
+        compile_package(code_dir_path)
 
     @staticmethod
     def tools(self):
@@ -190,7 +189,7 @@ class Deploy:
         code_dir_path = self.code_path + '/' + code_dir
         is_exists_path(self.code_path)
         get_code(self.code_path, self.tools_git, code_dir)
-        compile_package(self.mvn_path, code_dir_path)
+        compile_package(code_dir_path)
 
 
 if __name__ == "__main__":

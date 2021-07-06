@@ -50,7 +50,7 @@ class TestPageRank:
             print(result)
             rank_code, rank_res = Gremlin().gremlin_post("g.V('1:marko')")
             print(rank_code, rank_res)
-            assert result['last_changed_rank'] == 0.00015807441539228417 and \
+            assert result['last_changed_rank'] == 0.00015807441539237438 and \
                    rank_res['result']['data'][0]['properties']['r_rank'] == 0.05084635172453192
         else:
             assert 0

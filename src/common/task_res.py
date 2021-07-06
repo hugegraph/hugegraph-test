@@ -24,7 +24,6 @@ def get_task_res(id, time_out, auth=None):
     :return:
     """
     code, res = Task().get_task(id, auth)
-    print(code, res)
     for i in range(0, int(time_out / 5)):
         if code == 200:
             if res["task_status"] == "failed":

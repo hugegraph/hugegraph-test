@@ -20,8 +20,8 @@ graph_host = '127.0.0.1'
 graph_name = 'hugegraph'
 
 # 测试使用的权限配置
-admin_password = {'admin': '123456'}
-test_password = {'test': '123456'}
+admin_password = {}
+test_password = {}
 
 # loader
 loader_git = {'branch': 'master', 'url': 'https://github.com/hugegraph/hugegraph-loader.git'}
