@@ -64,7 +64,7 @@ jobs:
           python src/deploy_start.py all
           
       - name: run test cases
-        run: pytest src/test_start.py all
+        run: python src/test_start.py all
 
 
 #  # job: openSource and exist auth
