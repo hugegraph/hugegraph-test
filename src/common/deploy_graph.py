@@ -48,8 +48,8 @@ def compile_package(dir_code_path):
               '-DgroupId=com.oracle ' \
               '-DartifactId=ojdbc8 ' \
               '-Dversion=12.2.0.1 ' \
-              '-Dpackaging=jar && ' \
-              'clean package -Dmaven.test.skip=true -q | grep \"tar.gz\"' % dir_code_path
+              '-Dpackaging=jar | grep -v \"Downloading\|Downloaded\" && ' \
+              'mvn clean package -Dmaven.test.skip=true -q | grep \"tar.gz\"' % dir_code_path
         print(cmd)
         os.system(cmd)
     else:
