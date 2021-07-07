@@ -54,7 +54,6 @@ jobs:
           fetch-depth: 2
 
       - name: install python dependencies
-        # if: steps.cache-pip.outputs.cache-hit != 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -r ./requirements.txt
@@ -63,10 +62,13 @@ jobs:
         run: |
           python src/deploy_start.py all
           
+      - name: decompress dataset.zip
+        run: |
+          unzip src/config/dataset.zip
+          mv dataset src/config/
+          
       - name: run test cases
         run: |
-          pwd
-          ls
           tree
           python src/test_start.py all
         
