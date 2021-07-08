@@ -6,6 +6,8 @@ create_time: 2021/3/1 11:17 上午
 """
 import unittest
 import os
+
+import pytest
 import sys
 
 current_path = os.path.dirname(os.path.realpath(__file__))
@@ -28,6 +30,7 @@ if _cfg.is_auth:
     user = _cfg.test_password
 
 
+@pytest.mark.skipif(_cfg.is_auth is False, reason='hugegraph启动时没有配置权限')
 class TestDetailAuth(unittest.TestCase):
     """
     细粒度权限验证：创建用户并对用户进行鉴权和越权验证

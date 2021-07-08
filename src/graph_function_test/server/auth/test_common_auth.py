@@ -4,6 +4,7 @@ author     : lxb
 note       : 粗粒度权限的鉴权和越权
 create_time: 2021/02/22 5:17 下午
 """
+import pytest
 import sys
 import os
 import time
@@ -32,6 +33,7 @@ if _cfg.is_auth:
     user = _cfg.test_password
 
 
+@pytest.mark.skipif(_cfg.is_auth is False, reason='hugegraph启动时没有配置权限')
 class TestCommonAuth(unittest.TestCase):
     """
     粗粒度权限验证：创建用户并对用户进行鉴权和越权验证

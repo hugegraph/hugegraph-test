@@ -543,7 +543,7 @@ class TestBase(unittest.TestCase):
         self.test_addProperty_textSingle()
         code, res = GraphConnection().get_graph_connect()
         graph_id = res['data']['records'][0]['id']
-        code, res = Schema.delete_property(param={"names": "string1", "skip_using": False}, graph_id=graph_id)
+        code, res = Schema.delete_property(param="names=string1&skip_using=false", graph_id=graph_id)
         self.assertEqual(code, 200, "响应状态码不正确")
         self.assertEqual(res['status'], 200, "删除属性状态码不正确")
 
@@ -735,7 +735,7 @@ class TestBase(unittest.TestCase):
         self.test_addVertexLabel_PRIMARYKEY()
         code, res = GraphConnection().get_graph_connect()
         graph_id = res['data']['records'][0]['id']
-        code, res = Schema.delete_vertexLabel(param={"names": "vertexLabel1", "skip_using": False}, graph_id=graph_id)
+        code, res = Schema.delete_vertexLabel(param="names=vertexLabel1&skip_using=false", graph_id=graph_id)
         self.assertEqual(code, 200, "响应状态码不正确")
         self.assertEqual(res['status'], 200, "删除顶点类型状态码不正确")
 
@@ -790,7 +790,186 @@ class TestBase(unittest.TestCase):
         self.test_addEdgeLabel()
         code, res = GraphConnection().get_graph_connect()
         graph_id = res['data']['records'][0]['id']
-        code, res = Schema.delete_edgeLabel(param={"names": "link1", "skip_using": False}, graph_id=graph_id)
+        code, res = Schema.delete_edgeLabel(param="names=link1&skip_using=false", graph_id=graph_id)
+        self.assertEqual(code, 200, "响应状态码不正确")
+        self.assertEqual(res['status'], 200, "删除边类型状态码不正确")
+
+    def test_addIndexLabel_vertexLabel(self):
+        """
+        创建顶点类型添加索引
+        """
+        body = {
+            "name": _cfg.graph_name + "_test1",
+            "graph": _cfg.graph_name,
+            "host": _cfg.graph_host,
+            "port": _cfg.server_port
+        }
+        code, res = GraphConnection().add_graph_connect(body=body)
+        self.assertEqual(code, 200, "添加图链接成功")
+
+        code, res = GraphConnection().get_graph_connect()
+        graph_id = res['data']['records'][0]['id']
+
+        body = {"name": "string", "data_type": "TEXT", "cardinality": "SINGLE"}
+        code, res = Schema.create_property(body, graph_id)
+        self.assertEqual(code, 200, "创建属性失败")
+
+        body = {"name": "int", "data_type": "INT", "cardinality": "SINGLE"}
+        code, res = Schema.create_property(body, graph_id)
+        self.assertEqual(code, 200, "创建属性失败")
+
+        body = {
+            "name": "vertexLabel",
+            "id_strategy": "PRIMARY_KEY",
+            "properties": [
+                {"name": "string", "nullable": False},
+                {"name": "int", "nullable": True}
+            ],
+            "primary_keys": ["string"],
+            "property_indexes": [{"name": "intBySecondary", "type": "SECONDARY", "fields": ["int"]}],
+            "open_label_index": False,
+            "style":
+                {
+                    "color": "#569380",
+                    "icon": None
+                }
+        }
+        code, res = Schema.create_vertexLabel(body, graph_id)
+        self.assertEqual(code, 200, "响应状态码不正确")
+        self.assertEqual(res['status'], 200, "添加顶点类型及索引状态码不正确")
+
+    def test_addIndexLabel_edgeLabel(self):
+        """
+        创建边类型添加索引
+        """
+        body = {
+            "name": _cfg.graph_name + "_test1",
+            "graph": _cfg.graph_name,
+            "host": _cfg.graph_host,
+            "port": _cfg.server_port
+        }
+        code, res = GraphConnection().add_graph_connect(body=body)
+        self.assertEqual(code, 200, "添加图链接失败")
+
+        code, res = GraphConnection().get_graph_connect()
+        graph_id = res['data']['records'][0]['id']
+
+        body = {"name": "string", "data_type": "TEXT", "cardinality": "SINGLE"}
+        code, res = Schema.create_property(body, graph_id)
+        self.assertEqual(code, 200, "创建属性失败")
+
+        body = {
+            "name": "vertexLabel",
+            "id_strategy": "PRIMARY_KEY",
+            "properties": [
+                {"name": "string", "nullable": False}
+            ],
+            "primary_keys": ["string"],
+            "property_indexes": [],
+            "open_label_index": False,
+            "style":
+                {
+                    "color": "#569380",
+                    "icon": None
+                }
+        }
+        code, res = Schema.create_vertexLabel(body, graph_id)
+        self.assertEqual(code, 200, "添加顶点类型失败")
+
+        body = {
+            "name": "link",
+            "source_label": "vertexLabel",
+            "target_label": "vertexLabel",
+            "link_multi_times": False,
+            "properties": [
+                {"name": "string", "nullable": False}
+            ],
+            "sort_keys": [],
+            "property_indexes": [
+                {"name": "strBySecondary", "type": "SECONDARY", "fields": ["string"]}],
+            "open_label_index": False,
+            "style": {
+                "color": "#112233",
+                "with_arrow": True,
+                "thickness": "FINE",
+                "display_fields": [
+                    "~id"
+                ],
+                "join_symbols": [
+                    "-"
+                ]
+            }
+        }
+        code, res = Schema.create_edgeLabel(body, graph_id)
+        self.assertEqual(code, 200, "响应状态码不正确")
+        self.assertEqual(res['status'], 200, "添加边类型及索引状态码不正确")
+
+    def test_queryVertexLabelIndexLabel(self):
+        """
+        查看顶点类型属性索引
+        """
+        self.test_addIndexLabel_vertexLabel()
+        code, res = GraphConnection().get_graph_connect()
+        graph_id = res['data']['records'][0]['id']
+        param = "page_no=1&page_size=10&is_vertex_label=true"
+        code, res = Schema.get_PropertyIndex(graph_id, param=param)
+        self.assertEqual(code, 200, "响应状态码不正确")
+        self.assertEqual(res['status'], 200, "查询边类型状态码不正确")
+        self.assertEqual(res['data']["records"][0]["name"], "intBySecondary", "查询顶点类型属性索引不正确")
+
+    def test_queryEdgeLabelIndexLabel(self):
+        """
+        查看边类型属性索引
+        """
+        self.test_addIndexLabel_edgeLabel()
+        code, res = GraphConnection().get_graph_connect()
+        graph_id = res['data']['records'][0]['id']
+        param = "page_no=1&page_size=10&is_vertex_label=false"
+        code, res = Schema.get_PropertyIndex(graph_id, param=param)
+        self.assertEqual(code, 200, "响应状态码不正确")
+        self.assertEqual(res['status'], 200, "查询边类型状态码不正确")
+        self.assertEqual(res['data']["records"][0]["name"], "strBySecondary", "查询边类型属性索引不正确")
+
+    def test_deleteVertexLabelIndexLabel(self):
+        """
+        删除顶点类型索引
+        """
+        self.test_addIndexLabel_vertexLabel()
+        code, res = GraphConnection().get_graph_connect()
+        graph_id = res['data']['records'][0]['id']
+        body = {
+            "append_properties": [],
+            "append_property_indexes": [],
+            "remove_property_indexes": ["intBySecondary"],
+            "style": {
+                "color": "#5c73e6",
+                "icon": None,
+                "size": "NORMAL",
+                "display_fields": ["~id"]
+            }}
+        code, res = Schema.delete_vertexLabelIndexLabel(name="vertexLabel", graph_id=graph_id, body=body)
+        self.assertEqual(code, 200, "响应状态码不正确")
+        self.assertEqual(res['status'], 200, "删除顶点类型索引状态码不正确")
+
+    def test_deleteEdgeLabelIndexLabel(self):
+        """
+        删除边类型索引
+        """
+        self.test_addIndexLabel_edgeLabel()
+        code, res = GraphConnection().get_graph_connect()
+        graph_id = res['data']['records'][0]['id']
+        body = {
+            "append_properties": [],
+            "append_property_indexes": [],
+            "remove_property_indexes": ["strBySecondary"],
+            "style": {
+                "color": "#5c73e6",
+                "icon": None,
+                "with_arrow": True,
+                "thickness": "NORMAL",
+                "display_fields": ["~id"]
+            }}
+        code, res = Schema.delete_edgeLabelIndexLabel(name="link", graph_id=graph_id, body=body)
         self.assertEqual(code, 200, "响应状态码不正确")
         self.assertEqual(res['status'], 200, "删除边类型状态码不正确")
 

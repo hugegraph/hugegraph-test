@@ -70,7 +70,7 @@ jobs:
       - name: run test cases
         run: |
           tree
-          python src/test_start.py all
+          pytest --html=test.html --capture=tee-sys
         
       
 

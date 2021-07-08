@@ -49,17 +49,19 @@ class TestRing(unittest.TestCase):
         code, res = Traverser().get_rings(param_json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
-        self.assertEqual(
-            res['rings'],
-            [
-                {'objects': ['2:贾母', '1:贾代善', '1:贾赦', '2:贾母']},
-                {'objects': ['2:贾母', '2:贾敏', '1:贾代善', '1:贾政', '2:贾母']},
-                {'objects': ['2:贾母', '1:贾代善', '1:贾政', '2:贾母']},
-                {'objects': ['2:贾母', '1:贾赦', '1:贾代善', '1:贾政', '2:贾母']},
-                {'objects': ['2:贾母', '1:贾代善', '2:贾敏', '2:贾母']},
-                {'objects': ['2:贾母', '1:贾赦', '1:贾代善', '2:贾敏', '2:贾母']}
-            ]
-        )
+        self.assertEqual(len(res['rings']), 6)
+        for obj in res['rings']:
+            self.assertIn(
+                obj,
+                [
+                    {'objects': ['2:贾母', '1:贾代善', '1:贾赦', '2:贾母']},
+                    {'objects': ['2:贾母', '2:贾敏', '1:贾代善', '1:贾政', '2:贾母']},
+                    {'objects': ['2:贾母', '1:贾代善', '1:贾政', '2:贾母']},
+                    {'objects': ['2:贾母', '1:贾赦', '1:贾代善', '1:贾政', '2:贾母']},
+                    {'objects': ['2:贾母', '1:贾代善', '2:贾敏', '2:贾母']},
+                    {'objects': ['2:贾母', '1:贾赦', '1:贾代善', '2:贾敏', '2:贾母']}
+                ]
+            )
 
 
 if __name__ == "__main__":

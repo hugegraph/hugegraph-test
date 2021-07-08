@@ -4,6 +4,7 @@ author     : lxb
 note       : 设置用户的多种权限
 create_time: 2020/4/22 5:17 下午
 """
+import pytest
 import sys
 import os
 import unittest
@@ -23,6 +24,7 @@ if _cfg.is_auth:
     user = _cfg.test_password
 
 
+@pytest.mark.skipif(_cfg.is_auth is False, reason='hugegraph启动时没有配置权限')
 class Access(unittest.TestCase):
     """
     绑定资源和用户组
@@ -117,6 +119,7 @@ class Access(unittest.TestCase):
         self.assertEqual(res['id'], 'S-69:gremlin>-88>18>S-77:gremlin', 'res check fail')
 
 
+@pytest.mark.skipif(_cfg.is_auth is False, reason='hugegraph启动时没有配置权限')
 class Groups(unittest.TestCase):
     """
     创建用户组
@@ -196,6 +199,7 @@ class Groups(unittest.TestCase):
         self.assertEqual(res['group_description'], 'group_update  description', 'res check fail')
 
 
+@pytest.mark.skipif(_cfg.is_auth is False, reason='hugegraph启动时没有配置权限')
 class Target(unittest.TestCase):
     """
     创建资源
@@ -337,6 +341,7 @@ class Target(unittest.TestCase):
         self.assertEqual(res['target_resources'][0]['type'], 'VERTEX', 'res check fail')
 
 
+@pytest.mark.skipif(_cfg.is_auth is False, reason='hugegraph启动时没有配置权限')
 class User(unittest.TestCase):
     """
     创建用户
@@ -448,6 +453,7 @@ class User(unittest.TestCase):
         self.assertEqual(res['user_avatar'], 'tester.png', 'res check fail')
 
 
+@pytest.mark.skipif(_cfg.is_auth is False, reason='hugegraph启动时没有配置权限')
 class Belongs(unittest.TestCase):
     """
     绑定用户和用户组

@@ -84,7 +84,6 @@ class InsertData:
         通过loader组件导入数据
         """
         struct_file = dataset_path + self.dir + '/' + self.struct
-        loader_cmd = ''
         if self.schema is None:
             loader_cmd = self.part_cmd % (loader_path, self.host, self.port, self.graph, struct_file)
         else:
