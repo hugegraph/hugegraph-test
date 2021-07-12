@@ -4,7 +4,7 @@ author     : lxb
 note       : 相关测试配置项
 create_time: 2020/4/22 5:17 下午
 """
-code_path = '/Users/lixiaobiao/Documents/lixiaobiao/codeWorkSpace/gitHub/hugegraph-test/graph'
+code_path = '/home/runner/work/hugegraph-test/hugegraph-test/graph'
 
 is_auth = False
 is_https = False
