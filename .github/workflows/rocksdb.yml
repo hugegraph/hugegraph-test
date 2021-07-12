@@ -62,6 +62,10 @@ jobs:
         run: |
           python src/deploy_start.py all
           
+      - name: reduce graph version
+        run: |
+          cd /home/runner/work/hugegraph-test/hugegraph-test/graph/hugegraph && git branch -a 
+          
       - name: decompress dataset.zip
         run: |
           unzip src/config/dataset.zip
