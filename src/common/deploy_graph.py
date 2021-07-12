@@ -25,7 +25,7 @@ def get_code(pwd, git_obj, code_dir):
     if not is_match_re(pwd, code_dir):
         branch = git_obj['branch']
         url = git_obj['url']
-        clone_cmd = 'cd %s && git clone -b %s %s' % (pwd, branch, url)
+        clone_cmd = 'cd %s && git clone %s && git checkout %s' % (pwd, url, branch)
         print('clone code: ' + clone_cmd)
         os.system(clone_cmd)
     else:
@@ -41,7 +41,7 @@ def compile_package(dir_code_path):
     :return:
     """
     g_name = dir_code_path.split('/')[-1]
-    if g_name == 'hugegraph-loader':
+    if g_name == 'hugegraph-loader-bake':
         cmd = 'cd %s && ' \
               'mvn install:install-file ' \
               '-Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar ' \
@@ -173,7 +173,7 @@ class Deploy:
         """
         :return:
         """
-        code_dir = 'hugegraph-loader'
+        code_dir = 'hugegraph-loader-bake'
         code_dir_path = self.code_path + '/' + code_dir
         is_exists_path(self.code_path)
         get_code(self.code_path, self.loader_git, code_dir)
@@ -184,7 +184,7 @@ class Deploy:
         """
         :return:
         """
-        code_dir = 'hugegraph-tools'
+        code_dir = 'hugegraph-tools-bake'
         code_dir_path = self.code_path + '/' + code_dir
         is_exists_path(self.code_path)
         get_code(self.code_path, self.tools_git, code_dir)
