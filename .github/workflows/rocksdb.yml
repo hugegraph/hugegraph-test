@@ -69,9 +69,7 @@ jobs:
           
       - name: run test cases
         run: |
-          tree
-          # pytest --html=test.html --capture=tee-sys
-          cd /home/runner/work/hugegraph-test/hugegraph-test/src/common/../../src/config/dataset/movie && /home/runner/work/hugegraph-test/hugegraph-test/graph/hugegraph-loader/hugegraph-loader-0.11.2/bin/hugegraph-loader.sh -h 127.0.0.1  -p 8080  -g hugegraph -f /home/runner/work/hugegraph-test/hugegraph-test/src/common/../../src/config/dataset/movie/struct_movie.json -s /home/runner/work/hugegraph-test/hugegraph-test/src/common/../../src/config/dataset/movie/schema_movie.groovy --clear-all-data true --single-insert-threads 5
+          pytest --html=test.html --capture=tee-sys
           
         
       
