@@ -10,7 +10,7 @@ is_auth = False
 is_https = False
 
 # server
-server_git = {'branch': '9ee9fe12f3349a54bbceb161d002200d3689863c', 'url': 'https://github.com/hugegraph/hugegraph.git'}
+server_git = {'branch': 'c0dff5b233e853716ca6f3f28a5cda05e6f3d639', 'url': 'https://github.com/hugegraph/hugegraph.git'}
 graph_type = 'open_source'  # open_source || business
 
 server_port = 8080
