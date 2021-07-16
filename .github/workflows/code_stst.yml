@@ -1,5 +1,8 @@
 name: hugegraph code statistics
 on:
+  pull_request:
+    branches:
+      - master
   # 每月的1号在8点执行任务
   schedule:
     - cron: '0 0 1 * *'
