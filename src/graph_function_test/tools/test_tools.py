@@ -5,6 +5,8 @@ note       : tools 测试
 create_time: 2020/4/22 5:17 下午
 """
 import os
+
+import pytest
 import sys
 import time
 
@@ -32,7 +34,7 @@ class Test_tools:
         """
         cmd = "./bin/hugegraph --url %s --graph %s %s %s task-list"
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res.returncode == 0
         assert str(stdout, 'utf-8').startswith('Tasks:')
@@ -44,7 +46,7 @@ class Test_tools:
         """
         cmd = "./bin/hugegraph --url  %s  --graph %s %s %s task-list --limit 3 "
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res.returncode == 0
         assert str(stdout, 'utf-8').startswith('Tasks:')
@@ -56,7 +58,7 @@ class Test_tools:
         """
         cmd = "./bin/hugegraph --url  %s  --graph %s %s %s task-list  --status success "
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res.returncode == 0
         assert str(stdout, 'utf-8').startswith('Tasks:')
@@ -68,7 +70,7 @@ class Test_tools:
         """
         cmd = "./bin/hugegraph --url %s --graph %s %s %s graph-mode-get "
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res.returncode == 0
         assert str(stdout, 'utf-8').startswith('Graph mode: NONE')
@@ -80,15 +82,15 @@ class Test_tools:
         """
         cmd = "./bin/hugegraph --url %s --graph %s %s %s graph-mode-set -m RESTORING "
         res_restore = run_shell(cmd)
-        stdout, stderr = res_restore.communicate()
+        stdout, stderr = res_restore.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res_restore.returncode == 0
         assert str(stdout, 'utf-8').startswith("Set graph '%s' mode to 'RESTORING'" % _cfg.graph_name)
 
         # 清空图模式
         res0 = run_shell("./bin/hugegraph --url %s --graph %s %s %s graph-mode-set -m NONE ")
-        res0.communicate()
-        # stdout, stderr = res0.communicate()
+        res0.communicate(timeout=120)
+        # stdout, stderr = res0.communicate(timeout=120)
         # print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         print('设置图模式 RESTORING - 测试case结束 - 清空图模式')
 
@@ -99,15 +101,15 @@ class Test_tools:
         """
         cmd = "./bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m MERGING "
         res_merging = run_shell(cmd)
-        stdout, stderr = res_merging.communicate()
+        stdout, stderr = res_merging.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res_merging.returncode == 0
         assert str(stdout, 'utf-8').startswith("Set graph '%s' mode to 'MERGING'" % _cfg.graph_name)
 
         # 清空图模式
         res0 = run_shell("./bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m NONE ")
-        res0.communicate()
-        # stdout, stderr = res0.communicate()
+        res0.communicate(timeout=120)
+        # stdout, stderr = res0.communicate(timeout=120)
         # print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         print('设置图模式 MERGING - 测试case结束 - 清空图模式')
 
@@ -118,7 +120,7 @@ class Test_tools:
         """
         cmd = "./bin/hugegraph --url %s --graph %s %s %s graph-list "
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res.returncode == 0
         assert str(stdout, 'utf-8').startswith('Graphs:')
@@ -131,7 +133,7 @@ class Test_tools:
         cmd = "./bin/hugegraph --url %s --graph %s %s %s graph-clear --confirm-message " \
               " \"I'm sure to delete all data\" "
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         res_v, res_e = tools_assert()
         assert res.returncode == 0
@@ -150,7 +152,7 @@ class Test_tools:
         cmd = "./bin/hugegraph --url %s --graph %s %s %s backup -t all --directory ./backup" + str(
             int(time.time()))
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         print(str(stdout, 'utf-8').split('backup summary: ')[1].split('\ncost time(s)')[0])
         assert res.returncode == 0
@@ -174,7 +176,7 @@ class Test_tools:
         cmd = "./bin/hugegraph --url %s --graph %s %s %s backup " \
               "-t vertex --directory ./backup_" + str(int(time.time()))
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res.returncode == 0
         assert str(stdout, 'utf-8').split('backup summary: ')[1].split('\ncost time(s)')[0] == \
@@ -197,7 +199,7 @@ class Test_tools:
         cmd = "./bin/hugegraph --url  %s --graph %s %s %s backup " \
               "-t edge --directory ./backup_" + str(int(time.time()))
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res.returncode == 0
         assert str(stdout, 'utf-8').split('backup summary: ')[1].split('\ncost time(s)')[0] == \
@@ -221,7 +223,7 @@ class Test_tools:
               "-t vertex_label,edge_label,property_key,index_label " \
               "--directory ./backup_" + str(int(time.time()))
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res.returncode == 0
         assert str(stdout, 'utf-8').split('backup summary: ')[1].split('\ncost time(s)')[0] == \
@@ -244,17 +246,17 @@ class Test_tools:
         ### 数据备份
         backup_cmd = "./bin/hugegraph --url %s --graph %s %s %s backup -t all --directory ./" + dir_data
         backup_res = run_shell(backup_cmd)
-        backup_res.communicate()
+        backup_res.communicate(timeout=120)
         ### 清空数据
         clear_graph()
         ### 设置图模式
         mode_cmd = "./bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m RESTORING "
         res_mode = run_shell(mode_cmd)
-        res_mode.communicate()
+        res_mode.communicate(timeout=120)
         ### 恢复数据
         restore_cmd = "./bin/hugegraph --url %s --graph %s %s %s restore  -t all --directory ./" + dir_data
         restore_res = run_shell(restore_cmd)
-        restore_res.communicate()
+        restore_res.communicate(timeout=120)
         res_v, res_e = tools_assert()
         assert backup_res.returncode == 0
         assert res_mode.returncode == 0
@@ -264,7 +266,7 @@ class Test_tools:
         ### 恢复图模式
         mode_none = "./bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m NONE "
         res_none = run_shell(mode_none)
-        res_none.communicate()
+        res_none.communicate(timeout=120)
 
     def test_tool_execute_gremlin(self):
         """
@@ -277,7 +279,7 @@ class Test_tools:
         cmd = "./bin/hugegraph --url  %s --graph %s %s %s  " \
               "gremlin-execute --script 'g.V().count()' "
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res.returncode == 0 and str(stdout, 'utf-8').startswith('Run gremlin script\n6\n')
 
@@ -292,19 +294,20 @@ class Test_tools:
         gremlin_cmd = "./bin/hugegraph --url %s --graph %s %s %s " \
                       "gremlin-schedule --script 'g.V().count()' "
         gremlin_res = run_shell(gremlin_cmd)
-        stdout, stderr = gremlin_res.communicate()
+        stdout, stderr = gremlin_res.communicate(timeout=120)
         print(' ---> ' + str(stdout, 'utf-8') + str(stderr, 'utf-8'))
         ### 查看task内容
         time.sleep(60)
         task_id = str(stdout, 'utf-8').split('\n')[1].split(': ')[1]
         task_cmd = "./bin/hugegraph --url %s --graph %s %s %s task-get --task-id " + str(task_id)
         task_res = run_shell(task_cmd)
-        task_stdout, task_stderr = task_res.communicate()
+        task_stdout, task_stderr = task_res.communicate(timeout=120)
         print(' ---> ' + str(task_stdout, 'utf-8') + str(task_stderr, 'utf-8'))
         assert gremlin_res.returncode == 0
         assert task_res.returncode == 0
         assert str(task_stdout, 'utf-8').split('task_result=')[1].startswith('[6]')
 
+    @pytest.mark.skipif(_cfg.tools_target_host == '', reason='config中没有配置migrate的目标图信息')
     def test_tool_graph_migrate(self):
         """
         图迁移  需要两个server
@@ -312,7 +315,7 @@ class Test_tools:
         """
         # 清空图模式
         res0 = run_shell("./bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m NONE ")
-        res0.communicate()
+        res0.communicate(timeout=120)
 
         clear_graph()
         insert_data()
@@ -325,7 +328,7 @@ class Test_tools:
               "%s " \
               "--graph-mode RESTORING "
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res.returncode == 0
         assert str(stdout, 'utf-8').split('restore summary: ')[1].split('\ncost time(s)')[0] == \
@@ -336,6 +339,7 @@ class Test_tools:
                "\tvertex number: 6,\n" \
                "\tedge number: 8,\n}"
 
+    @pytest.mark.skipif(_cfg.tools_target_host == '', reason='config中没有配置merge的目标图信息')
     def test_tool_graph_merge(self):
         """
         合并图 需要两个server
@@ -343,7 +347,7 @@ class Test_tools:
         """
         # 清空图模式
         res0 = run_shell("./bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m NONE ")
-        res0.communicate()
+        res0.communicate(timeout=120)
 
         clear_graph()
         insert_data()
@@ -357,7 +361,7 @@ class Test_tools:
               "%s " \
               "--graph-mode MERGING "
         res = run_shell(cmd)
-        stdout, stderr = res.communicate()
+        stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
         assert res.returncode == 0
         assert str(stdout, 'utf-8').split('restore summary: ')[1].split('\ncost time(s)')[0] == \

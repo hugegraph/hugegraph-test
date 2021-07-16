@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
 author     : lxb
-note       : hubble API请求
+note       :
 create_time:
 """
 import os
@@ -182,40 +182,72 @@ class Schema:
         return code, res
 
     @staticmethod
-    def create_index(body, graph_id, auth=None):
+    def create_vertexLabelIndexLabel(body, graph_id, name, auth=None):
         """
         :param body:
         :param auth:
         :param graph_id:
+        :param name:顶点类型名称
         :return:
         """
-        url = "/api/v1.2/graph-connections/%d/schema/indexlabels" % graph_id
-        code, res = Request().request(method='post', path=url, json=body, types="hubble")
+        url = "/api/v1.2/graph-connections/%d/schema/vertexlabels/%s" % (graph_id, name)
+        code, res = Request().request(method='put', path=url, json=body, types="hubble")
         return code, res
 
     @staticmethod
-    def get_index(graph_id, auth=None):
+    def create_edgeLabelIndexLabel(body, graph_id, name, auth=None):
         """
-        查看IndexLabel
+        :param body:
         :param auth:
         :param graph_id:
+        :param name:边类型名称
         :return:
         """
-        url = "/api/v1.2/graph-connections/%d/schema/indexlabels" % graph_id
-        code, res = Request().request(method='get', path=url, types="hubble")
+        url = "/api/v1.2/graph-connections/%d/schema/edgelabels/%s" % (graph_id, name)
+        code, res = Request().request(method='put', path=url, json=body, types="hubble")
         return code, res
 
     @staticmethod
-    def delete_index(name, graph_id, auth=None):
+    def get_PropertyIndex(graph_id, param, auth=None):
         """
-        删除indexLabel删除
+        查看属性索引
+        :param auth:
+        :param graph_id:
+        :param param:
+        vertexLabelIndex:?page_no=1&page_size=10&is_vertex_label=true
+        edgeLabelIndex:?page_no=1&page_size=10&is_vertex_label=false
+        :return:
+        """
+        url = "/api/v1.2/graph-connections/%d/schema/propertyindexes" % graph_id
+        code, res = Request().request(method='get', path=url, params=param, types="hubble")
+        return code, res
+
+    @staticmethod
+    def delete_vertexLabelIndexLabel(name, graph_id, body, auth=None):
+        """
+        删除顶点类型索引
         :param name:
         :param auth:
         :param graph_id:
+        :param body:
         :return:
         """
-        url = "/api/v1.2/graph-connections/%d/schema/indexlabels/%s" % (graph_id, name)
-        code, res = Request().request(method='delete', path=url, types="hubble")
+        url = "/api/v1.2/graph-connections/%d/schema/vertexlabels/%s" % (graph_id, name)
+        code, res = Request().request(method='put', path=url, json=body, types="hubble")
+        return code, res
+
+    @staticmethod
+    def delete_edgeLabelIndexLabel(name, graph_id, body, auth=None):
+        """
+        删除边类型索引
+        :param name:
+        :param auth:
+        :param graph_id:
+        :param body:
+        :return:
+        """
+        url = "/api/v1.2/graph-connections/%d/schema/edgelabels/%s" % (graph_id, name)
+        code, res = Request().request(method='put', path=url, json=body, types="hubble")
         return code, res
 
 
@@ -312,7 +344,7 @@ class Task:
         return code, res
 
     @staticmethod
-    def view_async_tasks_results(graph_id, async_task_id, auth=None):
+    def view_async_task_result(graph_id, async_task_id, auth=None):
         """
         查看异步任务结果
         :param auth:
@@ -320,8 +352,21 @@ class Task:
         :param graph_id:
         :return:
         """
-        url = "/api/v1.2/graph-connections/%d/async-tasks/%d" % (graph_id, async_task_id)
+        url = "/api/v1.2/graph-connections/%d/async-tasks/%d/result" % (graph_id, async_task_id)
         code, res = Request().request(method='get', path=url, types="hubble")
+        return code, res
+
+    @staticmethod
+    def delete_async_task(graph_id, param, auth=None):
+        """
+        删除异步任务
+        :param auth:
+        :param param: 异步任务ID   单个:?ids=1    批量:?ids=1&ids=2
+        :param graph_id:
+        :return:
+        """
+        url = "/api/v1.2/graph-connections/%d/async-tasks" % graph_id
+        code, res = Request().request(method='delete', path=url, params=param, types="hubble")
         return code, res
 
 

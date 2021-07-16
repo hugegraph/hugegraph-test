@@ -28,7 +28,8 @@ def init_graph():
     if _cfg.server_backend == 'cassandra':
         clear_graph()
     else:
-        Gremlin().gremlin_post('graph.truncateBackend();', auth=auth)  # 适用gremlin语句进行truncate操作
+        code, res = Gremlin().gremlin_post('graph.truncateBackend();', auth=auth)  # 适用gremlin语句进行truncate操作
+        print(code, res)
 
 
 def test_create_edge():
@@ -41,10 +42,11 @@ def test_create_edge():
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name').primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('link').sourceLabel('person').targetLabel('person')" \
-            ".properties('name', 'age', 'date').ifNotExist().create()" \
+            ".properties('name', 'age', 'date').ifNotExist().create();" \
             "graph.addVertex(T.label, 'person', 'name', 'marko');" \
             "graph.addVertex(T.label, 'person', 'name', 'vadas');"
     code, res = Gremlin().gremlin_post(query, auth=auth)
+    print(code, res)
 
     if code == 200:
         body = {

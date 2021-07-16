@@ -4,6 +4,7 @@ author     : lxb
 note       : olap算法 环算法
 create_time: 2020/4/22 5:17 下午
 """
+import pytest
 import sys
 import os
 
@@ -22,6 +23,7 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
+@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
 class TestRingsDetect01:
     """
     接口rings_detect：环路检测
@@ -339,6 +341,7 @@ class TestRingsDetect01:
             assert 0
 
 
+@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
 class TestRingsDetect02:
     """
     接口rings_detect：环路检测

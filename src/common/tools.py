@@ -66,7 +66,6 @@ def run_shell(cmd, graph_name=None, graph_host=None, graph_port=None):
         run_cmd = cmd % (url, graph_name, protocol_cmd, auth_cmd,
                          target_url, _cfg.tools_target_graph, target_protocol_cmd, target_auth_cmd)
     else:
-        print(cmd)
         run_cmd = cmd % (url, graph_name, protocol_cmd, auth_cmd)
 
     print("run_cmd: " + run_cmd)
@@ -99,7 +98,6 @@ def insert_data():
         ".addE('next').from('d').to('e')"
         ".addE('next').from('e').to('f')"
         ".addE('next').from('f').to('d');")
-    print(res)
     assert code == 200 and res['status']['code'] == 200
 
 
@@ -170,7 +168,7 @@ def target_insert_data():
                            shell=True,
                            stdout=subprocess.PIPE,
                            stderr=subprocess.PIPE)
-    stdout, stderr = res.communicate()
+    stdout, stderr = res.communicate(timeout=120)
     print(' ---> ' + str(stdout) + ' === ' + str(stderr))
     assert res.returncode == 0
 
@@ -204,7 +202,7 @@ def target_clear_graph():
                            shell=True,
                            stdout=subprocess.PIPE,
                            stderr=subprocess.PIPE)
-    stdout, stderr = res.communicate()
+    stdout, stderr = res.communicate(timeout=120)
     print(' ---> ' + str(stdout) + ' === ' + str(stderr))
     assert res.returncode == 0 and \
            str(stdout, 'utf-8').startswith("Graph '%s' is cleared" % _cfg.tools_target_graph)

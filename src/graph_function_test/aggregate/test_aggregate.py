@@ -20,7 +20,7 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
-@pytest.mark.skipif(_cfg.server_backend == 'cassandra', reason='目前只有cassandra后端支持聚合属性的相关功能操作')
+@pytest.mark.skipif(_cfg.server_backend != 'cassandra', reason='目前只有cassandra后端支持聚合属性的相关功能操作')
 class TestAggregate:
     """
     test aggregate function

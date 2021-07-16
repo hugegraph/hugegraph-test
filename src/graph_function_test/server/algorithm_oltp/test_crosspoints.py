@@ -49,10 +49,15 @@ class TestCrosspoints(unittest.TestCase):
         code, res = Traverser().get_crosspoints(param_json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
-        self.assertEqual(
-            res['crosspoints'],
-            [{'crosspoint': '1:josh', 'objects': ['2:lop', '1:josh', '2:ripple']}]
-        )
+        self.assertEqual(len(res['crosspoints']), 2)
+        for obj in res['crosspoints']:
+            self.assertIn(
+                obj,
+                [
+                    {'crosspoint': '1:josh', 'objects': ['2:lop', '1:josh', '2:ripple']},
+                    {'crosspoint': '1:marko', 'objects': ['2:lop', '1:marko', '1:josh', '2:ripple']}
+                ]
+            )
 
 
 if __name__ == "__main__":

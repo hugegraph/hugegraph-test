@@ -49,7 +49,9 @@ class TestKOut(unittest.TestCase):
         code, res = Traverser().get_k_out(param_json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
-        self.assertEqual(res, {'vertices': ['2:史湘云', '2:薛宝钗', '2:王夫人', '2:林黛玉']})
+        self.assertEqual(len(res['vertices']), 4)
+        for obj in res['vertices']:
+            self.assertIn(obj, ['2:史湘云', '2:薛宝钗', '2:王夫人', '2:林黛玉'])
 
     def test_direction_in(self):
         """
@@ -71,7 +73,9 @@ class TestKOut(unittest.TestCase):
         code, res = Traverser().get_k_out(param_json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
-        self.assertEqual(res, {'vertices': ['2:史湘云', '2:薛宝钗', '2:林黛玉']})
+        self.assertEqual(len(res['vertices']), 3)
+        for obj in res['vertices']:
+            self.assertIn(obj, ['2:史湘云', '2:薛宝钗', '2:林黛玉'])
 
 
 if __name__ == "__main__":

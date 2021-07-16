@@ -161,6 +161,7 @@ class TestTTL:
         assert code == 200
         assert res['result']['data'] == []
 
+    @pytest.mark.skipif(_cfg.tools_target_host == '', reason='ttl功能测试migrate场景中没有配置目标图信息')
     def test_ttl_use_migrate(self):
         """
         顶点ttl + 数据迁移

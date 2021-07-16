@@ -4,6 +4,7 @@ author     : lxb
 note       : olap算法 pageRank计算
 create_time: 2020/4/22 5:17 下午
 """
+import pytest
 import sys
 import os
 
@@ -22,6 +23,7 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
+@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
 class TestPageRank:
     """
     page_rank 接口
@@ -50,7 +52,7 @@ class TestPageRank:
             print(result)
             rank_code, rank_res = Gremlin().gremlin_post("g.V('1:marko')")
             print(rank_code, rank_res)
-            assert result['last_changed_rank'] == 0.00015807441539228417 and \
+            assert result['last_changed_rank'] == 0.00015807441539237438 and \
                    rank_res['result']['data'][0]['properties']['r_rank'] == 0.05084635172453192
         else:
             assert 0
