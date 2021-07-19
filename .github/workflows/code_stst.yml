@@ -24,9 +24,9 @@ jobs:
          git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2; loc += $1 + $2 } END { printf "::set-output name=add::%s", add; printf "::set-output name=subs::%s", subs; printf "::set-output name=loc::%s", loc}'
      - id: test
        run: |
-         echo ${{steps.server_repository.outputs.add}}
-         echo ${{steps.server_repository.outputs.sub}}
-         echo ${{steps.server_repository.outputs.loc}}
+         echo ${{steps.server_stat.outputs.add}}
+         echo ${{steps.server_stat.outputs.sub}}
+         echo ${{steps.server_stat.outputs.loc}}
   
 #  loader_repository:
 #    runs-on: ubuntu-16.04
