@@ -53,8 +53,8 @@ jobs:
    steps:
      - id: loader_stat
        run: |
-         echo ${{needs.server_repository.outputs.add}} ${{needs.server_repository.outputs.sub}} ${{needs.server_repository.outputs.loc}} 
+         echo '${{needs.server_repository.outputs.add}}, ${{needs.server_repository.outputs.sub}}, ${{needs.server_repository.outputs.loc}}'
          git clone https://github.com/hugegraph/hugegraph-loader.git
          cd hugegraph-loader
-         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }'
-
+         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2; loc += $1 + $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add + ${{needs.server_repository.outputs.add}}, subs + ${{needs.server_repository.outputs.sub}}, loc + ${{needs.server_repository.outputs.loc}}}'
+        
