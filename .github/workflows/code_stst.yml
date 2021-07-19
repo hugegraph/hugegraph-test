@@ -33,31 +33,28 @@ jobs:
    runs-on: ubuntu-16.04
    outputs:
      add: ${{ steps.server_stat.outputs.add }}
-     sub: ${{ steps.server_stat.outputs.sub }}
+     sub: ${{ steps.server_stat.outputs.subs }}
      loc: ${{ steps.server_stat.outputs.loc }}
    steps:
      - id: server_stat
        run: |
          git clone https://github.com/hugegraph/hugegraph.git
-         ls
-         pwd
          cd hugegraph
-         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; sub += $2; loc += $1 - $2 } END { printf "%s, %s, %s", add, sub, loc }'
-
-#git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; sub += $2; loc += $1 - $2 } END { printf "::set-output name=add::%s, ::set-output name=sub::%s, ::set-output name=loc::%s", add, sub, loc }'
+         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2; loc += $1 + $2 } END { printf "::set-output name=add::%s, ::set-output name=subs::%s, ::set-output name=loc::%s", add, subs, loc }'
 
 
  loader_repository:
    runs-on: ubuntu-16.04
    needs: server_repository
-   outputs:
-     add: ${{ steps.loader_stat.outputs.add }}
-     sub: ${{ steps.loader_stat.outputs.sub }}
-     loc: ${{ steps.loader_stat.outputs.loc }}
+#    outputs:
+#      add: ${{ steps.loader_stat.outputs.add }}
+#      sub: ${{ steps.loader_stat.outputs.subs }}
+#      loc: ${{ steps.loader_stat.outputs.loc }}
    steps:
      - id: loader_stat
        run: |
          echo ${{needs.server_repository.outputs.add}} ${{needs.server_repository.outputs.sub}} ${{needs.server_repository.outputs.loc}} 
-         git clone git@github.com:hugegraph/hugegraph.git
+         git clone https://github.com/hugegraph/hugegraph-loader.git
+         cd hugegraph-loader
          git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }'
 
