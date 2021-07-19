@@ -40,7 +40,7 @@ jobs:
        run: |
          git clone https://github.com/hugegraph/hugegraph.git
          cd hugegraph
-         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2; loc += $1 + $2 } END { printf "::set-output name=add::%s, ::set-output name=subs::%s, ::set-output name=loc::%s", add, subs, loc }'
+         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2; loc += $1 + $2 } END { printf "::set-output name=add::%s name=subs::%s name=loc::%s", add, subs, loc }'
 
 
  loader_repository:
