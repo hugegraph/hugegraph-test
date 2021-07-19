@@ -35,12 +35,14 @@ jobs:
      - id: hubbble_stat
        run: |
          git clone https://github.com/hugegraph/hugegraph-hubble.git
-         cd hugegraph-loader
+         cd hugegraph-hubble
          git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
          cat ../stat.txt
      
      - id: stat1
        run: |
+         mkdir ee && cd ee
+         ls
          git clone https://github.com/hugegraph-ee/hugegraph.git
          cd hugegraph
          git log --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt       
@@ -48,6 +50,7 @@ jobs:
          
      - id: stat2
        run: |
+         cd ee
          git clone https://github.com/hugegraph-ee/hugegraph-signature.git
          cd hugegraph-signature
          git log --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt       
