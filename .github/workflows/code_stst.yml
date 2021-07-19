@@ -38,9 +38,10 @@ jobs:
    steps:
      - id: server_stat
        run: |
-         git clone git@github.com:hugegraph/hugegraph.git
+         git clone https://github.com/hugegraph/hugegraph.git
          ls
          pwd
+         cd hugegraph
          git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; sub += $2; loc += $1 - $2 } END { printf "::set-output name=add::%s, ::set-output name=sub::%s, ::set-output name=loc::%s", add, sub, loc }'
 
 
