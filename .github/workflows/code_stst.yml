@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
- server_repository:
+ build:
    runs-on: ubuntu-16.04
 #    outputs:
 #      add: ${{ steps.server_stat.outputs.add }}
@@ -20,13 +20,17 @@ jobs:
        run: |
          git clone https://github.com/hugegraph/hugegraph.git
          cd hugegraph
-         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2; loc += $1 + $2 } END { printf "::set-output name=add::%s", add}'
-         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2; loc += $1 + $2 } END { printf "::set-output name=subs::%s", subs}'
-     - id: test
+         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s", add, subs }' >> ../stat.txt
+         cat ../stat.txt
+     - id: loader_test
        run: |
-         echo ${{steps.server_stat.outputs.add}}
-         echo ${{steps.server_stat.outputs.subs}}
-  
+         git clone https://github.com/hugegraph/hugegraph-loader.git
+         ls 
+         pwd
+         cd hugegraph-loader
+         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s", add, subs }' >> ../stat.txt
+         cat ../stat.txt
+         
 #  loader_repository:
 #    runs-on: ubuntu-16.04
 #    needs: server_repository
