@@ -13,6 +13,13 @@ jobs:
   code_statistics:
     runs-on: ubuntu-16.04
     steps:
+     - id: stst_cmd
+       run: |
+         d_new=`date +%Y-%m-%d`
+         ts_new=`date +%s`
+         ts_old=`expr $ts_new - 3600 \* 24 \* 31`
+         d_old=`date -d@$ts_old +%Y-%m-%d`
+         
      - id: server
        run: |
          git clone https://github.com/hugegraph/hugegraph.git
