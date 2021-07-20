@@ -17,6 +17,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: hugegraph/hugegraph
+          path: hugegraph
 #           token: ${{ secrets.ACCESS_TOKEN }}
       - id: test
         run: |
