@@ -9,100 +9,109 @@ on:
   # 手动触发
   workflow_dispatch:
 
-
 jobs:
- code_statistics:
-   runs-on: ubuntu-16.04
-   steps:
-      - uses: actions/checkout@v2
-        with:
-          repository: hugegraph/hugegraph
-          path: hugegraph
-          
-      - uses: actions/checkout@v2
-        with:
-          repository: hugegraph/hugegraph-loader
-          path: loader
-          
-      - uses: actions/checkout@v2
-        with:
-          repository: hugegraph/hugegraph-tools
-          path: tools
-          
-      - uses: actions/checkout@v2
-        with:
-          repository: hugegraph/hugegraph-hubble
-          path: hubble
-      
-      - uses: actions/checkout@v2
-        with:
-          repository: hugegraph/hugegraph-common
-          path: common
-          
-      - uses: actions/checkout@v2
-        with:
-          repository: hugegraph/hugegraph-client
-          path: client
-          
-      - uses: actions/checkout@v2
-        with:
-          repository: hugegraph/hugegraph-computer
-          path: computer
-      
-      - id: code_stat
-        run: |
-          ls
-          pwd
-          cd hugegraph && git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
-          cd ../loader && git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
-          cd ../tools && git log --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
-          cd ../hubble && git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
-          cd ../common && git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
-          cd ../client && git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
-          cd ../computer && git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
-          cat ../stat.txt
-
-          
-
-#      - id: server_stat
-#        run: |
-#          git clone https://github.com/hugegraph/hugegraph.git
-#          cd hugegraph
-#          git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
+  code_statistics:
+    runs-on: ubuntu-16.04
+    steps:
+     - id: server_stat
+       run: |
+         git clone https://github.com/hugegraph/hugegraph.git
+         cd hugegraph
+         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-20  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
      
-#      - id: loader_stat
-#        run: |
-#          git clone https://github.com/hugegraph/hugegraph-loader.git
-#          cd hugegraph-loader
-#          git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
+     - id: loader_stat
+       run: |
+         git clone https://github.com/hugegraph/hugegraph-loader.git
+         cd hugegraph-loader
+         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-20  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
      
-#      - id: tools_stat
-#        run: |
-#          git clone https://github.com/hugegraph/hugegraph-tools.git
-#          cd hugegraph-tools
-#          git log --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
+     - id: tools_stat
+       run: |
+         git clone https://github.com/hugegraph/hugegraph-tools.git
+         cd hugegraph-tools
+         git log --all --pretty=tformat: --since=2021-06-01 --until=2021-07-20  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
      
-#      - id: hubbble_stat
-#        run: |
-#          git clone https://github.com/hugegraph/hugegraph-hubble.git
-#          cd hugegraph-hubble
-#          git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
-#          cat ../stat.txt
+     - id: hubbble_stat
+       run: |
+         git clone https://github.com/hugegraph/hugegraph-hubble.git
+         cd hugegraph-hubble
+         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-20  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
+         cat ../stat.txt
      
-#      - id: stat1
-#        run: |
-#          mkdir ee && cd ee
-#          ls
-#          git clone git@github.com:hugegraph-ee/hugegraph.git
-#          cd hugegraph
-#          git log --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt       
-#          cat ../stat.txt
+     - id: common_stat
+       run: |
+         git clone git@github.com:hugegraph/hugegraph-common.git
+         cd hugegraph-common
+         git log --all --pretty=tformat: --since=2021-06-01 --until=2021-07-20  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt       
+         cat ../stat.txt
          
-#      - id: stat2
-#        run: |
-#          cd ee
-#          git clone https://github.com/hugegraph-ee/hugegraph-signature.git
-#          cd hugegraph-signature
-#          git log --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt       
-#          cat ../stat.txt
+     - id: client_stat
+       run: |
+         git clone https://github.com/hugegraph/hugegraph-client.git
+         cd hugegraph-client
+         git log --all --pretty=tformat: --since=2021-06-01 --until=2021-07-20  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt       
+         cat ../stat.txt
+         
+     - id: computer_stat
+       run: |
+         git clone https://github.com/hugegraph/hugegraph-computer.git
+         cd hugegraph-computer
+         git log --all --pretty=tformat: --since=2021-06-01 --until=2021-07-20  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt       
+         cat ../stat.txt
+      
+
+
+# jobs:
+#  code_statistics:
+#    runs-on: ubuntu-16.04
+#    steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           repository: hugegraph/hugegraph
+#           path: hugegraph
+          
+#       - uses: actions/checkout@v2
+#         with:
+#           repository: hugegraph/hugegraph-loader
+#           path: loader
+          
+#       - uses: actions/checkout@v2
+#         with:
+#           repository: hugegraph/hugegraph-tools
+#           path: tools
+          
+#       - uses: actions/checkout@v2
+#         with:
+#           repository: hugegraph/hugegraph-hubble
+#           path: hubble
+      
+#       - uses: actions/checkout@v2
+#         with:
+#           repository: hugegraph/hugegraph-common
+#           path: common
+          
+#       - uses: actions/checkout@v2
+#         with:
+#           repository: hugegraph/hugegraph-client
+#           path: client
+          
+#       - uses: actions/checkout@v2
+#         with:
+#           repository: hugegraph/hugegraph-computer
+#           path: computer
+      
+#       - id: code_stat
+#         run: |
+#           ls
+#           pwd
+#           cd hugegraph && git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
+#           cd ../loader && git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
+#           cd ../tools && git log --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
+#           cd ../hubble && git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
+#           cd ../common && git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
+#           cd ../client && git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
+#           cd ../computer && git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-01  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
+#           cat ../stat.txt
+
+
          
