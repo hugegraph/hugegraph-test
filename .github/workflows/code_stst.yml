@@ -49,7 +49,7 @@ jobs:
           repository: hugegraph/hugegraph-computer
           path: computer
       
-      - id: code statistics
+      - id: code_stat
         run: |
           ls
           pwd
