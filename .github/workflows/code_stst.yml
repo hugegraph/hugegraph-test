@@ -16,9 +16,20 @@ jobs:
    steps:
       - uses: actions/checkout@v2
         with:
-          repository: hugegraph-ee/hugegraph
+          repository: hugegraph/hugegraph
           path: hugegraph
-          token: ${{ secrets.lxbToken }}
+      
+      - uses: actions/checkout@v2
+        with:
+          repository: hugegraph-ee/hugegraph
+          path: hugegraph-ee
+          token: ${{ secrets.LXBTOKEN }}
+          
+      - uses: actions/checkout@v2
+        with:
+          repository: hugegraph-ee/hugegraph
+          path: hugegraph-11
+      
       - id: test
         run: |
           ls
