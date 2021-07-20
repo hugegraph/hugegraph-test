@@ -14,12 +14,11 @@ jobs:
  code_statistics:
    runs-on: ubuntu-16.04
    steps:
-      - uses: hugegraph/hugegraph@master
-#       - uses: actions/checkout@v2
-#         with:
-#           repository: hugegraph/hugegraph
-#           path: hugegraph
-#           token: ${{ secrets.ACCESS_TOKEN }}
+      - uses: actions/checkout@v2
+        with:
+          repository: hugegraph-ee/hugegraph
+          path: hugegraph
+          token: ${{ secrets.lxbToken }}
       - id: test
         run: |
           ls
