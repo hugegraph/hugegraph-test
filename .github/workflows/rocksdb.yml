@@ -1,11 +1,11 @@
 name: hugegraph CI
 on:
-#   push:
-#     branches:
-#       - master
-#   pull_request:
-#     branches:
-#       - master
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
   # 1次/3天 在凌晨一点触发执行任务
   schedule:
     - cron: '0 17 */3 * *'
