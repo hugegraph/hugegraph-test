@@ -19,9 +19,7 @@ jobs:
          ts_new=`date +%s`
          ts_old=`expr $ts_new - 3600 \* 24 \* 31`
          d_old=`date -d@$ts_old +%Y-%m-%d`
-         echo $d_new
-         echo $d_old
-         echo "::set-output name=cmd::git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-20  --numstat | awk '{ add += $1; subs += $2} END { printf \"%s,%s\\n\", add, subs }' >> ../stat.txt"
+         echo "::set-output name=cmd::git log  --all --pretty=tformat: --since=$d_old --until=$d_new  --numstat | awk '{ add += \$1; subs += \$2} END { printf \"%s,%s\\n\", add, subs }' >> ../stat.txt"
          
      - id: server
        run: |
