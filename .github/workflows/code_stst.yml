@@ -13,19 +13,23 @@ jobs:
   code_statistics:
     runs-on: ubuntu-16.04
     steps:
-     - id: stst_cmd
+     - id: stat_cmd
        run: |
          d_new=`date +%Y-%m-%d`
          ts_new=`date +%s`
          ts_old=`expr $ts_new - 3600 \* 24 \* 31`
          d_old=`date -d@$ts_old +%Y-%m-%d`
+         echo $d_new
+         echo $d_old
+         echo "::set-output name=cmd::git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-20  --numstat | awk '{ add += $1; subs += $2} END { printf \"%s,%s\\n\", add, subs }' >> ../stat.txt"
          
      - id: server
        run: |
          git clone https://github.com/hugegraph/hugegraph.git
          cd hugegraph
-         git log  --all --pretty=tformat: --since=2021-06-01 --until=2021-07-20  --numstat | awk '{ add += $1; subs += $2} END { printf "%s,%s\n", add, subs }' >> ../stat.txt
-     
+         ${{ steps.stat_cmd.outputs.cmd }}
+         cat ../stat.txt
+ 
      - id: loader
        run: |
          git clone https://github.com/hugegraph/hugegraph-loader.git
@@ -64,7 +68,7 @@ jobs:
 
      - name: code-stat
        run: |
-         awk -F"," '{ add += $1; subs += $2; loc = $1 + $2} END { printf "add diff lines:%s, subtract diff lines:%s, total diff lines:%s\n", add, subs, loc}' stat.txt
+         awk -F"," '{ add += $1; subs += $2; loc = $1 - $2} END { printf "add diff lines:%s, subtract diff lines:%s, total diff lines:%s\n", add, subs, loc}' stat.txt
 
 
 # jobs:
