@@ -51,14 +51,15 @@ class TestAllShorttestPath(unittest.TestCase):
         )
         print(code, res)
         self.assertEqual(code, 200, "code is error")
-        self.assertEqual(
-            res['paths'],
-            [
-                {'objects': ['1:marko', '1:vadas', '2:ripple', '1:peter', '1:josh']},
-                {'objects': ['1:marko', '1:vadas', '2:lop', '1:peter', '1:josh']}
-            ],
-            "res is error"
-        )
+        self.assertEqual(len(res['paths']), 2)
+        for obj in res['paths']:
+            self.assertIn(
+                obj,
+                [
+                    {'objects': ['1:marko', '1:vadas', '2:ripple', '1:peter', '1:josh']},
+                    {'objects': ['1:marko', '1:vadas', '2:lop', '1:peter', '1:josh']}
+                ]
+            )
 
     def test_param_source_null(self):
         """
@@ -311,7 +312,7 @@ class TestAllShorttestPath(unittest.TestCase):
         :return:
         """
         code, res = Traverser().all_shortest_path(
-            param={"source": '"1:josh"', "target": '"1:marko"', "max_depth": 4, "max_degree": 2, "capacity": 3},
+            param={"source": '"1:josh"', "target": '"1:marko"', "max_depth": 4, "max_degree": 2, "capacity": 10},
             auth=auth
         )
         print(code, res)

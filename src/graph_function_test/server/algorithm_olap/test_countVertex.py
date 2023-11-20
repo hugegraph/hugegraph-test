@@ -4,6 +4,7 @@ author     : lxb
 note       : olap算法 点统计
 create_time: 2020/4/22 5:17 下午
 """
+import pytest
 import sys
 import os
 
@@ -22,6 +23,7 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
+@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
 class TestCountVertex:
     """
     接口count_vertex：统计顶点信息，包括图中顶点数量、各类型的顶点数量

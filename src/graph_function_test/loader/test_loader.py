@@ -342,7 +342,7 @@ def test_load_network_retry_times():
     cmd = "%s/bin/hugegraph-loader.sh -h %s  -p %d  -g %s -f %s -s %s " \
           "--clear-all-data true  " \
           "--retry-times 10 "
-    res = InsertData(cmd, schema='schema_checkVertex.groovy', struct='struct_checkVertex.json', dir='network') \
+    res = InsertData(cmd, schema='schema_network-1000.groovy', struct='struct_network-1000.json', dir='network') \
         .load_graph()
     res.communicate()
     res_assert = InsertData().loader_assert()
@@ -359,7 +359,7 @@ def test_load_set_insert_errors():
     cmd = "%s/bin/hugegraph-loader.sh -h %s  -p %d  -g %s -f %s -s %s " \
           "--clear-all-data true  " \
           "--max-insert-errors 5000 "
-    res = InsertData(cmd, schema='schema_checkVertex.groovy', struct='struct_checkVertex.json', dir='network') \
+    res = InsertData(cmd, schema='schema_network-1000.groovy', struct='struct_network-1000.json', dir='network') \
         .load_graph()
     res.communicate()
     res_assert = InsertData().loader_assert()
@@ -376,7 +376,7 @@ def test_load_set_parse_errors():
     cmd = "%s/bin/hugegraph-loader.sh -h %s  -p %d  -g %s -f %s -s %s " \
           "--clear-all-data true " \
           "--max-parse-errors 5000 "
-    res = InsertData(cmd, schema='schema_checkVertex.groovy', struct='struct_checkVertex.json', dir='network') \
+    res = InsertData(cmd, schema='schema_network-1000.groovy', struct='struct_network-1000.json', dir='network') \
         .load_graph()
     res.communicate()
     res_assert = InsertData().loader_assert()
@@ -393,7 +393,7 @@ def test_load_set_max_lines():
     cmd = "%s/bin/hugegraph-loader.sh -h %s  -p %d  -g %s -f %s -s %s " \
           "--clear-all-data true " \
           "--max-read-lines 10000000 "
-    res = InsertData(cmd, schema='schema_checkVertex.groovy', struct='struct_checkVertex.json', dir='network') \
+    res = InsertData(cmd, schema='schema_network-1000.groovy', struct='struct_network-1000.json', dir='network') \
         .load_graph()
     res.communicate()
     res_assert = InsertData().loader_assert()
@@ -410,7 +410,7 @@ def test_load_set_batch_concurrent():
     cmd = "%s/bin/hugegraph-loader.sh -h %s  -p %d  -g %s -f %s -s %s " \
           "--clear-all-data true " \
           "--batch-insert-threads 50 "
-    res = InsertData(cmd, schema='schema_checkVertex.groovy', struct='struct_checkVertex.json', dir='network') \
+    res = InsertData(cmd, schema='schema_network-1000.groovy', struct='struct_network-1000.json', dir='network') \
         .load_graph()
     res.communicate()
     res_assert = InsertData().loader_assert()
@@ -427,7 +427,7 @@ def test_load_network_check_vertex():
     cmd = "%s/bin/hugegraph-loader.sh -h %s  -p %d  -g %s -f %s -s %s " \
           "--clear-all-data true  " \
           "--check-basic_operation true "
-    res = InsertData(cmd, schema='schema_checkVertex.groovy', struct='struct_checkVertex.json', dir='network') \
+    res = InsertData(cmd, schema='schema_network-1000.groovy', struct='struct_network-1000.json', dir='network') \
         .load_graph()
     res.communicate()
     # stdout, stderr = res.communicate()
@@ -446,7 +446,7 @@ def test_load_set_single_concurrent():
     cmd = "%s/bin/hugegraph-loader.sh -h %s  -p %d  -g %s -f %s -s %s " \
           "--clear-all-data true " \
           "--single-insert-threads 5 "
-    res = InsertData(cmd, schema='schema_checkVertex.groovy', struct='struct_checkVertex.json', dir='network') \
+    res = InsertData(cmd, schema='schema_network-1000.groovy', struct='struct_network-1000.json', dir='network') \
         .load_graph()
     res.communicate()
     res_assert = InsertData().loader_assert()

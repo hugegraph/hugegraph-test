@@ -4,6 +4,7 @@ author     : lxb
 note       : 若联通子图 测试
 create_time: 2020/4/22 5:17 下午
 """
+import pytest
 import sys
 import os
 
@@ -22,6 +23,7 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
+@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
 class TestWeakConnectedComponent:
     """
     weak_connected_component 接口

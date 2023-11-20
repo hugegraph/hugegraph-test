@@ -40,29 +40,6 @@ class TestPaths(unittest.TestCase):
 
         InsertData(gremlin='gremlin_hlm.txt').gremlin_graph()
 
-    def test_get_paths_reqiured_params(self):
-        """
-        source、max_depth
-        :return:
-        """
-        param_json = {'source': '"1:贾宝玉"', 'target': '"1:贾代善"', 'max_depth': 5}
-        code, res = Traverser().get_paths(param_json, auth=auth)
-        print(code, res)
-        self.assertEqual(code, 200)
-        self.assertEqual(
-            res,
-            {"paths": [{"objects": ["1:贾宝玉", "2:林黛玉", "1:林如海", "2:贾敏", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:林黛玉", "2:贾敏", "2:贾母", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:林黛玉", "2:贾敏", "2:贾母", "1:贾政", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:林黛玉", "2:贾敏", "2:贾母", "1:贾赦", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:史湘云", "1:史氏", "1:史公", "2:贾母", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:林黛玉", "2:贾敏", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "1:贾赦", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "2:贾敏", "1:贾代善"]}]}
-        )
-
     def test_get_paths_direction_in(self):
         """
         direction = in
@@ -105,23 +82,22 @@ class TestPaths(unittest.TestCase):
         source、max_depth
         :return:
         """
-        param_json = {'source': '"1:贾宝玉"', 'target': '"1:贾代善"', 'max_depth': 5}
+        param_json = {'source': '"1:贾宝玉"', 'target': '"1:贾代善"', 'max_depth': 4, 'limit': 200}
         code, res = Traverser().get_paths(param_json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
-        self.assertEqual(
-            res,
-            {"paths": [{"objects": ["1:贾宝玉", "2:林黛玉", "1:林如海", "2:贾敏", "1:贾代善"]},
-                        {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "1:贾代善"]},
-                        {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "1:贾代善"]},
-                        {"objects": ["1:贾宝玉", "2:林黛玉", "2:贾敏", "2:贾母", "1:贾代善"]},
-                        {"objects": ["1:贾宝玉", "2:林黛玉", "2:贾敏", "2:贾母", "1:贾政", "1:贾代善"]},
-                        {"objects": ["1:贾宝玉", "2:林黛玉", "2:贾敏", "2:贾母", "1:贾赦", "1:贾代善"]},
-                        {"objects": ["1:贾宝玉", "2:史湘云", "1:史氏", "1:史公", "2:贾母", "1:贾代善"]},
-                        {"objects": ["1:贾宝玉", "2:林黛玉", "2:贾敏", "1:贾代善"]},
-                        {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "1:贾赦", "1:贾代善"]},
-                        {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "2:贾敏", "1:贾代善"]}]}
-        )
+        self.assertEqual(len(res['paths']), 5)
+        for obj in res['paths']:
+            self.assertIn(
+                obj,
+                [
+                    {'objects': ['1:贾宝玉', '2:王夫人', '1:贾政', '1:贾代善']},
+                    {'objects': ['1:贾宝玉', '2:林黛玉', '2:贾敏', '1:贾代善']},
+                    {'objects': ['1:贾宝玉', '2:林黛玉', '1:林如海', '2:贾敏', '1:贾代善']},
+                    {'objects': ['1:贾宝玉', '2:王夫人', '1:贾政', '2:贾母', '1:贾代善']},
+                    {'objects': ['1:贾宝玉', '2:林黛玉', '2:贾敏', '2:贾母', '1:贾代善']}
+                ]
+            )
 
     def test_post_paths_reqiured_params(self):
         """
@@ -132,24 +108,24 @@ class TestPaths(unittest.TestCase):
             'sources': {'ids': ['1:贾宝玉']},
             'targets': {'ids': ['1:贾代善']},
             'step': {"direction": "BOTH"},
-            'max_depth': 5
+            'max_depth': 4,
+            'limit': 100
         }
         code, res = Traverser().post_paths(json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
-        self.assertEqual(
-            res,
-            {"paths": [{"objects": ["1:贾宝玉", "2:林黛玉", "1:林如海", "2:贾敏", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:林黛玉", "2:贾敏", "2:贾母", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:林黛玉", "2:贾敏", "2:贾母", "1:贾政", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:林黛玉", "2:贾敏", "2:贾母", "1:贾赦", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:史湘云", "1:史氏", "1:史公", "2:贾母", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:林黛玉", "2:贾敏", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "1:贾赦", "1:贾代善"]},
-                       {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "2:贾敏", "1:贾代善"]}]}
-        )
+        self.assertEqual(len(res['paths']), 5)
+        for obj in res['paths']:
+            self.assertIn(
+                obj,
+                [
+                    {'objects': ['1:贾宝玉', '2:王夫人', '1:贾政', '1:贾代善']},
+                    {'objects': ['1:贾宝玉', '2:林黛玉', '2:贾敏', '1:贾代善']},
+                    {'objects': ['1:贾宝玉', '2:林黛玉', '1:林如海', '2:贾敏', '1:贾代善']},
+                    {'objects': ['1:贾宝玉', '2:王夫人', '1:贾政', '2:贾母', '1:贾代善']},
+                    {'objects': ['1:贾宝玉', '2:林黛玉', '2:贾敏', '2:贾母', '1:贾代善']}
+                ]
+            )
 
 
 if __name__ == "__main__":

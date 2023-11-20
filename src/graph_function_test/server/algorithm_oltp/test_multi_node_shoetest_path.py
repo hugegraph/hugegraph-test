@@ -60,14 +60,16 @@ class TestMultiNodeShortestPath(unittest.TestCase):
         code, res = Traverser().post_multi_node_shortestPath(json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
-        self.assertEqual(
-            res['paths'],
-            [
-                {'objects': ['2:ripple', '1:josh', '1:marko', '1:vadas']},
-                {'objects': ['2:ripple', '1:josh', '2:lop', '1:peter']},
-                {'objects': ['1:vadas', '1:marko', '2:lop', '1:peter']}
-            ]
-        )
+        self.assertEqual(len(res['paths']), 3)
+        for obj in res['paths']:
+            self.assertIn(
+                obj,
+                [
+                    {'objects': ['2:ripple', '1:josh', '1:marko', '1:vadas']},
+                    {'objects': ['2:ripple', '1:josh', '2:lop', '1:peter']},
+                    {'objects': ['1:vadas', '1:marko', '2:lop', '1:peter']}
+                ]
+            )
 
 
 if __name__ == "__main__":

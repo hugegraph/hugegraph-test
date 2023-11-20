@@ -10,7 +10,7 @@ import os
 rootPath = os.path.split(os.path.abspath(os.path.dirname(__file__)))[0]
 sys.path.append(rootPath)
 
-from src.graph_deploy.deploy_graph import Deploy
+from src.common.deploy_graph import Deploy
 from src.config import basic_config
 
 
@@ -41,4 +41,5 @@ if __name__ == "__main__":
             and sys.argv[1] in ['all', 'server', 'loader', 'tools', 'hubble']:
         graph_deploy(sys.argv[1], basic_config)
     else:
-        print('---> 执行脚本参数为1个,param为[all,server,loader,tools,hubble]')
+        print('failed: 执行脚本参数为[all,server,loader,tools,hubble]')
+        exit(1)

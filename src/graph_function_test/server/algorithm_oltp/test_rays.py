@@ -48,23 +48,23 @@ class TestRays(unittest.TestCase):
         param_json = {'source': '"1:贾宝玉"', 'max_depth': 2}
         code, res = Traverser().get_rays(param_json, auth=auth)
         print(code, res)
-        for i in res['rays']:
-            print(i)
         self.assertEqual(code, 200)
-        self.assertEqual(
-            res['rays'],
-            [
-                {'objects': ['1:贾宝玉', '2:王夫人', '2:薛姨妈']},
-                {'objects': ['1:贾宝玉', '2:王夫人', '2:贾元春']},
-                {'objects': ['1:贾宝玉', '2:林黛玉', '2:贾敏']},
-                {'objects': ['1:贾宝玉', '2:史湘云', '1:史氏']},
-                {'objects': ['1:贾宝玉', '2:林黛玉', '1:林如海']},
-                {'objects': ['1:贾宝玉', '2:王夫人', '1:贾珠']},
-                {'objects': ['1:贾宝玉', '2:史湘云', '1:卫若兰']},
-                {'objects': ['1:贾宝玉', '2:王夫人', '1:贾政']},
-                {'objects': ['1:贾宝玉', '2:薛宝钗', '2:薛姨妈']}
-            ]
-        )
+        self.assertEqual(len(res['rays']), 9)
+        for obj in res['rays']:
+            self.assertIn(
+                obj,
+                [
+                    {'objects': ['1:贾宝玉', '2:王夫人', '2:薛姨妈']},
+                    {'objects': ['1:贾宝玉', '2:王夫人', '2:贾元春']},
+                    {'objects': ['1:贾宝玉', '2:林黛玉', '2:贾敏']},
+                    {'objects': ['1:贾宝玉', '2:史湘云', '1:史氏']},
+                    {'objects': ['1:贾宝玉', '2:林黛玉', '1:林如海']},
+                    {'objects': ['1:贾宝玉', '2:王夫人', '1:贾珠']},
+                    {'objects': ['1:贾宝玉', '2:史湘云', '1:卫若兰']},
+                    {'objects': ['1:贾宝玉', '2:王夫人', '1:贾政']},
+                    {'objects': ['1:贾宝玉', '2:薛宝钗', '2:薛姨妈']}
+                ]
+            )
 
 
 if __name__ == "__main__":

@@ -22,41 +22,40 @@ def get_code(pwd, git_obj, code_dir):
     :param git_obj: git 配置
     :param code_dir:
     """
+    branch = git_obj['branch']
+    url = git_obj['url']
     if not is_match_re(pwd, code_dir):
-        branch = git_obj['branch']
-        url = git_obj['url']
-        print('cd %s && git clone -b %s %s' % (pwd, branch, url))
-        os.system('cd %s && git clone -b %s %s' % (pwd, branch, url))
+        clone_cmd = 'cd %s && git clone %s && cd %s && git checkout %s' % (pwd, url, code_dir, branch)
+        print('clone code: ' + clone_cmd)
+        os.system(clone_cmd)
     else:
-        os.system('cd %s/%s && git pull' % (pwd, code_dir))
+        pull_cmd = 'cd %s/%s && git checkout %s && git pull' % (pwd, code_dir, branch)
+        print('pull code: ' + pull_cmd)
+        os.system(pull_cmd)
 
 
-def compile_package(mvn_path, dir_code_path):
+def compile_package(dir_code_path):
     """
     编译包
-    :param mvn_path: 添加mvn_path
     :param dir_code_path: 本地代码库路径
     :return:
     """
     g_name = dir_code_path.split('/')[-1]
     if g_name == 'hugegraph-loader':
-        os.system(
-            'cd %s && '
-            '%smvn install:install-file '
-            '-Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar '
-            '-DgroupId=com.oracle '
-            '-DartifactId=ojdbc8 '
-            '-Dversion=12.2.0.1 '
-            '-Dpackaging=jar && '
-            '%smvn clean package -Dmaven.test.skip=true | '
-            'grep -v \"Downloading\|Downloaded\"' % (dir_code_path, mvn_path, mvn_path)
-        )
+        cmd = 'cd %s && ' \
+              'mvn install:install-file ' \
+              '-Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar ' \
+              '-DgroupId=com.oracle ' \
+              '-DartifactId=ojdbc8 ' \
+              '-Dversion=12.2.0.1 ' \
+              '-Dpackaging=jar | grep -v \"Downloading\|Downloaded\" && ' \
+              'mvn clean package -Dmaven.test.skip=true -q | grep \"tar.gz\"' % dir_code_path
+        print(cmd)
+        os.system(cmd)
     else:
-        os.system(
-            'cd %s && '
-            '%smvn clean package -Dmaven.test.skip=true | '
-            'grep -v \"Downloading\|Downloaded\"' % (dir_code_path, mvn_path)
-        )
+        cmd = 'cd %s && mvn clean package -Dmaven.test.skip=true -q | grep \"tar.gz\"' % dir_code_path
+        print(cmd)
+        os.system(cmd)
 
 
 def set_server_properties(package_dir_path, host, server_port, gremlin_port):
@@ -120,7 +119,6 @@ class Deploy:
         self.gremlin_port = obj.gremlin_port
         self.hubble_host = obj.hubble_host
         self.hubble_port = obj.hubble_port
-        self.mvn_path = obj.mvn_path
         self.code_path = obj.code_path
         self.server_git = obj.server_git
         self.loader_git = obj.loader_git
@@ -138,7 +136,7 @@ class Deploy:
 
         is_exists_path(self.code_path)
         get_code(self.code_path, self.server_git, code_dir)
-        compile_package(self.mvn_path, code_dir_path)
+        compile_package(code_dir_path)
         #  start graph_server
         package_dir_name = is_match_re(code_dir_path, re_dir)
         package_dir_path = code_dir_path + '/' + package_dir_name
@@ -153,15 +151,15 @@ class Deploy:
         code_dir = 'hugegraph-hubble'
         code_dir_path = self.code_path + '/' + code_dir
         re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
-#         # get code && compile
-#         is_exists_path(self.code_path)
-#         get_code(self.code_path, self.hubble_git, code_dir)
-#         compile_package(self.mvn_path, code_dir_path)
+        # # get code && compile
+        # is_exists_path(self.code_path)
+        # get_code(self.code_path, self.hubble_git, code_dir)
+        # compile_package(code_dir_path)
         # wget tar
         is_exists_path(code_dir_path)
         os.system(
             'cd %s && '
-            'wget https://github.com/hugegraph/hugegraph-hubble/releases/download/v1.5.0/hugegraph-hubble-1.5.0.tar.gz '
+            'wget https://github.com/hugegraph/hugegraph-hubble/releases/download/v1.5.0/hugegraph-hubble-1.5.0.tar.gz -q'
             '&& tar xzvf hugegraph-hubble-1.5.0.tar.gz' % code_dir_path
         )
         # set properties && start hubble
@@ -179,7 +177,7 @@ class Deploy:
         code_dir_path = self.code_path + '/' + code_dir
         is_exists_path(self.code_path)
         get_code(self.code_path, self.loader_git, code_dir)
-        compile_package(self.mvn_path, code_dir_path)
+        compile_package(code_dir_path)
 
     @staticmethod
     def tools(self):
@@ -190,7 +188,7 @@ class Deploy:
         code_dir_path = self.code_path + '/' + code_dir
         is_exists_path(self.code_path)
         get_code(self.code_path, self.tools_git, code_dir)
-        compile_package(self.mvn_path, code_dir_path)
+        compile_package(code_dir_path)
 
 
 if __name__ == "__main__":
