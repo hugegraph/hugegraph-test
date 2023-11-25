@@ -74,7 +74,7 @@ def test_gremlin_post_vertex():
     执行gremlin post请求的同步任务
     查询所有的点，限制返回的点的数量为5
     """
-    #没有点创建点
+    # 没有点创建点
     init_graph()
     query = "graph.schema().propertyKey('name').asText().ifNotExist().create();" \
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
@@ -126,7 +126,7 @@ def test_gremlin_post_vertex_label():
     init_graph()
     query = "graph.schema().propertyKey('name').asText().ifNotExist().create();" \
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
-            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();"\
+            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();" \
             "a=graph.addVertex(T.label, 'person', 'name', 'a', 'age', 29);" \
             "b=graph.addVertex(T.label, 'person', 'name', 'b', 'age', 27);" \
             "c=graph.addVertex(T.label, 'person', 'name', 'c', 'age', 29);" \
@@ -151,16 +151,16 @@ def test_gremlin_post_edge():
     query = "graph.schema().propertyKey('name').asText().ifNotExist().create();" \
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();" \
-            "graph.schema().edgeLabel('help').sourceLabel('person').targetLabel('person').ifNotExist().create();"\
+            "graph.schema().edgeLabel('help').sourceLabel('person').targetLabel('person').ifNotExist().create();" \
             "a=graph.addVertex(T.label, 'person', 'name', 'a', 'age', 29);" \
             "b=graph.addVertex(T.label, 'person', 'name', 'b', 'age', 27);" \
             "c=graph.addVertex(T.label, 'person', 'name', 'c', 'age', 29);" \
             "d=graph.addVertex(T.label, 'person', 'name', 'd', 'age', 27);" \
             "e=graph.addVertex(T.label, 'person', 'name', 'e', 'age', 29);" \
-            "a.addEdge('help', b);"\
-            "b.addEdge('help', c);"\
-            "c.addEdge('help', d);"\
-            "d.addEdge('help', e);"\
+            "a.addEdge('help', b);" \
+            "b.addEdge('help', c);" \
+            "c.addEdge('help', d);" \
+            "d.addEdge('help', e);" \
             "e.addEdge('help', a);"
     code, res = Gremlin().gremlin_post(query, auth=auth)
     assert code == 200
@@ -201,7 +201,7 @@ def test_gremlin_post_delete_edge():
     init_graph()
     query = "graph.schema().propertyKey('name').asText().ifNotExist().create();" \
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
-            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();"\
+            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('help').sourceLabel('person').targetLabel('person').ifNotExist().create();" \
             "a=graph.addVertex(T.label, 'person', 'name', 'a', 'age', 29);" \
             "b=graph.addVertex(T.label, 'person', 'name', 'b', 'age', 27);" \
@@ -224,7 +224,7 @@ def test_gremlin_post_has_label():
     init_graph()
     query = "graph.schema().propertyKey('name').asText().ifNotExist().create();" \
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
-            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();"\
+            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('help').sourceLabel('person').targetLabel('person').ifNotExist().create();" \
             "a=graph.addVertex(T.label, 'person', 'name', 'a', 'age', 29);" \
             "b=graph.addVertex(T.label, 'person', 'name', 'b', 'age', 27);" \
@@ -249,8 +249,8 @@ def test_gremlin_post_has_label_tow():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('lang').asText().ifNotExist().create();" \
             "graph.schema().propertyKey('price').asInt().ifNotExist().create();" \
-            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();"\
-            "graph.schema().vertexLabel('software').properties('name', 'lang', 'price').primaryKeys('name')"\
+            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();" \
+            "graph.schema().vertexLabel('software').properties('name', 'lang', 'price').primaryKeys('name')" \
             ".ifNotExist().create();" \
             "a=graph.addVertex(T.label, 'person', 'name', 'a', 'age', 29);" \
             "b=graph.addVertex(T.label, 'person', 'name', 'b', 'age', 27);" \
@@ -276,8 +276,8 @@ def test_gremlin_post_has_lt():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('lang').asText().ifNotExist().create();" \
             "graph.schema().propertyKey('price').asInt().ifNotExist().create();" \
-            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();"\
-            "graph.schema().vertexLabel('software').properties('name', 'lang', 'price').primaryKeys('name')"\
+            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();" \
+            "graph.schema().vertexLabel('software').properties('name', 'lang', 'price').primaryKeys('name')" \
             ".ifNotExist().create();" \
             "a=graph.addVertex(T.label, 'person', 'name', 'a', 'age', 29);" \
             "b=graph.addVertex(T.label, 'person', 'name', 'b', 'age', 27);" \
@@ -306,8 +306,8 @@ def test_gremlin_post_has_lte():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('lang').asText().ifNotExist().create();" \
             "graph.schema().propertyKey('price').asInt().ifNotExist().create();" \
-            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();"\
-            "graph.schema().vertexLabel('software').properties('name', 'lang', 'price').primaryKeys('name')"\
+            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();" \
+            "graph.schema().vertexLabel('software').properties('name', 'lang', 'price').primaryKeys('name')" \
             ".ifNotExist().create();" \
             "a=graph.addVertex(T.label, 'person', 'name', 'a', 'age', 29);" \
             "b=graph.addVertex(T.label, 'person', 'name', 'b', 'age', 27);" \
@@ -336,7 +336,7 @@ def test_gremlin_post_has_gt():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('lang').asText().ifNotExist().create();" \
             "graph.schema().propertyKey('price').asInt().ifNotExist().create();" \
-            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();"\
+            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();" \
             "graph.schema().vertexLabel('software').properties('name', 'lang', 'price').primaryKeys('name')" \
             ".ifNotExist().create();" \
             "a=graph.addVertex(T.label, 'person', 'name', 'a', 'age', 29);" \
@@ -392,8 +392,8 @@ def test_gremlin_job_has_count():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('lang').asText().ifNotExist().create();" \
             "graph.schema().propertyKey('price').asInt().ifNotExist().create();" \
-            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();"\
-            "graph.schema().vertexLabel('software').properties('name', 'lang', 'price').primaryKeys('name')"\
+            "graph.schema().vertexLabel('person').properties('name', 'age').primaryKeys('name').ifNotExist().create();" \
+            "graph.schema().vertexLabel('software').properties('name', 'lang', 'price').primaryKeys('name')" \
             ".ifNotExist().create();" \
             "a=graph.addVertex(T.label, 'person', 'name', 'a', 'age', 29);" \
             "b=graph.addVertex(T.label, 'person', 'name', 'b', 'age', 27);" \

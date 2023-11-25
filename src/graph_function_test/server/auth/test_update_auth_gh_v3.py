@@ -3154,6 +3154,7 @@ class Target(unittest.TestCase):
     """
     创建资源
     """
+
     def setUp(self):
         """
         测试case开始
@@ -3289,6 +3290,7 @@ class Access(unittest.TestCase):
     """
     绑定资源和用户组
     """
+
     def setUp(self):
         """
         测试case开始
@@ -3407,6 +3409,7 @@ class Belongs(unittest.TestCase):
     """
     绑定用户和用户组
     """
+
     def setUp(self):
         """
         测试case开始
@@ -3515,10 +3518,10 @@ class Belongs(unittest.TestCase):
 
 @pytest.mark.skipif(_cfg.is_auth is False, reason='hugegraph启动时没有配置权限')
 class Token(unittest.TestCase):
-
     """
     token
     """
+
     def test_login_token(self):
         """
         超级管理员登录

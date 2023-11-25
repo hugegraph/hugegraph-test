@@ -118,12 +118,12 @@ def test_update_vertex_single():
     v_id = '"1:marko"'
     action = {'action': 'append'}
     body = {
-            "label": "person",
-            "properties": {
-                "age": 39,
-                "date": "2021-02-07"
-            }
+        "label": "person",
+        "properties": {
+            "age": 39,
+            "date": "2021-02-07"
         }
+    }
     code, res = Vertex().update_vertex_property(v_id=v_id, action=action, body=body, auth=auth)
     print(code, res)
     ### 断言
@@ -235,11 +235,11 @@ def test_eliminate_vertex_single():
     v_id = '"1:marko"'
     action = {'action': 'eliminate'}
     body = {
-            "label": "person",
-            "properties": {
-                "age": 29
-            }
+        "label": "person",
+        "properties": {
+            "age": 29
         }
+    }
     code, res = Vertex().update_vertex_property(v_id=v_id, action=action, body=body, auth=auth)
     print(code, res)
     ### 断言

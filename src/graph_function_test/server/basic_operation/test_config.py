@@ -33,7 +33,6 @@ def test_get_rest_config():
     """
 
 
-
 def test_set_one_service_rest_config():
     """
     设置一个服务的rest配置
