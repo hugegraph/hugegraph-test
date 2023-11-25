@@ -5950,10 +5950,10 @@ class Belongs(unittest.TestCase):
 
 @pytest.mark.skipif(_cfg.is_auth is False, reason='hugegraph启动时没有配置权限')
 class Token(unittest.TestCase):
-
     """
     token
     """
+
     def test_login_token(self):
         """
         超级管理员登录
@@ -6000,7 +6000,7 @@ class Token(unittest.TestCase):
         self.assertEqual(code, 200, msg='code check fail')
         x = res["token"]
 
-        #等待30秒
+        # 等待30秒
         time.sleep(130)
 
         # 验证
@@ -6010,10 +6010,9 @@ class Token(unittest.TestCase):
         # h = {'Postman-Token': x}
         code, res = AuthGH().get_verify(header=h, auth=auth)
         print(code, res)
-        self.assertEqual(code, 200, msg= 'code check fail')
+        self.assertEqual(code, 200, msg='code check fail')
         self.assertEqual(res['user_name'], 'admin')
         self.assertEqual(res['user_id'], '-63:admin')
-
 
     def test_ordinary_login_token(self):
         """
@@ -6028,7 +6027,6 @@ class Token(unittest.TestCase):
         # print(type(x))
         self.assertEqual(code, 200, msg='code check fail')
         self.assertEqual(res['token'], x, 'res check fail')
-
 
     def test_ordinary_verify_token(self):
         """

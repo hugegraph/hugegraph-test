@@ -8,23 +8,31 @@ import os
 
 code_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 
-### server ###
+# server
+server_git = {
+    'branch': 'master',
+    'url': 'https://github.com/apache/incubator-hugegraph.git'
+}
 # gremlin_port = 8515
 server_backend = 'hstore'
 
-is_auth = True
+# TODO
+is_auth = False
 is_auth_divide = False
 is_https = False
 server_port = 8080
 pd_peer = "10.xx.12.66:8386"
 operator_image_path = "10.xx.12.61/kgs_bd/hugegraph-computer-operator:3.1.18"
 internal_algorithm_image_url = "10.xx.12.61/kgs_bd/hugegraph-computer-algorithm:3.1.18"
-graph_host = '10.xx.12.66'
+graph_host = '127.0.0.1'
 graph_space = 'ipipe'
-graph_name = 'ipipe_g1'
+graph_name = 'hugegraph'
 admin_password = {"admin": "admin"}
 test_password = {"tester": "123456"}
 task_scheduler_type = "distributed"
+
+gremlin_port = 8182
+
 # auth
 auth_graph = "ipipe_g2"
 
@@ -48,7 +56,6 @@ tools_target_auth = {"admin": "admin"}
 # hubble
 hubble_host = ''
 hubble_port = 8088
-
 
 if __name__ == "__main__":
     pass

@@ -64,7 +64,7 @@ def test_load_movie_check_data_customizeId_error():
     print(res_assert)
     # assert res.returncode == 0
     assert res_assert[0] == 49036
-    assert res_assert[1] != 117356    # 加上check vertex时有bug：因为movie数据集中的不同顶点类型的ID会覆盖，导致边导入的时候会报错。
+    assert res_assert[1] != 117356  # 加上check vertex时有bug：因为movie数据集中的不同顶点类型的ID会覆盖，导致边导入的时候会报错。
 
 
 def test_load_check_vertex_hlm():
@@ -79,7 +79,7 @@ def test_load_check_vertex_hlm():
           "--max-parse-errors 1 " \
           "--max-insert-errors 1 " \
           "--batch-size 500"
-          
+
     res = InsertData(
         cmd,
         schema='schema_checkVertex.groovy',

@@ -17,7 +17,6 @@ from src.common.loader import InsertData
 from src.config import basic_config as _cfg
 from src.common.tools import clear_graph
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
@@ -46,57 +45,57 @@ class TestShortestPath(unittest.TestCase):
         :return:
         """
         json = {
-          "sources": {
-            "ids": [],
-            "label": "person",
-            "properties": {
-              "name": "vadas"
-            }
-          },
-          "targets": {
-            "ids": [],
-            "label": "software",
-            "properties": {
-              "name": "ripple"
-            }
-          },
-          "steps": [
-            {
-              "direction": "IN",
-              "labels": ["knows"],
-              "properties": {
-              },
-              "degree": 10000,
-              "skip_degree": 100000
+            "sources": {
+                "ids": [],
+                "label": "person",
+                "properties": {
+                    "name": "vadas"
+                }
             },
-            {
-              "direction": "OUT",
-              "labels": ["created"],
-              "properties": {
-              },
-              "degree": 10000,
-              "skip_degree": 100000
+            "targets": {
+                "ids": [],
+                "label": "software",
+                "properties": {
+                    "name": "ripple"
+                }
             },
-            {
-              "direction": "IN",
-              "labels": ["created"],
-              "properties": {
-              },
-              "degree": 10000,
-              "skip_degree": 100000
-            },
-            {
-              "direction": "OUT",
-              "labels": ["created"],
-              "properties": {
-              },
-              "degree": 10000,
-              "skip_degree": 100000
-            }
-          ],
-          "capacity": 10000,
-          "limit": 10,
-          "with_vertex": True
+            "steps": [
+                {
+                    "direction": "IN",
+                    "labels": ["knows"],
+                    "properties": {
+                    },
+                    "degree": 10000,
+                    "skip_degree": 100000
+                },
+                {
+                    "direction": "OUT",
+                    "labels": ["created"],
+                    "properties": {
+                    },
+                    "degree": 10000,
+                    "skip_degree": 100000
+                },
+                {
+                    "direction": "IN",
+                    "labels": ["created"],
+                    "properties": {
+                    },
+                    "degree": 10000,
+                    "skip_degree": 100000
+                },
+                {
+                    "direction": "OUT",
+                    "labels": ["created"],
+                    "properties": {
+                    },
+                    "degree": 10000,
+                    "skip_degree": 100000
+                }
+            ],
+            "capacity": 10000,
+            "limit": 10,
+            "with_vertex": True
         }
         code, res = Traverser().post_template_paths(json=json, auth=auth)
         print(code, res)
@@ -106,4 +105,3 @@ class TestShortestPath(unittest.TestCase):
 
 if __name__ == "__main__":
     pass
-

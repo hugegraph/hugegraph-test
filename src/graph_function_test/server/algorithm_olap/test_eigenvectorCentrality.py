@@ -253,7 +253,7 @@ class TestEigenvectorCentrality:
         :return:
         """
         body = {"depth": 5, "degree": 50, "sample": -1, "top": 10, "source_sample": -1,
-                "label":"created"}
+                "label": "created"}
         code, res = Algorithm().post_eigenvector_centrality(body, auth=auth)
         id = res["task_id"]
         if id > 0:
@@ -269,7 +269,7 @@ class TestEigenvectorCentrality:
         :return:
         """
         body = {"depth": 5, "degree": 50, "sample": -1, "top": 10, "source_sample": -1,
-                "direction":"BOTH"}
+                "direction": "BOTH"}
         code, res = Algorithm().post_eigenvector_centrality(body, auth=auth)
         id = res["task_id"]
         if id > 0:
@@ -286,7 +286,7 @@ class TestEigenvectorCentrality:
         :return:
         """
         body = {"depth": 5, "degree": 50, "sample": -1, "top": 10, "source_sample": -1,
-                "direction":"IN"}
+                "direction": "IN"}
         code, res = Algorithm().post_eigenvector_centrality(body, auth=auth)
         id = res["task_id"]
         if id > 0:

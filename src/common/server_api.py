@@ -1993,6 +1993,7 @@ class GraphConfig:
     """
     图配置
     """
+
     def get_reset_config(self, space=None, auth=None):
         """
 
@@ -2353,6 +2354,7 @@ class GraphSpace:
     """
     图空间的基本接口
     """
+
     def update_graph_space(self, space=None, body=None, auth=None):
         """
         设置某个图的模式
@@ -2417,6 +2419,7 @@ class Service:
     """
     图服务的基本接口
     """
+
     def update_service(self, space=None, body=None, auth=None):
         """
         设置某个图的模式

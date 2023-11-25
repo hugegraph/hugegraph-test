@@ -94,7 +94,7 @@ def test_get_edge_by_property():
 
     condition = {'vertex_id': '"1:marko"'}
     code, res = Edge().get_filter_edge(condition=condition, auth=auth)
-    print(code, res)    # 有点重复展示问题，暂时不修复
+    print(code, res)  # 有点重复展示问题，暂时不修复
     assert code == 200
     assert len(res['edges']) == 3
 
@@ -157,4 +157,3 @@ def test_update_edge_by_page():
 
 if __name__ == "__main__":
     pass
-

@@ -19,7 +19,6 @@ from src.common.tools import clear_graph
 from src.common.tools import run_shell
 from src.config import basic_config as _cfg
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
@@ -87,20 +86,20 @@ class TestTTL:
         local_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
         print(local_time)
         query = "graph.schema().propertyKey('name').asText().ifNotExist().create();" \
-            "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
-            "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
-            "graph.schema().vertexLabel('personA').properties('name', 'age').primaryKeys('name')" \
-            ".ifNotExist().create();" \
-            "graph.schema().vertexLabel('personB').properties('name', 'date').primaryKeys('name')" \
-            ".ttl(5000L).ttlStartTime('date').ifNotExist().create();" \
-            "graph.schema().edgeLabel('linkA').sourceLabel('personA').targetLabel('personA')" \
-            ".properties('date').ifNotExist().create();" \
-            "graph.schema().edgeLabel('linkB').sourceLabel('personB').targetLabel('personB')" \
-            ".properties('age').ifNotExist().create();" \
-            "marko = graph.addVertex(T.label, 'personA', 'name', 'marko', 'age', 29);" \
-            "peter = graph.addVertex(T.label, 'personA', 'name', 'peter', 'age', 25);" \
-            "vadas = graph.addVertex(T.label, 'personB', 'name', 'vadas', 'date', '%s');" \
-            "josh = graph.addVertex(T.label, 'personB', 'name', 'josh', 'date', '%s');" % (local_time, local_time)
+                "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
+                "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
+                "graph.schema().vertexLabel('personA').properties('name', 'age').primaryKeys('name')" \
+                ".ifNotExist().create();" \
+                "graph.schema().vertexLabel('personB').properties('name', 'date').primaryKeys('name')" \
+                ".ttl(5000L).ttlStartTime('date').ifNotExist().create();" \
+                "graph.schema().edgeLabel('linkA').sourceLabel('personA').targetLabel('personA')" \
+                ".properties('date').ifNotExist().create();" \
+                "graph.schema().edgeLabel('linkB').sourceLabel('personB').targetLabel('personB')" \
+                ".properties('age').ifNotExist().create();" \
+                "marko = graph.addVertex(T.label, 'personA', 'name', 'marko', 'age', 29);" \
+                "peter = graph.addVertex(T.label, 'personA', 'name', 'peter', 'age', 25);" \
+                "vadas = graph.addVertex(T.label, 'personB', 'name', 'vadas', 'date', '%s');" \
+                "josh = graph.addVertex(T.label, 'personB', 'name', 'josh', 'date', '%s');" % (local_time, local_time)
 
         # 插入设置ttl的数据
         Gremlin().gremlin_post(query, auth=auth)
@@ -150,10 +149,10 @@ class TestTTL:
         # 断言
         code, res = Gremlin().gremlin_post("g.V().count();", auth=auth)
         assert code == 200
-        assert res['result']['data'][0] == 47863    # rocksdb后端中的设置ttl，进行count()操作有bug
+        assert res['result']['data'][0] == 47863  # rocksdb后端中的设置ttl，进行count()操作有bug
         code, res = Gremlin().gremlin_post("g.E().count();", auth=auth)
         assert code == 200
-        assert res['result']['data'][0] == 114945   # rocksdb后端中的设置ttl，进行count()操作有bug
+        assert res['result']['data'][0] == 114945  # rocksdb后端中的设置ttl，进行count()操作有bug
         code, res = Gremlin().gremlin_post("g.V('吴宇森');", auth=auth)
         assert code == 200
         assert res['result']['data'] == []

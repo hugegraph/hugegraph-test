@@ -81,7 +81,6 @@ def test_get_task_by_id_01():
 
         time.sleep(3)
 
-
         code, res = Task().get_task(id=res['task_id'], auth=auth)
         print(code, res)
         assert code == 200
@@ -153,4 +152,3 @@ def test_compulsory_cancle_task_01():
 
 if __name__ == "__main__":
     pass
-

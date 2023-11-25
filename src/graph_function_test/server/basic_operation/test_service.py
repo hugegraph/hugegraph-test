@@ -24,10 +24,12 @@ graph_space_name = "gs_tmp"
 service_name = "ser_tmp"
 service_name1 = "ser_tmp1"
 
+
 class TestGraphSpace:
     """
     测试图服务的增删改查
     """
+
     def setup_class(self):
         """
         创建图计算空间
@@ -121,26 +123,26 @@ class TestGraphSpace:
         :return:
         """
         body = {
-          "name": service_name,
-          "type": "OLTP",
-          "count": 1,
-          "cpu_limit": 20,
-          "memory_limit": 50,
-          "storage_limit": 50,
-          "deployment_type": "K8S",
-          "route_type": "NodePort",
-          "urls": [],
-          "description": "test oltp service"
+            "name": service_name,
+            "type": "OLTP",
+            "count": 1,
+            "cpu_limit": 20,
+            "memory_limit": 50,
+            "storage_limit": 50,
+            "deployment_type": "K8S",
+            "route_type": "NodePort",
+            "urls": [],
+            "description": "test oltp service"
         }
         code, res = Service().create_service(space=graph_space_name, body=body, auth=auth)
         print(code, res)
         assert code == 201
 
         code, res = Service().delete_service(
-                space=graph_space_name,
-                service=service_name,
-                param={"confirm_message": "I'm sure to delete the service"},
-                auth=auth
+            space=graph_space_name,
+            service=service_name,
+            param={"confirm_message": "I'm sure to delete the service"},
+            auth=auth
         )
         print(code, res)
         assert code == 204

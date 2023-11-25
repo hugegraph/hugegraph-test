@@ -1,4 +1,4 @@
- # -*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 """
 author     : lxb
 note       : gremlin api 测试
@@ -152,12 +152,12 @@ def test_post_create_garph():
     graph_name = 'hugegraph_tmp_lxb1'
     # create graphs
     body = {
-      "gremlin.graph": "com.baidu.hugegraph.HugeFactory",
-      "backend": "hstore",
-      "serializer": "binary",
-      "store": graph_name,
-      "search.text_analyzer": "jieba",
-      "search.text_analyzer_mode": "INDEX"
+        "gremlin.graph": "com.baidu.hugegraph.HugeFactory",
+        "backend": "hstore",
+        "serializer": "binary",
+        "store": graph_name,
+        "search.text_analyzer": "jieba",
+        "search.text_analyzer_mode": "INDEX"
     }
     code, res = Graph().post_create_graph(body=body, auth=auth, graph=graph_name)
     print(code, res)

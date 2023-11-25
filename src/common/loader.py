@@ -47,11 +47,11 @@ def gremlin_create_graph(file_name, auth=None):
         print(code, res)
 
 
-
 class InsertData:
     """
     添加数据
     """
+
     def __init__(self, part_cmd=None, gremlin=None, schema=None, struct=None, dir=None):
         self.host = _cfg.graph_host
         self.port = _cfg.server_port
@@ -143,4 +143,3 @@ class InsertData:
 if __name__ == "__main__":
     code_v, res_v = Gremlin().gremlin_post("g.V().count()", auth=_cfg.admin_password)
     print(code_v, res_v)
-

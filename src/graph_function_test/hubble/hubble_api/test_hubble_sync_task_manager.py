@@ -88,7 +88,8 @@ class SyncTaskManagerCase(unittest.TestCase):
         code, res = Task.view_async_tasks_all(graph_id=graph_id)
         self.assertEqual(code, 200, "响应状态码不正确")
         self.assertEqual(res['status'], 200, "查看异步任务状态码不正确")
-        self.assertEqual(res['data']['records'][0]['task_name'], body["content"], "非gremlin异步任务或者异步任务内容有误")
+        self.assertEqual(res['data']['records'][0]['task_name'], body["content"],
+                         "非gremlin异步任务或者异步任务内容有误")
         self.assertEqual(res['data']['records'][0]['task_type'], "gremlin", "非gremlin异步任务或者异步任务执行失败")
 
     def test_deleteVertexLabel(self):

@@ -103,4 +103,3 @@ def test_get_schema_groovy():
 
 if __name__ == "__main__":
     pass
-

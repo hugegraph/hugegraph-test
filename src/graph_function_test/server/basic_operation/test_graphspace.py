@@ -26,6 +26,7 @@ class TestGraphSpace:
     """
     测试图空间
     """
+
     def teardown(self):
         """
         :return:
@@ -39,22 +40,22 @@ class TestGraphSpace:
         :return:
         """
         body = {
-          "name": graph_space_name,
-          "description": "graph space test",
-          "cpu_limit": 100,
-          "memory_limit": 100,
-          "compute_cpu_limit": 100,
-          "compute_memory_limit": 100,
-          "storage_limit": 100,
-          "oltp_namespace": "hgser",
-          "olap_namespace": "hgcp",
-          "operator_image_path": _cfg.operator_image_path,
-          "internal_algorithm_image_url": _cfg.internal_algorithm_image_url,
-          "storage_namespace": "storage",
-          "max_graph_number": 50,
-          "max_role_number": 10,
-          "auth": True,
-          "configs": {}
+            "name": graph_space_name,
+            "description": "graph space test",
+            "cpu_limit": 100,
+            "memory_limit": 100,
+            "compute_cpu_limit": 100,
+            "compute_memory_limit": 100,
+            "storage_limit": 100,
+            "oltp_namespace": "hgser",
+            "olap_namespace": "hgcp",
+            "operator_image_path": _cfg.operator_image_path,
+            "internal_algorithm_image_url": _cfg.internal_algorithm_image_url,
+            "storage_namespace": "storage",
+            "max_graph_number": 50,
+            "max_role_number": 10,
+            "auth": True,
+            "configs": {}
         }
         code, res = GraphSpace().create_graph_space(body=body, auth=auth)
         print(code, res)
@@ -66,22 +67,22 @@ class TestGraphSpace:
         :return:
         """
         body = {
-          "name": graph_space_name,
-          "description": "graph space test",
-          "cpu_limit": 100,
-          "memory_limit": 100,
-          "compute_cpu_limit": 100,
-          "compute_memory_limit": 100,
-          "storage_limit": 100,
-          "oltp_namespace": "hgser",
-          "olap_namespace": "hgcp",
-          "operator_image_path": _cfg.operator_image_path,
-          "internal_algorithm_image_url": _cfg.internal_algorithm_image_url,
-          "storage_namespace": "storage",
-          "max_graph_number": 50,
-          "max_role_number": 10,
-          "auth": False,
-          "configs": {}
+            "name": graph_space_name,
+            "description": "graph space test",
+            "cpu_limit": 100,
+            "memory_limit": 100,
+            "compute_cpu_limit": 100,
+            "compute_memory_limit": 100,
+            "storage_limit": 100,
+            "oltp_namespace": "hgser",
+            "olap_namespace": "hgcp",
+            "operator_image_path": _cfg.operator_image_path,
+            "internal_algorithm_image_url": _cfg.internal_algorithm_image_url,
+            "storage_namespace": "storage",
+            "max_graph_number": 50,
+            "max_role_number": 10,
+            "auth": False,
+            "configs": {}
         }
         code, res = GraphSpace().create_graph_space(body=body, auth=auth)
         print(code, res)

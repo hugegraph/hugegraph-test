@@ -48,7 +48,7 @@ def exec_gremlin(query=None, space=None, graph=None, host=None, port=None):
     """
     执行gremlin语句
     """
-    header = {"Authorization": "Basic YWRtaW46YWRtaW4=", "Content-Type": "application/json"} 
+    header = {"Authorization": "Basic YWRtaW46YWRtaW4=", "Content-Type": "application/json"}
     body = {
         "gremlin": query,
         "bindings": {},
@@ -58,7 +58,7 @@ def exec_gremlin(query=None, space=None, graph=None, host=None, port=None):
     url = "http://%s:%s/gremlin" % (host, port)
     res = requests.request('post', url, headers=header, json=body)
     print(res.status_code, res.content)
-    assert(res.status_code == 200)
+    assert (res.status_code == 200)
 
 
 def run_cmd(cmd):
@@ -73,7 +73,7 @@ def run_cmd(cmd):
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
         res.communicate()
-        assert(res.returncode == 0)
+        assert (res.returncode == 0)
     except (SystemExit, KeyboardInterrupt):
         raise
 
@@ -89,10 +89,10 @@ def run_main(scene, need_pre=None):
             if gremlin_cmd:
                 print(gremlin_cmd)
                 exec_gremlin(
-                    query=gremlin_cmd, 
-                    space=p_cfg.graph_space, 
-                    graph=p_cfg.graph, 
-                    host=p_cfg.host, 
+                    query=gremlin_cmd,
+                    space=p_cfg.graph_space,
+                    graph=p_cfg.graph,
+                    host=p_cfg.host,
                     port=p_cfg.port
                 )
 
@@ -116,7 +116,8 @@ if __name__ == '__main__':
 
     print("测试场景如下:")
     print(p_cfg.scenes.keys())
-    var_scene = input("根据提示选择测试场景并说明是否需要执行前置条件[例如:insert_single_vertex,yes;select_vertex_byId,no]\n输入:")
+    var_scene = input(
+        "根据提示选择测试场景并说明是否需要执行前置条件[例如:insert_single_vertex,yes;select_vertex_byId,no]\n输入:")
     if var_scene:
         for each in var_scene.split(";"):
             if "," in each:
@@ -125,18 +126,11 @@ if __name__ == '__main__':
             else:
                 each_scene = each
                 need_pre = "yes"
-            
-            if  each_scene in p_cfg.scenes.keys():
+
+            if each_scene in p_cfg.scenes.keys():
                 run_main(p_cfg.scenes[each_scene], need_pre=need_pre)
             else:
                 print("输入的测试场景: %s不存在, 请确认后重新执行" % each_scene)
     else:
         for each_scene in p_cfg.scenes.items():
             run_main(each_scene[1], need_pre='yes')
-
-
-
-
-    
-
-

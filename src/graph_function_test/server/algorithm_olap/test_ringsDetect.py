@@ -403,4 +403,3 @@ class TestRingsDetect02:
 
 if __name__ == '__main__':
     pass
-

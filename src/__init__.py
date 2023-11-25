@@ -85,4 +85,3 @@ if __name__ == "__main__":
     print(TestClass('a', 'b').test3(7, 8))
 
     print(test_founction(1, 2))
-

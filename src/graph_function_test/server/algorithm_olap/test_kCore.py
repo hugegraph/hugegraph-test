@@ -104,7 +104,7 @@ class TestKCore01:
         """
         :return:
         """
-        body = {"direction": "OUT", "k":2 }
+        body = {"direction": "OUT", "k": 2}
         code, res = Algorithm().post_kcore(body, auth=auth)
         id = res["task_id"]
         if id > 0:
@@ -118,7 +118,7 @@ class TestKCore01:
         """
         :return:
         """
-        body = {"label": "created", "k":2}
+        body = {"label": "created", "k": 2}
         code, res = Algorithm().post_kcore(body, auth=auth)
         id = res["task_id"]
         if id > 0:
@@ -375,7 +375,7 @@ class TestKCore01:
             assert result == {'kcores': []}
         else:
             assert 0
-            
+
 
 @pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
 class TestKCore02:
@@ -392,7 +392,7 @@ class TestKCore02:
         cmd = "%s/bin/hugegraph-loader.sh -h %s  -p %d  -g %s -f %s -s %s " \
               "--clear-all-data true "
         InsertData(part_cmd=cmd, schema='schema_checkVertex.groovy', struct='struct_checkVertex.json',
-                         dir='network').load_graph()
+                   dir='network').load_graph()
 
     @staticmethod
     def teardown_class(self):
@@ -415,7 +415,7 @@ class TestKCore02:
             assert result == {'kcores': []}
         else:
             assert 0
-            
+
 
 if __name__ == '__main__':
     pass

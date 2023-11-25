@@ -145,7 +145,7 @@ class TestDegreeCentrality:
             result = get_task_res(id, 120, auth=auth)
             print(result)
             assert result == {'2:lop': 1, '1:josh': 1, '1:marko': 3,
-                               '1:peter': 3, '1:vadas': 1, '2:ripple': 3}
+                              '1:peter': 3, '1:vadas': 1, '2:ripple': 3}
         else:
             assert 0
 

@@ -6,6 +6,7 @@ create_time: 2020/4/22 5:17 下午
 """
 import sys
 import os
+
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../..')
 
@@ -21,6 +22,7 @@ class AuthBody(object):
     """
     权限公共方法
     """
+
     def __init__(self):
         """初始化"""
         self.auth = Auth()

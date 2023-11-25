@@ -17,7 +17,6 @@ from src.common.loader import InsertData
 from src.config import basic_config as _cfg
 from src.common.tools import clear_graph
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
@@ -53,4 +52,3 @@ class TestVertexShard(unittest.TestCase):
 
 if __name__ == "__main__":
     pass
-
