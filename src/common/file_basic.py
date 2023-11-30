@@ -34,8 +34,6 @@ def is_match_re(dir_path, re_rule):
         if match_obj is not None:
             res = name
             break
-        else:
-            continue
     return res
 
 

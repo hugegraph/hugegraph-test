@@ -26,11 +26,11 @@ def get_code(pwd, git_obj, code_dir):
     url = git_obj['url']
     if not is_match_re(pwd, code_dir):
         clone_cmd = 'cd %s && git clone %s && cd %s && git checkout %s' % (pwd, url, code_dir, branch)
-        print('clone code: ' + clone_cmd)
+        print('clone code cmd: ' + clone_cmd)
         os.system(clone_cmd)
     else:
         pull_cmd = 'cd %s/%s && git checkout %s && git pull' % (pwd, code_dir, branch)
-        print('pull code: ' + pull_cmd)
+        print('pull code cmd: ' + pull_cmd)
         os.system(pull_cmd)
 
 
@@ -53,7 +53,7 @@ def compile_package(dir_code_path):
         print(cmd)
         os.system(cmd)
     else:
-        cmd = 'cd %s && mvn clean package -Dmaven.test.skip=true -q | grep \"tar.gz\"' % dir_code_path
+        cmd = 'cd %s && mvn clean package -DskipTests -ntp | grep \"tar.gz\"' % dir_code_path
         print(cmd)
         os.system(cmd)
 
@@ -126,21 +126,24 @@ class Deploy:
         self.hubble_git = obj.hubble_git
 
     @staticmethod
-    def server(self):
+    def server(conf):
         """
         :return:
         """
-        code_dir = 'hugegraph'
-        code_dir_path = self.code_path + '/' + code_dir
-        re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
+        code_dir = 'incubator-hugegraph'
+        server_module = 'hugegraph-server'
+        build_dir_prefix = 'apache-hugegraph-incubating'
+        code_dir_path = os.path.join(conf.code_path, code_dir)
+        server_module_path = os.path.join(code_dir_path, server_module)
+        re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % build_dir_prefix
 
-        is_exists_path(self.code_path)
-        get_code(self.code_path, self.server_git, code_dir)
+        is_exists_path(conf.code_path)
+        get_code(conf.code_path, conf.server_git, code_dir)
         compile_package(code_dir_path)
         #  start graph_server
-        package_dir_name = is_match_re(code_dir_path, re_dir)
-        package_dir_path = code_dir_path + '/' + package_dir_name
-        set_server_properties(package_dir_path, self.graph_host, self.server_port, self.gremlin_port)
+        package_dir_name = is_match_re(server_module_path, re_dir)
+        package_dir_path = os.path.join(server_module_path, package_dir_name)
+        set_server_properties(package_dir_path, conf.graph_host, conf.server_port, conf.gremlin_port)
         start_graph(package_dir_path, 'server')
 
     @staticmethod

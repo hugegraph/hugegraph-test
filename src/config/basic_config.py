@@ -4,13 +4,19 @@ author     : lxb
 note       : 相关测试配置项
 create_time: 2020/4/22 5:17 下午
 """
-code_path = '/home/runner/work/hugegraph-test/hugegraph-test/graph'
+import os.path
+
+# code_path = '/home/runner/work/hugegraph-test/hugegraph-test/graph'
+code_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 
 is_auth = False
 is_https = False
 
 # server
-server_git = {'branch': 'c0dff5b233e853716ca6f3f28a5cda05e6f3d639', 'url': 'https://github.com/hugegraph/hugegraph.git'}
+server_git = {
+    'branch': 'master',
+    'url': 'https://github.com/apache/incubator-hugegraph.git'
+}
 graph_type = 'open_source'  # open_source || business
 
 server_port = 8080
