@@ -40,7 +40,7 @@ def test_create_range_vertex_indexlabel():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age')" \
-            ".primaryKeys('name').ifNotExist().create();"\
+            ".primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('knows').sourceLabel('person').targetLabel('person')" \
             ".properties('date').ifNotExist().create()"
     code, res = Gremlin().gremlin_post(query, auth=auth)
@@ -73,7 +73,7 @@ def test_create_range_edge_indexlabel():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age')" \
-            ".primaryKeys('name').ifNotExist().create();"\
+            ".primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('knows').sourceLabel('person').targetLabel('person')" \
             ".properties('date').ifNotExist().create()"
     code, res = Gremlin().gremlin_post(query, auth=auth)
@@ -106,7 +106,7 @@ def test_create_secondary_vertex_indexlabel():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age')" \
-            ".primaryKeys('name').ifNotExist().create();"\
+            ".primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('knows').sourceLabel('person').targetLabel('person')" \
             ".properties('date').ifNotExist().create()"
     code, res = Gremlin().gremlin_post(query, auth=auth)
@@ -139,7 +139,7 @@ def test_create_secondary_edge_indexlabel():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age')" \
-            ".primaryKeys('name').ifNotExist().create();"\
+            ".primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('knows').sourceLabel('person').targetLabel('person')" \
             ".properties('date').ifNotExist().create()"
     code, res = Gremlin().gremlin_post(query, auth=auth)
@@ -172,7 +172,7 @@ def test_create_search_vertex_indexlabel_int_error():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age')" \
-            ".primaryKeys('name').ifNotExist().create();"\
+            ".primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('knows').sourceLabel('person').targetLabel('person')" \
             ".properties('date').ifNotExist().create()"
     code, res = Gremlin().gremlin_post(query, auth=auth)
@@ -203,7 +203,7 @@ def test_create_search_vertex_indexlabel_text():
             "graph.schema().propertyKey('address').asText().ifNotExist().create();" \
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age', 'address')" \
-            ".primaryKeys('name').ifNotExist().create();"\
+            ".primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('knows').sourceLabel('person').targetLabel('person')" \
             ".properties('date', 'address').ifNotExist().create()"
     code, res = Gremlin().gremlin_post(query, auth=auth)
@@ -237,7 +237,7 @@ def test_create_search_edge_indexlabel_text():
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().propertyKey('address').asText().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age')" \
-            ".primaryKeys('name').ifNotExist().create();"\
+            ".primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('knows').sourceLabel('person').targetLabel('person')" \
             ".properties('date', 'address').ifNotExist().create()"
     code, res = Gremlin().gremlin_post(query, auth=auth)
@@ -270,7 +270,7 @@ def test_create_shard_vertex_indexlabel():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age')" \
-            ".primaryKeys('name').ifNotExist().create();"\
+            ".primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('knows').sourceLabel('person').targetLabel('person')" \
             ".properties('date').ifNotExist().create()"
     code, res = Gremlin().gremlin_post(query, auth=auth)
@@ -303,7 +303,7 @@ def test_create_shard_edge_indexlabel():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age')" \
-            ".primaryKeys('name').ifNotExist().create();"\
+            ".primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('knows').sourceLabel('person').targetLabel('person')" \
             ".properties('date').ifNotExist().create()"
     code, res = Gremlin().gremlin_post(query, auth=auth)
@@ -336,7 +336,7 @@ def test_create_unique_vertex_indexlabel():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age')" \
-            ".primaryKeys('name').ifNotExist().create();"\
+            ".primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('knows').sourceLabel('person').targetLabel('person')" \
             ".properties('date').ifNotExist().create()"
     code, res = Gremlin().gremlin_post(query, auth=auth)
@@ -369,7 +369,7 @@ def test_create_unique_edge_indexlabel():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age')" \
-            ".primaryKeys('name').ifNotExist().create();"\
+            ".primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('knows').sourceLabel('person').targetLabel('person')" \
             ".properties('date').ifNotExist().create()"
     code, res = Gremlin().gremlin_post(query, auth=auth)
@@ -402,7 +402,7 @@ def test_get_indexlabel_by_name():
             "graph.schema().propertyKey('age').asInt().ifNotExist().create();" \
             "graph.schema().propertyKey('date').asDate().ifNotExist().create();" \
             "graph.schema().vertexLabel('person').properties('name', 'age')" \
-            ".primaryKeys('name').ifNotExist().create();"\
+            ".primaryKeys('name').ifNotExist().create();" \
             "graph.schema().edgeLabel('knows').sourceLabel('person').targetLabel('person')" \
             ".properties('date').ifNotExist().create();" \
             "graph.schema().indexLabel('rangeByAgeByVertex').onV('person').by('age').range().ifNotExist().create();"
@@ -468,5 +468,3 @@ def test_delete_indexlabel():
 
 if __name__ == "__main__":
     pass
-
-

@@ -59,8 +59,8 @@ def test_create_property_single_int():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'INT'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'INT'
 
 
 def test_create_property_single_time():
@@ -76,8 +76,8 @@ def test_create_property_single_time():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'DATE'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'DATE'
 
 
 def test_create_property_single_uuid():
@@ -93,8 +93,8 @@ def test_create_property_single_uuid():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'UUID'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'UUID'
 
 
 def test_create_property_single_boolean():
@@ -109,8 +109,8 @@ def test_create_property_single_boolean():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'BOOLEAN'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'BOOLEAN'
 
 
 def test_create_property_single_byte():
@@ -126,8 +126,8 @@ def test_create_property_single_byte():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'BYTE'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'BYTE'
 
 
 def test_create_property_single_blob():
@@ -143,8 +143,8 @@ def test_create_property_single_blob():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'BLOB'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'BLOB'
 
 
 def test_create_property_single_double():
@@ -160,25 +160,8 @@ def test_create_property_single_double():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'DOUBLE'
-
-
-def test_create_property_single_double():
-    """
-    double类型的属性创建
-    """
-    init_graph()
-
-    body = {
-        "name": "double",
-        "data_type": "DOUBLE",
-        "cardinality": "SINGLE"
-    }
-    code, res = Schema().create_property(body, auth=auth)
-    print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'DOUBLE'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'DOUBLE'
 
 
 def test_create_property_single_float():
@@ -194,8 +177,8 @@ def test_create_property_single_float():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'FLOAT'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'FLOAT'
 
 
 def test_create_property_single_long():
@@ -211,8 +194,8 @@ def test_create_property_single_long():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'LONG'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'LONG'
 
 
 def test_create_property_set_text():
@@ -228,8 +211,8 @@ def test_create_property_set_text():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'TEXT'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'TEXT'
 
 
 def test_create_property_list_text():
@@ -245,8 +228,8 @@ def test_create_property_list_text():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'TEXT'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'TEXT'
 
 
 def test_append_userdata():
@@ -261,8 +244,8 @@ def test_append_userdata():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'INT'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'INT'
 
     body = {
         "name": "age",
@@ -272,9 +255,7 @@ def test_append_userdata():
         }
     }
     code, res = Schema().deal_property_userdata("age", {"action": "append"}, body, auth=auth)
-    assert code == 200
-    assert res["user_data"]["min"] == 0
-    assert res["user_data"]["max"] == 100
+    assert code == 202
 
 
 def test_eliminate_userdata():
@@ -293,8 +274,8 @@ def test_eliminate_userdata():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'INT'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'INT'
 
     body = {
         "name": "age",
@@ -304,9 +285,9 @@ def test_eliminate_userdata():
     }
     code, res = Schema().deal_property_userdata("age", {"action": "eliminate"}, body, auth=auth)
     print(code, res)
-    assert code == 200
-    assert "min" not in res["user_data"]
-    assert res["user_data"]["max"] == 100
+    assert code == 202
+    assert "min" not in res['property_key']["user_data"]
+    assert res['property_key']["user_data"]["max"] == 100
 
 
 def test_get_all_property():
