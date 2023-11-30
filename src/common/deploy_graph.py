@@ -172,14 +172,22 @@ class Deploy:
         start_graph(package_dir_path, 'hubble')
 
     @staticmethod
-    def loader(self):
+    def toolchain(conf):
+        code_dir = 'incubator-hugegraph-toolchain'
+        code_dir_path = os.path.join(conf.code_path, code_dir)
+        is_exists_path(conf.code_path)
+        get_code(conf.code_path, conf.toolchain_git, code_dir)
+        compile_package(code_dir_path)
+
+    @staticmethod
+    def loader(conf):
         """
         :return:
         """
         code_dir = 'hugegraph-loader'
-        code_dir_path = self.code_path + '/' + code_dir
-        is_exists_path(self.code_path)
-        get_code(self.code_path, self.loader_git, code_dir)
+        code_dir_path = conf.code_path + '/' + code_dir
+        is_exists_path(conf.code_path)
+        get_code(conf.code_path, conf.loader_git, code_dir)
         compile_package(code_dir_path)
 
     @staticmethod

@@ -23,13 +23,13 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
-class TestAllShorttestPath(unittest.TestCase):
+class TestAllShortestPath(unittest.TestCase):
     """
     查询所有最短路径
     """
 
     @staticmethod
-    def setup_class(self):
+    def setup_class():
         """
         测试类开始
         """

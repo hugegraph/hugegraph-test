@@ -29,6 +29,12 @@ graph_name = 'hugegraph'
 admin_password = {}
 test_password = {}
 
+# toolchain
+toolchain_git = {
+    'branch': 'master',
+    'url': 'https://github.com/apache/incubator-hugegraph-toolchain.git'
+}
+
 # loader
 loader_git = {'branch': 'master', 'url': 'https://github.com/hugegraph/hugegraph-loader.git'}
 loader_store_file = ""
