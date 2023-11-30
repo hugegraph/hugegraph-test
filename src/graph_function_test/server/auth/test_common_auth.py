@@ -882,12 +882,12 @@ class TestCommonAuth(unittest.TestCase):
                 {'type': 'EDGE_LABEL'},
                 {'type': 'INDEX_LABEL'}
             ],
-             'permission': 'READ', 'name': 'propertyKey_read'},
+                'permission': 'READ', 'name': 'propertyKey_read'},
             {'target_list': [
                 {'type': 'INDEX_LABEL'},
                 {'type': 'TASK'}
             ],
-             'permission': 'WRITE', 'name': 'indexLabel_write'},
+                'permission': 'WRITE', 'name': 'indexLabel_write'},
             {'target_list': [
                 {'type': 'TASK'}
             ], 'permission': 'EXECUTE', 'name': 'task_execute'}

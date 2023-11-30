@@ -1462,7 +1462,8 @@ class TestDetailAuth(unittest.TestCase):
             {"target_list": [{"type": "PROPERTY_KEY"},
                              {"type": "VERTEX_LABEL"},
                              {"type": "EDGE_LABEL"},
-                             {"type": "EDGE", "label": "knows", "properties": {"address": "P.contains(\"北京市海淀区\")"}}],
+                             {"type": "EDGE", "label": "knows",
+                              "properties": {"address": "P.contains(\"北京市海淀区\")"}}],
              "permission": "READ",
              "name": "edge_read"}
         ]
@@ -1519,7 +1520,8 @@ class TestDetailAuth(unittest.TestCase):
         permission_list = [
             {"target_list": [{"type": "PROPERTY_KEY"}, {"type": "VERTEX_LABEL"}, {"type": "EDGE_LABEL"},
                              {"type": "VERTEX"}], "permission": "READ", "name": "vertexlabel_pro_read"},
-            {"target_list": [{"type": "EDGE", "label": "knows", "properties": {"address": "P.contains(\"北京市海淀区\")"}}],
+            {"target_list": [
+                {"type": "EDGE", "label": "knows", "properties": {"address": "P.contains(\"北京市海淀区\")"}}],
              "permission": "WRITE", "name": "edge_write"}
         ]
         user_id = set_auth.post_auth(permission_list)
@@ -1575,7 +1577,8 @@ class TestDetailAuth(unittest.TestCase):
         permission_list = [
             {"target_list": [{"type": "PROPERTY_KEY"}, {"type": "VERTEX_LABEL"}, {"type": "EDGE_LABEL"},
                              {"type": "EDGE"}], "permission": "READ", "name": "vertexlabel_pro_read"},
-            {"target_list": [{"type": "EDGE", "label": "knows", "properties": {"address": "P.contains(\"北京市海淀区\")"}}],
+            {"target_list": [
+                {"type": "EDGE", "label": "knows", "properties": {"address": "P.contains(\"北京市海淀区\")"}}],
              "permission": "DELETE", "name": "vertex_delete"}
         ]
         user_id = set_auth.post_auth(permission_list)
