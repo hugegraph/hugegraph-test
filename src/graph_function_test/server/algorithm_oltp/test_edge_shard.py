@@ -17,7 +17,6 @@ from src.common.loader import InsertData
 from src.config import basic_config as _cfg
 from src.common.tools import clear_graph
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
@@ -29,7 +28,7 @@ class TestEdgeShard(unittest.TestCase):
     """
 
     @staticmethod
-    def setup_class(self):
+    def setup_class():
         """
         测试类开始
         """
@@ -40,7 +39,7 @@ class TestEdgeShard(unittest.TestCase):
 
         InsertData(gremlin='gremlin_hlm.txt').gremlin_graph()
 
-    def test_reqiured_params(self):
+    def test_required_params(self):
         """
         :return:
         """
@@ -54,7 +53,13 @@ class TestEdgeShard(unittest.TestCase):
                 'shards': [
                     {
                         'start': 'hzE65Y+y5YCZgggBAIcxOuWPsuWFrA==',
-                        'end': 'ijI66LW15aeo5aiYgggEAIoyOui0vuaOouaYpQA=', 'length': 0
+                        'end': 'iLG65yK0ZZQhM9hMwUeanbfg9ucdNXNHUXNMUoA=',
+                        'length': 0
+                    },
+                    {
+                        'start': 'iLG65yK0ZZQhM9hMwUeanbfg9ucdNXNHUXNMUoA=',
+                        'end': 'ijI66LW15aeo5aiYgggEAIoyOui0vuaOouaYpQA=',
+                        'length': 0
                     }
                 ]
             }
@@ -63,4 +68,3 @@ class TestEdgeShard(unittest.TestCase):
 
 if __name__ == "__main__":
     pass
-
