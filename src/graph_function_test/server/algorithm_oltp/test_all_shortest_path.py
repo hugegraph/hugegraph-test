@@ -205,7 +205,8 @@ class TestAllShortestPath(unittest.TestCase):
         )
         print(code, res)
         self.assertEqual(code, 200, "code is error")
-        self.assertEqual(res, {'paths': []}, 'res is error')
+        self.assertEqual(res['edges'], [], 'res is error')
+        self.assertEqual(res['paths'], [], 'res is error')
 
     def test_param_direction_valueIn(self):
         """
