@@ -179,7 +179,7 @@ class TestAllShortestPath(unittest.TestCase):
         )
         print(code, res)
         self.assertEqual(code, 200, "code is error")
-        self.assertEqual(res, {'paths': []}, 'res is error')
+        self.assertEqual(res['paths'], [], 'res is error')
 
     def test_param_maxDepth_valueInvalid(self):
         """
@@ -192,7 +192,9 @@ class TestAllShortestPath(unittest.TestCase):
         )
         print(code, res)
         self.assertEqual(code, 200, "code is error")
-        self.assertEqual(res, {'paths': []}, 'res is error')
+        self.assertEqual(res['vertices'], [], 'res vertices are error')
+        self.assertEqual(res['edges'], [], 'res edges are error')
+        self.assertEqual(res['paths'], [], 'res paths are error')
 
     def test_param_direction_valueOut(self):
         """
