@@ -29,7 +29,7 @@ class TestShortestPath(unittest.TestCase):
     """
 
     @staticmethod
-    def setup_class(self):
+    def setup_class():
         """
         测试类开始
         """
@@ -40,7 +40,7 @@ class TestShortestPath(unittest.TestCase):
 
         InsertData(gremlin='gremlin_hlm.txt').gremlin_graph()
 
-    def test_reqiured_params(self):
+    def test_required_params(self):
         """
         source、max_depth
         :return:
@@ -49,7 +49,8 @@ class TestShortestPath(unittest.TestCase):
         code, res = Traverser().get_shortestPath(param_json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
-        self.assertEqual(res, {'path': ['1:贾宝玉', '2:王夫人', '1:贾政', '1:贾代善']})
+        self.assertEqual(res['path'], ['1:贾宝玉', '2:王夫人', '1:贾政', '1:贾代善'])
+        self.assertEqual(res['vertices'], ['1:贾宝玉', '2:王夫人', '1:贾政', '1:贾代善'])
 
     def test_direction_in(self):
         """
@@ -60,7 +61,8 @@ class TestShortestPath(unittest.TestCase):
         code, res = Traverser().get_shortestPath(param_json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
-        self.assertEqual(res, {'path': ['1:贾宝玉', '2:王夫人', '1:贾政', '1:贾代善']})
+        self.assertEqual(res['path'], ['1:贾宝玉', '2:王夫人', '1:贾政', '1:贾代善'])
+        self.assertEqual(res['vertices'], ['1:贾宝玉', '2:王夫人', '1:贾政', '1:贾代善'])
 
     def test_direction_out(self):
         """
@@ -71,7 +73,8 @@ class TestShortestPath(unittest.TestCase):
         code, res = Traverser().get_shortestPath(param_json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
-        self.assertEqual(res, {'path': ['1:贾代善', '1:贾政', '2:王夫人', '1:贾宝玉']})
+        self.assertEqual(res['path'], ['1:贾代善', '1:贾政', '2:王夫人', '1:贾宝玉'])
+        self.assertEqual(res['vertices'], ['1:贾代善', '1:贾政', '2:王夫人', '1:贾宝玉'])
 
 
 if __name__ == "__main__":
