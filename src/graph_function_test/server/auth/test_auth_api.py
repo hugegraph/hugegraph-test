@@ -238,7 +238,7 @@ class Target(unittest.TestCase):
         code, res = Auth().post_targets(body, auth=auth)
         print(code, res)
         self.assertEqual(code, 201, msg='code check fail')
-        self.assertEqual(res['id'], '-77:gremlin', 'res check fail')
+        self.assertEqual(res['id'], '-44:gremlin', 'res check fail')
 
     def test_target_delete(self):
         """
@@ -287,7 +287,7 @@ class Target(unittest.TestCase):
         code, res = Auth().get_targets(auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['targets'][0]['id'], '-77:gremlin', 'res check fail')
+        self.assertEqual(res['targets'][0]['id'], '-44:gremlin', 'res check fail')
 
     def test_target_one(self):
         """
@@ -312,7 +312,7 @@ class Target(unittest.TestCase):
         code, res = Auth().get_target(res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], '-77:gremlin', 'res check fail')
+        self.assertEqual(res['id'], '-44:gremlin', 'res check fail')
 
     def test_target_update(self):
         """
