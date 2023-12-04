@@ -30,6 +30,9 @@ class Access(unittest.TestCase):
     绑定资源和用户组
     """
 
+    group_id = None
+    target_id = None
+
     def setUp(self):
         """
         测试case开始
@@ -40,6 +43,8 @@ class Access(unittest.TestCase):
         body = {"group_name": "gremlin", "group_description": "group can execute gremlin"}
         code, res = Auth().post_groups(body, auth=auth)
         print(code, res)
+        self.group_id = res.get('id', None)
+        assert self.group_id is not None
         # 创建 target
         body = {
             "target_url": '%s:%d' % (_cfg.graph_host, _cfg.server_port),
@@ -55,23 +60,25 @@ class Access(unittest.TestCase):
         }
         code, res = Auth().post_targets(body, auth=auth)
         print(code, res)
+        self.target_id = res.get('id')
+        assert self.target_id is not None
 
     def test_access_create(self):
         """
         创建 access
         """
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': self.group_id, 'target': self.target_id, 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=auth)
         print(code, res)
         self.assertEqual(code, 201, msg='code check fail')
-        self.assertEqual(res['id'], 'S-69:gremlin>-88>18>S-77:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'res check fail')
 
     def test_access_delete(self):
         """
         删除 access
         """
         # premise
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=auth)
         # test
         code, res = Auth().delete_accesses(res['id'], auth=auth)
@@ -83,40 +90,40 @@ class Access(unittest.TestCase):
         获取 access
         """
         # premise
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=auth)
         # test
         code, res = Auth().get_accesses(auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['accesses'][0]['id'], 'S-69:gremlin>-88>18>S-77:gremlin', 'res check fail')
+        self.assertEqual(res['accesses'][0]['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'res check fail')
 
     def test_access_one(self):
         """
         获取 access
         """
         # premise
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=auth)
         # test
         code, res = Auth().get_access(res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], 'S-69:gremlin>-88>18>S-77:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'res check fail')
 
     def test_access_update(self):
         """
         更新 access
         """
         # premise
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=auth)
         # test
         body = {"access_description": "access description rename"}
         code, res = Auth().update_accesses(body, res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], 'S-69:gremlin>-88>18>S-77:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'res check fail')
 
 
 @pytest.mark.skipif(_cfg.is_auth is False, reason='hugegraph启动时没有配置权限')
