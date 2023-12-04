@@ -9,7 +9,7 @@ import os.path
 # code_path = '/home/runner/work/hugegraph-test/hugegraph-test/graph'
 code_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 
-is_auth = False
+is_auth = True
 is_https = False
 
 # server
@@ -26,8 +26,8 @@ graph_host = '127.0.0.1'
 graph_name = 'hugegraph'
 
 # 测试使用的权限配置
-admin_password = {}
-test_password = {}
+admin_password = {'admin': 'admin'}
+test_password = {'tester': '123456'}
 
 # toolchain
 toolchain_git = {
