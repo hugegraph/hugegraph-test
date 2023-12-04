@@ -17,7 +17,7 @@ jobs:
   # job: openSource and no auth
   openSource_no_auth:
     name: openSource and no auth
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
       - name: install JDK 8
         uses: actions/setup-java@v2
@@ -75,7 +75,7 @@ jobs:
   # job: openSource and exist auth
   openSource_exist_auth:
     name: openSource and exist auth
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
       - name: install JDK 8
         uses: actions/setup-java@v2

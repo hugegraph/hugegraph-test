@@ -11,7 +11,7 @@ on:
 
 jobs:
   code_statistics:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
      - id: stat_cmd
        run: |
