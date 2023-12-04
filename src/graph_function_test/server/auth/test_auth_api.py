@@ -174,7 +174,7 @@ class Groups(unittest.TestCase):
         code, res = Auth().get_groups(auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['groups'][0]['id'], '-69:gremlin', 'res check fail')
+        self.assertEqual(res['groups'][0]['id'], '-36:gremlin', 'res check fail')
 
     def test_groups_one(self):
         """
@@ -188,7 +188,7 @@ class Groups(unittest.TestCase):
         code, res = Auth().get_group(res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], '-69:gremlin', 'res check fail')
+        self.assertEqual(res['id'], '-36:gremlin', 'res check fail')
 
     def test_groups_update(self):
         """
