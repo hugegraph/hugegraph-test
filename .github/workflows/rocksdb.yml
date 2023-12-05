@@ -29,9 +29,18 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      - name: Get Yarn path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: install python 3.10
         uses: actions/setup-python@v4
