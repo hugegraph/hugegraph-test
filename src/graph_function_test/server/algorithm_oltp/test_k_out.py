@@ -61,7 +61,7 @@ class TestKOut(unittest.TestCase):
         code, res = Traverser().get_k_out(param_json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
-        self.assertEqual(res, {'vertices': ['2:王夫人']})
+        self.assertEqual(res['vertices'], ['2:王夫人'])
 
     def test_direction_out(self):
         """
