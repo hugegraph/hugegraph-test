@@ -45,8 +45,6 @@ def is_exists_path(dir_name):
     :return: True || False
     """
     if os.path.exists(dir_name):
-        shutil.rmtree(dir_name)
-        os.makedirs(dir_name)
         return True
     else:
         os.makedirs(dir_name)
