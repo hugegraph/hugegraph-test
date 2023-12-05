@@ -54,7 +54,7 @@ def compile_package(dir_code_path):
         print(cmd)
         os.system(cmd)
     else:
-        cmd = 'cd %s && mvn clean package -DskipTests -ntp' % dir_code_path
+        cmd = 'cd %s && mvn clean package -P stage -DskipTests -ntp' % dir_code_path
         print(cmd)
         os.system(cmd)
 

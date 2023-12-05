@@ -518,12 +518,8 @@ def test_load_close_print():
     print(str(stdout) + '\n' + str(stderr))
     res_assert = InsertData().loader_assert()
     print(res_assert)
-    print('========================')
-    print(str(stdout, 'utf-8'))
-    print(res_assert)
-    print('========================')
     assert res.returncode == 0
-    assert str(stdout, 'utf-8').strip().split('\n')[1] == 'count metrics'
+    assert str(stdout, 'utf-8').split('\n')[1] == 'count metrics'
     assert res_assert[0] == 49015
     assert res_assert[1] == 117356
 
@@ -540,12 +536,8 @@ def test_load_help_message():
     print(str(stdout) + '\n' + str(stderr))
     res_assert = InsertData().loader_assert()
     print(res_assert)
-    print('=' * 50)
-    print(str(stdout, 'utf-8'))
-    print(res)
-    print('=' * 50)
     assert res.returncode == 0
-    assert str(stdout, 'utf-8').strip().startswith("Usage: <main class> [options]")
+    assert str(stdout, 'utf-8').startswith("Usage: <main class> [options]")
 
 
 if __name__ == "__main__":
