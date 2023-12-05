@@ -54,7 +54,7 @@ def compile_package(dir_code_path):
         print(cmd)
         os.system(cmd)
     else:
-        cmd = 'cd %s && mvn clean package -DskipTests -ntp | grep \"tar.gz\"' % dir_code_path
+        cmd = 'cd %s && mvn clean package -DskipTests' % dir_code_path
         print(cmd)
         os.system(cmd)
 
