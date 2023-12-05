@@ -714,7 +714,7 @@ class TestBase(unittest.TestCase):
         code, res = Schema.create_vertexLabel(body, graph_id)
         self.assertEqual(code, 200, "响应状态码不正确")
         self.assertEqual(res['status'], 400, "添加顶点类型状态码不正确")
-        self.assertEqual(res['message'], "顶点类型 vertexLabel1 的主键属性不能为空", "message信息提示错误")
+        self.assertEqual(res['message'], "The primary keys of vertex label vertexLabel1 cant be null or empty", "message信息提示错误")
 
     def test_queryVertexLabel(self):
         """
