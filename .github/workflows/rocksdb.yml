@@ -23,6 +23,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '8'
+          distribution: 'adopt'
 
       - name: cache maven repository
         uses: actions/cache@v3
