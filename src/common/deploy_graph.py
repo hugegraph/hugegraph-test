@@ -13,6 +13,7 @@ sys.path.append(current_path + '/../../')
 from src.common.file_basic import is_match_re
 from src.common.file_basic import is_exists_path
 from src.common.file_basic import alter_properties
+from src.config import basic_config as _cfg
 
 
 def get_code(pwd, git_obj, code_dir):
@@ -80,6 +81,19 @@ def set_server_properties(package_dir_path, host, server_port, gremlin_port):
                      '#port: 8182',
                      'port: %d' % gremlin_port)
 
+    if _cfg.is_auth is True:
+        graph_conf = package_dir_path + f'/conf/graphs/{_cfg.graph_name}.properties'
+        alter_properties(graph_conf,
+                         'gremlin.graph=org.apache.hugegraph.HugeFactory'
+                         'gremlin.graph=org.apache.hugegraph.auth.HugeFactoryAuthProxy')
+
+        alter_properties(rest_conf,
+                         '#auth.authenticator=',
+                         'auth.authenticator=org.apache.hugegraph.auth.ConfigAuthenticator')
+
+        # alter_properties(gremlin_conf,
+        #                  )
+
 
 def set_hubble_properties(package_dir_path, host, port):
     """
@@ -140,11 +154,26 @@ class Deploy:
         is_exists_path(conf.code_path)
         get_code(conf.code_path, conf.server_git, code_dir)
         compile_package(code_dir_path)
-        #  start graph_server
+        # start graph_server
         package_dir_name = is_match_re(server_module_path, re_dir)
         package_dir_path = os.path.join(server_module_path, package_dir_name)
         set_server_properties(package_dir_path, conf.graph_host, conf.server_port, conf.gremlin_port)
         start_graph(package_dir_path, 'server')
+
+    @staticmethod
+    def toolchain(conf):
+        code_dir = 'incubator-hugegraph-toolchain'
+        code_dir_path = os.path.join(conf.code_path, code_dir)
+        is_exists_path(conf.code_path)
+        get_code(conf.code_path, conf.toolchain_git, code_dir)
+        compile_package(code_dir_path)
+
+        # set properties && start hubble
+        hubble_package_dir_name = os.path.join(code_dir_path,
+                                               'apache-hugegraph-toolchain-incubating-1.0.0',
+                                               'apache-hugegraph-hubble-incubating-1.0.0')
+        # set_hubble_properties(hubble_package_dir_name, conf.graph_host, conf.hubble_port)
+        start_graph(hubble_package_dir_name, 'hubble')
 
     @staticmethod
     def hubble(self):
@@ -170,14 +199,6 @@ class Deploy:
         package_dir_path = code_dir_path + '/' + package_dir_name
         set_hubble_properties(package_dir_path, self.graph_host, self.hubble_port)
         start_graph(package_dir_path, 'hubble')
-
-    @staticmethod
-    def toolchain(conf):
-        code_dir = 'incubator-hugegraph-toolchain'
-        code_dir_path = os.path.join(conf.code_path, code_dir)
-        is_exists_path(conf.code_path)
-        get_code(conf.code_path, conf.toolchain_git, code_dir)
-        compile_package(code_dir_path)
 
     @staticmethod
     def loader(conf):

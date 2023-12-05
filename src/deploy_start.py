@@ -18,26 +18,22 @@ def graph_deploy(param, conf_obj):
     """
     get package & install package
     :param conf_obj:
-    :param param: all、server、toolchain、hubble
+    :param param: all、server、toolchain
     """
     if param == 'server':
         Deploy.server(conf_obj)
     elif param == 'toolchain':
         Deploy.toolchain(conf_obj)
-    elif param == 'hubble':
-        Deploy.hubble(conf_obj)
     else:
         Deploy.server(conf_obj)
-        Deploy.loader(conf_obj)
-        Deploy.tools(conf_obj)
-        Deploy.hubble(conf_obj)
+        Deploy.toolchain(conf_obj)
 
 
 if __name__ == "__main__":
     param_size = len(sys.argv)
     if param_size == 2 \
-            and sys.argv[1] in ['all', 'server', 'toolchain', 'hubble']:
+            and sys.argv[1] in ['all', 'server', 'toolchain']:
         graph_deploy(sys.argv[1], basic_config)
     else:
-        print('failed: 执行脚本参数为[all,server,loader,tools,hubble]')
+        print('failed: 执行脚本参数为[all,server,toolchain]')
         exit(1)
