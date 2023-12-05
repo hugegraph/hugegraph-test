@@ -6,6 +6,7 @@ create_time: 2021/03/12
 """
 import re
 import os
+import shutil
 
 
 def alter_properties(file, old_str, new_str):
@@ -44,6 +45,8 @@ def is_exists_path(dir_name):
     :return: True || False
     """
     if os.path.exists(dir_name):
+        shutil.rmtree(dir_name)
+        os.makedirs(dir_name)
         return True
     else:
         os.makedirs(dir_name)
