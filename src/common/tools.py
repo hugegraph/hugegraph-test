@@ -35,7 +35,7 @@ def run_shell(cmd, graph_name=None, graph_host=None, graph_port=None):
     if graph_host is None:
         graph_host = _cfg.graph_host
 
-    ### source graph
+    # source graph
     protocol = 'http'
     protocol_cmd = ""
     if _cfg.is_https:
@@ -50,7 +50,7 @@ def run_shell(cmd, graph_name=None, graph_host=None, graph_port=None):
         auth_cmd = ' --user admin --password %s ' % _cfg.admin_password['admin']
     url = protocol + '://' + graph_host + ':' + str(graph_port)
 
-    ### target graph
+    # target graph
     run_cmd = ""
     if "migrate" in cmd:
         target_protocol = "http"
