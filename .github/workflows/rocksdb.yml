@@ -20,7 +20,7 @@ jobs:
     steps:
 
       - name: install JDK 11
-      - uses: actions/setup-java@v4
+        uses: actions/setup-java@v4
         with:
           java-version: '11'
           distribution: 'zulu'
