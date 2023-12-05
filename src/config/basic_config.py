@@ -9,7 +9,7 @@ import os.path
 # code_path = '/home/runner/work/hugegraph-test/hugegraph-test/graph'
 code_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 
-is_auth = True
+is_auth = False
 is_https = False
 
 # server
