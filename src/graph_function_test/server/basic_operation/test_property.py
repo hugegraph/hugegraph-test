@@ -42,8 +42,8 @@ def test_create_property_single_text():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'TEXT'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'TEXT'
 
 
 def test_create_property_single_int():
@@ -302,8 +302,8 @@ def test_get_all_property():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'INT'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'INT'
 
     code, res = Schema().get_all_properties(auth=auth)
     print(code, res)
@@ -324,8 +324,8 @@ def test_get_property_by_name():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'INT'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'INT'
 
     code, res = Schema().get_property_by_name('age', auth=auth)
     print(code, res)
@@ -345,12 +345,12 @@ def test_delete_property_by_name():
     }
     code, res = Schema().create_property(body, auth=auth)
     print(code, res)
-    assert code == 201
-    assert res['data_type'] == 'INT'
+    assert code == 202
+    assert res['property_key']['data_type'] == 'INT'
 
     code, res = Schema().delete_property_by_name('age', auth=auth)
     print(code, res)
-    assert code == 204
+    assert code == 202
 
 
 if __name__ == "__main__":
