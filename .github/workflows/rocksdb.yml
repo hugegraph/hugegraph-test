@@ -18,7 +18,7 @@ jobs:
     name: openSource and no auth
     runs-on: ubuntu-latest
     strategy:
-      mas-parallel: 3
+      max-parallel: 3
       matrix:
         python-version: [3.8, 3.9, 3.10, 3.11, 3.12]
 
