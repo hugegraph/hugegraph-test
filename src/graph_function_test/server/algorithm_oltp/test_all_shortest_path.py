@@ -17,19 +17,18 @@ from src.common.loader import InsertData
 from src.config import basic_config as _cfg
 from src.common.tools import clear_graph
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
-class TestAllShorttestPath(unittest.TestCase):
+class TestAllShortestPath(unittest.TestCase):
     """
     查询所有最短路径
     """
 
     @staticmethod
-    def setup_class(self):
+    def setup_class():
         """
         测试类开始
         """
@@ -179,7 +178,7 @@ class TestAllShorttestPath(unittest.TestCase):
         )
         print(code, res)
         self.assertEqual(code, 200, "code is error")
-        self.assertEqual(res, {'paths': []}, 'res is error')
+        self.assertEqual(res['paths'], [], 'res is error')
 
     def test_param_maxDepth_valueInvalid(self):
         """
@@ -192,7 +191,9 @@ class TestAllShorttestPath(unittest.TestCase):
         )
         print(code, res)
         self.assertEqual(code, 200, "code is error")
-        self.assertEqual(res, {'paths': []}, 'res is error')
+        self.assertEqual(res['vertices'], [], 'res vertices are error')
+        self.assertEqual(res['edges'], [], 'res edges are error')
+        self.assertEqual(res['paths'], [], 'res paths are error')
 
     def test_param_direction_valueOut(self):
         """
@@ -205,7 +206,8 @@ class TestAllShorttestPath(unittest.TestCase):
         )
         print(code, res)
         self.assertEqual(code, 200, "code is error")
-        self.assertEqual(res, {'paths': []}, 'res is error')
+        self.assertEqual(res['edges'], [], 'res is error')
+        self.assertEqual(res['paths'], [], 'res is error')
 
     def test_param_direction_valueIn(self):
         """
@@ -373,4 +375,3 @@ class TestAllShorttestPath(unittest.TestCase):
 
 if __name__ == "__main__":
     pass
-

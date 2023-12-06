@@ -6,6 +6,7 @@ create_time: 2021/03/12
 """
 import re
 import os
+import shutil
 
 
 def alter_properties(file, old_str, new_str):
@@ -34,8 +35,6 @@ def is_match_re(dir_path, re_rule):
         if match_obj is not None:
             res = name
             break
-        else:
-            continue
     return res
 
 

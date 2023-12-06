@@ -108,18 +108,18 @@ def post_auth(auth_list):
     :param auth_list:
     """
     auth_body = AuthBody()
-    ### 创建用户并获取用户id
+    # 创建用户并获取用户id
     user_id = auth_body.create_user()
     for each in auth_list:
-        ### 创建target并获取target_id
+        # 创建target并获取target_id
         target_name = each["name"]
         target_resources = each["target_list"]
         target_id = auth_body.create_target(target_resources, target_name)
-        ### 创建group 并获取group_id
+        # 创建group 并获取group_id
         group_id = auth_body.create_group(each["name"])
-        ### 创建 access
+        # 创建 access
         access_id = auth_body.create_access(group_id, target_id, each["permission"])
-        ### 创建 belong
+        # 创建 belong
         auth_body.create_belong(user_id, group_id)
     return user_id
 

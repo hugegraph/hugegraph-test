@@ -17,7 +17,6 @@ from src.common.loader import InsertData
 from src.config import basic_config as _cfg
 from src.common.tools import clear_graph
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
@@ -29,7 +28,7 @@ class TestCustomizedPaths(unittest.TestCase):
     """
 
     @staticmethod
-    def setup_class(self):
+    def setup_class():
         """
         测试类开始
         """
@@ -40,43 +39,43 @@ class TestCustomizedPaths(unittest.TestCase):
 
         InsertData(gremlin='gremlin_traverser.txt').gremlin_graph()
 
-    def test_reqiured_params(self):
+    def test_required_params(self):
         """
         source、max_depth
         :return:
         """
         json = {
-                    "sources": {
-                        "ids": [],
-                        "label": "person",
-                        "properties": {
-                            "name": "marko"
-                        }
-                    },
-                    "steps": [
-                        {
-                            "direction": "OUT",
-                            "labels": [
-                                "knows"
-                            ],
-                            "weight_by": "weight",
-                            "degree": -1
-                        },
-                        {
-                            "direction": "OUT",
-                            "labels": [
-                                "created"
-                            ],
-                            "default_weight": 8,
-                            "degree": -1,
-                            "sample": -1
-                        }
-                    ],
-                    "sort_by": "INCR",
-                    "with_vertex": True,
-                    "capacity": -1,
-                    "limit": -1
+            "sources": {
+                "ids": [],
+                "label": "person",
+                "properties": {
+                    "name": "marko"
                 }
+            },
+            "steps": [
+                {
+                    "direction": "OUT",
+                    "labels": [
+                        "knows"
+                    ],
+                    "weight_by": "weight",
+                    "degree": -1
+                },
+                {
+                    "direction": "OUT",
+                    "labels": [
+                        "created"
+                    ],
+                    "default_weight": 8,
+                    "degree": -1,
+                    "sample": -1
+                }
+            ],
+            "sort_by": "INCR",
+            "with_vertex": True,
+            "capacity": -1,
+            "limit": -1
+        }
         code, res = Traverser().post_customized_paths(json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
@@ -91,4 +90,3 @@ class TestCustomizedPaths(unittest.TestCase):
 
 if __name__ == "__main__":
     pass
-

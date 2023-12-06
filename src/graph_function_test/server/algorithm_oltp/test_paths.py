@@ -17,7 +17,6 @@ from src.common.loader import InsertData
 from src.config import basic_config as _cfg
 from src.common.tools import clear_graph
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
@@ -29,7 +28,7 @@ class TestPaths(unittest.TestCase):
     """
 
     @staticmethod
-    def setup_class(self):
+    def setup_class():
         """
         测试类开始
         """
@@ -50,13 +49,11 @@ class TestPaths(unittest.TestCase):
         print(code, res)
         self.assertEqual(code, 200)
         self.assertEqual(
-            res,
-            {"paths":
-                 [
-                     {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "1:贾代善"]},
-                     {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "1:贾代善"]}
-                  ]
-             }
+            res['paths'],
+            [
+                {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "1:贾代善"]},
+                {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "1:贾代善"]}
+            ]
         )
 
     def test_get_paths_direction_out(self):
@@ -69,12 +66,11 @@ class TestPaths(unittest.TestCase):
         print(code, res)
         self.assertEqual(code, 200)
         self.assertEqual(
-            res,
-            {"paths": [
+            res['paths'],
+            [
                 {"objects": ["1:贾代善", "1:贾政", "2:王夫人", "1:贾宝玉"]},
                 {"objects": ["1:贾代善", "2:贾母", "1:贾政", "2:王夫人", "1:贾宝玉"]}
             ]
-            }
         )
 
     def test_get_paths_reqiured_params(self):

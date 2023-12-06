@@ -37,7 +37,7 @@ class TestBetweenessCentrality:
         if _cfg.server_backend == 'cassandra':
             clear_graph()
         else:
-            Gremlin().gremlin_post('graph.truncateBackend();')    # 适用gremlin语句进行truncate操作
+            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用gremlin语句进行truncate操作
 
         InsertData(gremlin='gremlin_alg_01.txt').gremlin_graph()
 

@@ -4,13 +4,19 @@ author     : lxb
 note       : 相关测试配置项
 create_time: 2020/4/22 5:17 下午
 """
-code_path = '/home/runner/work/hugegraph-test/hugegraph-test/graph'
+import os.path
+
+code_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 
 is_auth = False
 is_https = False
 
 # server
-server_git = {'branch': 'c0dff5b233e853716ca6f3f28a5cda05e6f3d639', 'url': 'https://github.com/hugegraph/hugegraph.git'}
+server_git = {
+    # 'branch': 'master',
+    'branch': '20d1e5228e39bd974079891fc713574fb14798c5',
+    'url': 'https://github.com/apache/hugegraph.git'
+}
 graph_type = 'open_source'  # open_source || business
 
 server_port = 8080
@@ -20,16 +26,20 @@ graph_host = '127.0.0.1'
 graph_name = 'hugegraph'
 
 # 测试使用的权限配置
-admin_password = {}
-test_password = {}
+admin_password = {'admin': 'admin'}
+test_password = {'tester': '123456'}
+
+# toolchain (includes loader, hubble, tools)
+toolchain_git = {
+    'branch': 'b066b805630ca591809cfee2da2aae1395fc6b42',
+    'url': 'https://github.com/apache/hugegraph-toolchain.git'
+}
 
 # loader
-loader_git = {'branch': 'master', 'url': 'https://github.com/hugegraph/hugegraph-loader.git'}
 loader_store_file = ""
 loader_store_password = ""
 
 # tools
-tools_git = {'branch': 'master', 'url': 'https://github.com/hugegraph/hugegraph-tools.git'}
 tools_is_auth = False
 tools_is_https = False
 
@@ -44,7 +54,6 @@ tools_target_store_password = ""
 tools_target_auth = {}
 
 # hubble
-hubble_git = {'branch': 'master', 'url': 'https://github.com/hugegraph/hugegraph-hubble.git'}
 hubble_host = '127.0.0.1'
 hubble_port = 8088
 hubble_reuse_server_host = ''

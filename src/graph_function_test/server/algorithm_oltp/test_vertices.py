@@ -17,7 +17,6 @@ from src.common.loader import InsertData
 from src.config import basic_config as _cfg
 from src.common.tools import clear_graph
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
@@ -29,7 +28,7 @@ class TestVertices(unittest.TestCase):
     """
 
     @staticmethod
-    def setup_class(self):
+    def setup_class():
         """
         测试类开始
         """
@@ -40,7 +39,7 @@ class TestVertices(unittest.TestCase):
 
         InsertData(gremlin='gremlin_hlm.txt').gremlin_graph()
 
-    def test_reqiured_params(self):
+    def test_required_params(self):
         """
         source、max_depth
         :return:
@@ -54,4 +53,3 @@ class TestVertices(unittest.TestCase):
 
 if __name__ == "__main__":
     pass
-

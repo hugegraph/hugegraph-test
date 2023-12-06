@@ -14,8 +14,11 @@ from src.config import basic_config as _cfg
 from src.common.file_basic import is_match_re
 from src.common.server_api import Gremlin
 
-tools_name = is_match_re(_cfg.code_path + '/hugegraph-tools', "^hugegraph-tools-(\d).(\d{1,2}).(\d)$")
-tools_path = _cfg.code_path + '/hugegraph-tools' + '/' + tools_name
+tools_name = is_match_re(
+    _cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0',
+    "^apache-hugegraph-tools-incubating-(\d).(\d{1,2}).(\d)$"
+)
+tools_path = _cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0' + '/' + tools_name
 
 
 def run_shell(cmd, graph_name=None, graph_host=None, graph_port=None):
@@ -32,7 +35,7 @@ def run_shell(cmd, graph_name=None, graph_host=None, graph_port=None):
     if graph_host is None:
         graph_host = _cfg.graph_host
 
-    ### source graph
+    # source graph
     protocol = 'http'
     protocol_cmd = ""
     if _cfg.is_https:
@@ -47,7 +50,7 @@ def run_shell(cmd, graph_name=None, graph_host=None, graph_port=None):
         auth_cmd = ' --user admin --password %s ' % _cfg.admin_password['admin']
     url = protocol + '://' + graph_host + ':' + str(graph_port)
 
-    ### target graph
+    # target graph
     run_cmd = ""
     if "migrate" in cmd:
         target_protocol = "http"
@@ -210,4 +213,3 @@ def target_clear_graph():
 
 if __name__ == "__main__":
     target_clear_graph()
-

@@ -15,8 +15,8 @@ from src.common.server_api import Gremlin
 from src.common.file_basic import is_match_re
 from src.config import basic_config as _cfg
 
-loader_name = is_match_re(_cfg.code_path + '/hugegraph-loader', "^hugegraph-loader-(\d).(\d{1,2}).(\d)$")
-loader_path = _cfg.code_path + '/hugegraph-loader' + '/' + loader_name
+loader_name = is_match_re(_cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0', "^apache-hugegraph-loader-incubating-(\d).(\d{1,2}).(\d)$")
+loader_path = _cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0' + '/' + loader_name
 dataset_path = root_path + 'src/config/dataset/'
 
 

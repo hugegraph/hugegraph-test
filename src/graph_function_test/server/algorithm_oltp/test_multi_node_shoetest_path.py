@@ -17,7 +17,6 @@ from src.common.loader import InsertData
 from src.config import basic_config as _cfg
 from src.common.tools import clear_graph
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
@@ -29,7 +28,7 @@ class TestMultiNodeShortestPath(unittest.TestCase):
     """
 
     @staticmethod
-    def setup_class(self):
+    def setup_class():
         """
         测试类开始
         """
@@ -40,14 +39,14 @@ class TestMultiNodeShortestPath(unittest.TestCase):
 
         InsertData(gremlin='gremlin_traverser.txt').gremlin_graph()
 
-    def test_reqiured_params(self):
+    def test_required_params(self):
         """
         source、max_depth
         :return:
         """
         json = {
             "vertices": {
-              "ids": ["1:vadas", "1:peter", "2:ripple"]
+                "ids": ["1:vadas", "1:peter", "2:ripple"]
             },
             "step": {
                 "direction": "BOTH",
@@ -74,4 +73,3 @@ class TestMultiNodeShortestPath(unittest.TestCase):
 
 if __name__ == "__main__":
     pass
-

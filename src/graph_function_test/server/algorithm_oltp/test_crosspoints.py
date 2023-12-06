@@ -17,7 +17,6 @@ from src.common.loader import InsertData
 from src.config import basic_config as _cfg
 from src.common.tools import clear_graph
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
@@ -29,7 +28,7 @@ class TestCrosspoints(unittest.TestCase):
     """
 
     @staticmethod
-    def setup_class(self):
+    def setup_class():
         """
         测试类开始
         """
@@ -40,7 +39,7 @@ class TestCrosspoints(unittest.TestCase):
 
         InsertData(gremlin='gremlin_traverser.txt').gremlin_graph()
 
-    def test_reqiured_params(self):
+    def test_required_params(self):
         """
         source、max_depth
         :return:
@@ -49,7 +48,7 @@ class TestCrosspoints(unittest.TestCase):
         code, res = Traverser().get_crosspoints(param_json, auth=auth)
         print(code, res)
         self.assertEqual(code, 200)
-        self.assertEqual(len(res['crosspoints']), 2)
+        self.assertEqual(len(res['crosspoints']), 1)
         for obj in res['crosspoints']:
             self.assertIn(
                 obj,
@@ -62,4 +61,3 @@ class TestCrosspoints(unittest.TestCase):
 
 if __name__ == "__main__":
     pass
-

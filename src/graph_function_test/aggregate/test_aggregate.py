@@ -85,14 +85,14 @@ class TestAggregate:
         """
         # first load
         query1 = "graph.schema().propertyKey('name').asText().ifNotExist().create();" \
-                "graph.schema().propertyKey('min_num').asInt().calcMin().ifNotExist().create();" \
-                "graph.schema().vertexLabel('person').properties('name', 'min_num')" \
-                ".primaryKeys('name').ifNotExist().create();" \
-                "graph.schema().edgeLabel('link').sourceLabel('person').targetLabel('person')" \
-                ".properties('name', 'min_num').ifNotExist().create();" \
-                "a = graph.addVertex(T.label, 'person', 'name', 'a', 'min_num', 20160110);" \
-                "b = graph.addVertex(T.label, 'person', 'name', 'b', 'min_num', 20210110);" \
-                "a.addEdge('link', b, 'name', 'link', 'min_num', 20211110);"
+                 "graph.schema().propertyKey('min_num').asInt().calcMin().ifNotExist().create();" \
+                 "graph.schema().vertexLabel('person').properties('name', 'min_num')" \
+                 ".primaryKeys('name').ifNotExist().create();" \
+                 "graph.schema().edgeLabel('link').sourceLabel('person').targetLabel('person')" \
+                 ".properties('name', 'min_num').ifNotExist().create();" \
+                 "a = graph.addVertex(T.label, 'person', 'name', 'a', 'min_num', 20160110);" \
+                 "b = graph.addVertex(T.label, 'person', 'name', 'b', 'min_num', 20210110);" \
+                 "a.addEdge('link', b, 'name', 'link', 'min_num', 20211110);"
         code, res = Gremlin().gremlin_post(query1, auth=auth)
         print(code, res)
         assert code == 200
@@ -253,14 +253,14 @@ class TestAggregate:
         """
         # first load
         query1 = "graph.schema().propertyKey('name').asText().ifNotExist().create();" \
-                "graph.schema().propertyKey('earliest_time').asDate().calcMin().ifNotExist().create();" \
-                "graph.schema().vertexLabel('person').properties('name', 'earliest_time')" \
-                ".primaryKeys('name').ifNotExist().create();" \
-                "graph.schema().edgeLabel('link').sourceLabel('person').targetLabel('person')" \
-                ".properties('name', 'earliest_time').ifNotExist().create();" \
-                "a = graph.addVertex(T.label, 'person', 'name', 'a', 'earliest_time', '2016-01-10 10:23:28');" \
-                "b = graph.addVertex(T.label, 'person', 'name', 'b', 'earliest_time', '2021-01-10 10:23:28');" \
-                "a.addEdge('link', b, 'name', 'link', 'earliest_time', '2021-11-10 10:23:28');"
+                 "graph.schema().propertyKey('earliest_time').asDate().calcMin().ifNotExist().create();" \
+                 "graph.schema().vertexLabel('person').properties('name', 'earliest_time')" \
+                 ".primaryKeys('name').ifNotExist().create();" \
+                 "graph.schema().edgeLabel('link').sourceLabel('person').targetLabel('person')" \
+                 ".properties('name', 'earliest_time').ifNotExist().create();" \
+                 "a = graph.addVertex(T.label, 'person', 'name', 'a', 'earliest_time', '2016-01-10 10:23:28');" \
+                 "b = graph.addVertex(T.label, 'person', 'name', 'b', 'earliest_time', '2021-01-10 10:23:28');" \
+                 "a.addEdge('link', b, 'name', 'link', 'earliest_time', '2021-11-10 10:23:28');"
         code, res = Gremlin().gremlin_post(query1, auth=auth)
         print(code, res)
         assert code == 200
@@ -334,4 +334,3 @@ class TestAggregate:
 
 if __name__ == "__main__":
     pass
-

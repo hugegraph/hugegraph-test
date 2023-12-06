@@ -373,4 +373,3 @@ def test_delete_edgeLabel_by_name():
 
 if __name__ == "__main__":
     pass
-

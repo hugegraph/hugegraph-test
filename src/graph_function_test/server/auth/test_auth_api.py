@@ -30,6 +30,9 @@ class Access(unittest.TestCase):
     绑定资源和用户组
     """
 
+    group_id = None
+    target_id = None
+
     def setUp(self):
         """
         测试case开始
@@ -40,6 +43,8 @@ class Access(unittest.TestCase):
         body = {"group_name": "gremlin", "group_description": "group can execute gremlin"}
         code, res = Auth().post_groups(body, auth=auth)
         print(code, res)
+        self.group_id = res.get('id', None)
+        assert self.group_id is not None
         # 创建 target
         body = {
             "target_url": '%s:%d' % (_cfg.graph_host, _cfg.server_port),
@@ -55,23 +60,25 @@ class Access(unittest.TestCase):
         }
         code, res = Auth().post_targets(body, auth=auth)
         print(code, res)
+        self.target_id = res.get('id')
+        assert self.target_id is not None
 
     def test_access_create(self):
         """
         创建 access
         """
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': self.group_id, 'target': self.target_id, 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=auth)
         print(code, res)
         self.assertEqual(code, 201, msg='code check fail')
-        self.assertEqual(res['id'], 'S-69:gremlin>-88>18>S-77:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'res check fail')
 
     def test_access_delete(self):
         """
         删除 access
         """
         # premise
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=auth)
         # test
         code, res = Auth().delete_accesses(res['id'], auth=auth)
@@ -83,40 +90,40 @@ class Access(unittest.TestCase):
         获取 access
         """
         # premise
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=auth)
         # test
         code, res = Auth().get_accesses(auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['accesses'][0]['id'], 'S-69:gremlin>-88>18>S-77:gremlin', 'res check fail')
+        self.assertEqual(res['accesses'][0]['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'res check fail')
 
     def test_access_one(self):
         """
         获取 access
         """
         # premise
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=auth)
         # test
         code, res = Auth().get_access(res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], 'S-69:gremlin>-88>18>S-77:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'res check fail')
 
     def test_access_update(self):
         """
         更新 access
         """
         # premise
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=auth)
         # test
         body = {"access_description": "access description rename"}
         code, res = Auth().update_accesses(body, res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], 'S-69:gremlin>-88>18>S-77:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'res check fail')
 
 
 @pytest.mark.skipif(_cfg.is_auth is False, reason='hugegraph启动时没有配置权限')
@@ -167,7 +174,7 @@ class Groups(unittest.TestCase):
         code, res = Auth().get_groups(auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['groups'][0]['id'], '-69:gremlin', 'res check fail')
+        self.assertEqual(res['groups'][0]['id'], '-36:gremlin', 'res check fail')
 
     def test_groups_one(self):
         """
@@ -181,7 +188,7 @@ class Groups(unittest.TestCase):
         code, res = Auth().get_group(res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], '-69:gremlin', 'res check fail')
+        self.assertEqual(res['id'], '-36:gremlin', 'res check fail')
 
     def test_groups_update(self):
         """
@@ -231,7 +238,7 @@ class Target(unittest.TestCase):
         code, res = Auth().post_targets(body, auth=auth)
         print(code, res)
         self.assertEqual(code, 201, msg='code check fail')
-        self.assertEqual(res['id'], '-77:gremlin', 'res check fail')
+        self.assertEqual(res['id'], '-44:gremlin', 'res check fail')
 
     def test_target_delete(self):
         """
@@ -280,7 +287,7 @@ class Target(unittest.TestCase):
         code, res = Auth().get_targets(auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['targets'][0]['id'], '-77:gremlin', 'res check fail')
+        self.assertEqual(res['targets'][0]['id'], '-44:gremlin', 'res check fail')
 
     def test_target_one(self):
         """
@@ -305,7 +312,7 @@ class Target(unittest.TestCase):
         code, res = Auth().get_target(res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], '-77:gremlin', 'res check fail')
+        self.assertEqual(res['id'], '-44:gremlin', 'res check fail')
 
     def test_target_update(self):
         """
@@ -362,7 +369,7 @@ class User(unittest.TestCase):
         code, res = Auth().post_users(body, auth=auth)
         print(code, res)
         self.assertEqual(code, 201, msg='code check fail')
-        self.assertEqual(res['id'], '-63:tester', 'res check fail')
+        self.assertEqual(res['id'], '-30:tester', 'res check fail')
 
     def test_user_delete(self):
         """
@@ -389,7 +396,7 @@ class User(unittest.TestCase):
         code, res = Auth().get_users(auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['users'][1]['id'], '-63:tester', 'res check fail')
+        self.assertEqual(res['users'][1]['id'], '-30:tester', 'res check fail')
 
     def test_user_one(self):
         """
@@ -403,7 +410,7 @@ class User(unittest.TestCase):
         code, res = Auth().get_user(res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], '-63:tester', 'res check fail')
+        self.assertEqual(res['id'], '-30:tester', 'res check fail')
 
     def test_user_one_role(self):
         """
@@ -478,18 +485,18 @@ class Belongs(unittest.TestCase):
         """
         创建 belong
         """
-        body = {'group': '-69:gremlin', 'user': '-63:tester', 'belong_description': 'belong gremlin'}
+        body = {'group': '-36:gremlin', 'user': '-30:tester', 'belong_description': 'belong gremlin'}
         code, res = Auth().post_belongs(body, auth=auth)
         print(code, res)
         self.assertEqual(code, 201, msg='code check fail')
-        self.assertEqual(res['id'], 'S-63:tester>-82>>S-69:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-30:tester>-49>>S-36:gremlin', 'res check fail')
 
     def test_belong_delete(self):
         """
         删除 belong
         """
         # premise
-        body = {'group': '-69:gremlin', 'user': '-63:tester', 'belong_description': 'belong gremlin'}
+        body = {'group': '-36:gremlin', 'user': '-30:tester', 'belong_description': 'belong gremlin'}
         code, res = Auth().post_belongs(body, auth=auth)
         print(code, res)
         # test
@@ -502,35 +509,35 @@ class Belongs(unittest.TestCase):
         获取 belongs
         """
         # premise
-        body = {'group': '-69:gremlin', 'user': '-63:tester', 'belong_description': 'belong gremlin'}
+        body = {'group': '-36:gremlin', 'user': '-30:tester', 'belong_description': 'belong gremlin'}
         code, res = Auth().post_belongs(body, auth=auth)
         print(code, res)
         # test
         code, res = Auth().get_belongs(auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['belongs'][0]['id'], 'S-63:tester>-82>>S-69:gremlin', 'res check fail')
+        self.assertEqual(res['belongs'][0]['id'], 'S-30:tester>-49>>S-36:gremlin', 'res check fail')
 
     def test_belong_one(self):
         """
         获取 belong
         """
         # premise
-        body = {'group': '-69:gremlin', 'user': '-63:tester', 'belong_description': 'belong gremlin'}
+        body = {'group': '-36:gremlin', 'user': '-30:tester', 'belong_description': 'belong gremlin'}
         code, res = Auth().post_belongs(body, auth=auth)
         print(code, res)
         # test
         code, res = Auth().get_belong(res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], 'S-63:tester>-82>>S-69:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-30:tester>-49>>S-36:gremlin', 'res check fail')
 
     def test_belong_update(self):
         """
         更新 belong
         """
         # premise
-        body = {'group': '-69:gremlin', 'user': '-63:tester', 'belong_description': 'belong gremlin'}
+        body = {'group': '-36:gremlin', 'user': '-30:tester', 'belong_description': 'belong gremlin'}
         code, res = Auth().post_belongs(body, auth=auth)
         print(code, res)
         # test
@@ -538,7 +545,7 @@ class Belongs(unittest.TestCase):
         code, res = Auth().update_belongs(body, res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], 'S-63:tester>-82>>S-69:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-30:tester>-49>>S-36:gremlin', 'res check fail')
 
 
 if __name__ == '__main__':

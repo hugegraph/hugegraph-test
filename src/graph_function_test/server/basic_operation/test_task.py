@@ -70,6 +70,7 @@ def test_get_task_by_id_01():
     根据ID获取task结果
     :return:
     """
+    pass
 
 
 def test_delete_task_01():
@@ -77,15 +78,16 @@ def test_delete_task_01():
     删除某个task的信息（不删除任务本身）
     :return:
     """
+    pass
 
 
-def test_cancle_task_01():
+def test_cancel_task_01():
     """
     取消某个任务
     :return:
     """
+    pass
 
 
 if __name__ == "__main__":
     pass
-
