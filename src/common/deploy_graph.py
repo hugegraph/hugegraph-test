@@ -144,7 +144,7 @@ class Deploy:
         """
         :return:
         """
-        code_dir = 'incubator-hugegraph'
+        code_dir = 'hugegraph'
         server_module = 'hugegraph-server'
         build_dir_prefix = 'apache-hugegraph-incubating'
         code_dir_path = os.path.join(conf.code_path, code_dir)
@@ -162,7 +162,7 @@ class Deploy:
 
     @staticmethod
     def toolchain(conf):
-        code_dir = 'incubator-hugegraph-toolchain'
+        code_dir = 'hugegraph-toolchain'
         code_dir_path = os.path.join(conf.code_path, code_dir)
         is_exists_path(conf.code_path)
         get_code(conf.code_path, conf.toolchain_git, code_dir)
