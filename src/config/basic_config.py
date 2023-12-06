@@ -16,7 +16,7 @@ is_https = False
 server_git = {
     # 'branch': 'master',
     'branch': '20d1e5228e39bd974079891fc713574fb14798c5',
-    'url': 'https://github.com/apache/incubator-hugegraph.git'
+    'url': 'https://github.com/apache/hugegraph.git'
 }
 graph_type = 'open_source'  # open_source || business
 
