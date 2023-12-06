@@ -33,7 +33,7 @@ test_password = {'tester': '123456'}
 # toolchain
 toolchain_git = {
     'branch': 'b066b805630ca591809cfee2da2aae1395fc6b42',
-    'url': 'https://github.com/apache/incubator-hugegraph-toolchain.git'
+    'url': 'https://github.com/apache/hugegraph-toolchain.git'
 }
 
 # loader
