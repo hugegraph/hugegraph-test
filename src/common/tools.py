@@ -15,10 +15,10 @@ from src.common.file_basic import is_match_re
 from src.common.server_api import Gremlin
 
 tools_name = is_match_re(
-    _cfg.code_path + '/incubator-hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0',
+    _cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0',
     "^apache-hugegraph-tools-incubating-(\d).(\d{1,2}).(\d)$"
 )
-tools_path = _cfg.code_path + '/incubator-hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0' + '/' + tools_name
+tools_path = _cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0' + '/' + tools_name
 
 
 def run_shell(cmd, graph_name=None, graph_host=None, graph_port=None):
