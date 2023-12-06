@@ -6,7 +6,6 @@ create_time: 2020/4/22 5:17 下午
 """
 import os.path
 
-# code_path = '/home/runner/work/hugegraph-test/hugegraph-test/graph'
 code_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 
 is_auth = False
@@ -30,19 +29,17 @@ graph_name = 'hugegraph'
 admin_password = {'admin': 'admin'}
 test_password = {'tester': '123456'}
 
-# toolchain
+# toolchain (includes loader, hubble, tools)
 toolchain_git = {
     'branch': 'b066b805630ca591809cfee2da2aae1395fc6b42',
     'url': 'https://github.com/apache/hugegraph-toolchain.git'
 }
 
 # loader
-loader_git = {'branch': 'master', 'url': 'https://github.com/hugegraph/hugegraph-loader.git'}
 loader_store_file = ""
 loader_store_password = ""
 
 # tools
-tools_git = {'branch': 'master', 'url': 'https://github.com/hugegraph/hugegraph-tools.git'}
 tools_is_auth = False
 tools_is_https = False
 
@@ -57,7 +54,6 @@ tools_target_store_password = ""
 tools_target_auth = {}
 
 # hubble
-hubble_git = {'branch': 'master', 'url': 'https://github.com/hugegraph/hugegraph-hubble.git'}
 hubble_host = '127.0.0.1'
 hubble_port = 8088
 hubble_reuse_server_host = ''
