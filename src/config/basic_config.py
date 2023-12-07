@@ -13,8 +13,7 @@ is_https = False
 
 # server
 server_git = {
-    # 'branch': 'master',
-    'branch': '20d1e5228e39bd974079891fc713574fb14798c5',
+    'branch': '47aa8be8508293bbda76c93b461292efc84a75c7',
     'url': 'https://github.com/apache/hugegraph.git'
 }
 graph_type = 'open_source'  # open_source || business
@@ -31,7 +30,7 @@ test_password = {'tester': '123456'}
 
 # toolchain (includes loader, hubble, tools)
 toolchain_git = {
-    'branch': 'b066b805630ca591809cfee2da2aae1395fc6b42',
+    'branch': '8ce8b2bf7d6cc0b1f716e852fca03e38ce857682',
     'url': 'https://github.com/apache/hugegraph-toolchain.git'
 }
 
