@@ -147,12 +147,12 @@ class Deploy:
         code_dir = 'hugegraph'
         server_module = 'hugegraph-server'
         build_dir_prefix = 'apache-hugegraph-incubating'
-        code_dir_path = os.path.join(conf.code_path, code_dir)
+        code_dir_path = os.path.join(conf.codebase_path, code_dir)
         server_module_path = os.path.join(code_dir_path, server_module)
-        re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % build_dir_prefix
+        re_dir = '^%s-(\\d).(\\d{1,2}).(\\d)$' % build_dir_prefix
 
-        is_exists_path(conf.code_path)
-        get_code(conf.code_path, conf.server_git, code_dir)
+        is_exists_path(conf.codebase_path)
+        get_code(conf.codebase_path, conf.server_git, code_dir)
         compile_package(code_dir_path)
         # start graph_server
         package_dir_name = is_match_re(server_module_path, re_dir)
