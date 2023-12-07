@@ -9,6 +9,7 @@ import sys
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../../')
+
 from src.common.loader import InsertData
 
 
@@ -418,6 +419,7 @@ def test_load_set_batch_concurrent():
     assert res.returncode == 0
     assert res_assert[0] == 1000
     assert res_assert[1] == 15156
+
 
 # TODO "--check-basic_operation true "
 def test_load_network_check_vertex():

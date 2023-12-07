@@ -8,11 +8,11 @@ import os
 import sys
 import subprocess
 
-from src.config import basic_config as _cfg
-from src.common.server_api import Gremlin
-
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../../')
+
+from src.config import basic_config as _cfg
+from src.common.server_api import Gremlin
 
 
 def run_shell(cmd, graph_name=None, graph_host=None, graph_port=None):
