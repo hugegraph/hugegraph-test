@@ -2,7 +2,7 @@
 
 CI testing is carried out through this project for hugegraph
 
-```
+```bash
 git clone https://github.com/hugegraph/hugegraph-test.git
 
 cd hugegraph-test
