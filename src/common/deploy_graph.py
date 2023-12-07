@@ -170,8 +170,8 @@ class Deploy:
 
         # set properties && start hubble
         hubble_package_dir_name = os.path.join(code_dir_path,
-                                               'apache-hugegraph-toolchain-incubating-1.0.0',
-                                               'apache-hugegraph-hubble-incubating-1.0.0')
+                                               'apache-hugegraph-toolchain-incubating-1.2.0',
+                                               'apache-hugegraph-hubble-incubating-1.2.0')
         # set_hubble_properties(hubble_package_dir_name, conf.graph_host, conf.hubble_port)
         start_graph(hubble_package_dir_name, 'hubble')
 

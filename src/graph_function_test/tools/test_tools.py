@@ -23,9 +23,9 @@ from src.common.tools import target_clear_graph
 from src.common.tools import target_insert_data
 from src.config import basic_config as _cfg
 
-tools_name = is_match_re(_cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0',
+tools_name = is_match_re(_cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.2.0',
                          "^apache-hugegraph-tools-incubating-(\d).(\d{1,2}).(\d)$")
-tools_path = _cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0' + '/' + tools_name
+tools_path = _cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.2.0' + '/' + tools_name
 
 
 class TestTools:
