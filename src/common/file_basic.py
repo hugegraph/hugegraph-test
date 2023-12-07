@@ -6,7 +6,6 @@ create_time: 2021/03/12
 """
 import re
 import os
-import shutil
 
 
 def alter_properties(file, old_str, new_str):

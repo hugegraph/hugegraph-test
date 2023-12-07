@@ -12,11 +12,8 @@ root_path = os.path.dirname(os.path.realpath(__file__)) + '/../../'
 sys.path.append(root_path)
 
 from src.common.server_api import Gremlin
-from src.common.file_basic import is_match_re
 from src.config import basic_config as _cfg
 
-loader_name = is_match_re(_cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.2.0', "^apache-hugegraph-loader-incubating-(\d).(\d{1,2}).(\d)$")
-loader_path = _cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.2.0' + '/' + loader_name
 dataset_path = root_path + 'src/config/dataset/'
 
 
@@ -85,10 +82,10 @@ class InsertData:
         """
         struct_file = dataset_path + self.dir + '/' + self.struct
         if self.schema is None:
-            loader_cmd = self.part_cmd % (loader_path, self.host, self.port, self.graph, struct_file)
+            loader_cmd = self.part_cmd % (_cfg.loader_path, self.host, self.port, self.graph, struct_file)
         else:
             schema_file = dataset_path + self.dir + '/' + self.schema
-            loader_cmd = self.part_cmd % (loader_path, self.host, self.port, self.graph, struct_file, schema_file)
+            loader_cmd = self.part_cmd % (_cfg.loader_path, self.host, self.port, self.graph, struct_file, schema_file)
 
         if self.is_https:
             loader_cmd += self.https_cmd

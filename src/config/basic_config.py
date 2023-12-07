@@ -6,8 +6,24 @@ create_time: 2020/4/22 5:17 下午
 """
 import os.path
 
-code_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
+# local codebase
+codebase_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 
+# apache release version
+is_incubating = 'incubating-'
+toolchain_release_version = '1.2.0'
+toolchain_local_repo_name = 'hugegraph-toolchain'
+toolchain_gen_dir = f'hugegraph-toolchain/apache-hugegraph-toolchain-{is_incubating}{toolchain_release_version}'
+toolchain_obj_template = 'apache-hugegraph-{tool_name}-' + is_incubating + f'{toolchain_release_version}'
+
+# export
+toolchain_path = os.path.join(codebase_path, toolchain_local_repo_name)
+loader_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='loader'))
+hubble_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='hubble'))
+tools_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='tools'))
+
+# common
+# todo ci test
 is_auth = False
 is_https = False
 

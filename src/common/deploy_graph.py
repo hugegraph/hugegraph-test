@@ -162,18 +162,13 @@ class Deploy:
 
     @staticmethod
     def toolchain(conf):
-        code_dir = 'hugegraph-toolchain'
-        code_dir_path = os.path.join(conf.code_path, code_dir)
-        is_exists_path(conf.code_path)
-        get_code(conf.code_path, conf.toolchain_git, code_dir)
-        compile_package(code_dir_path)
+        is_exists_path(conf.codebase_path)
+        get_code(conf.codebase_path, conf.toolchain_git, conf.toolchain_local_repo)
+        compile_package(conf.toolchain_path)
 
         # set properties && start hubble
-        hubble_package_dir_name = os.path.join(code_dir_path,
-                                               'apache-hugegraph-toolchain-incubating-1.2.0',
-                                               'apache-hugegraph-hubble-incubating-1.2.0')
         # set_hubble_properties(hubble_package_dir_name, conf.graph_host, conf.hubble_port)
-        start_graph(hubble_package_dir_name, 'hubble')
+        start_graph(conf.hubble_path, 'hubble')
 
 
 if __name__ == "__main__":
