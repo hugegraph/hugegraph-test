@@ -81,6 +81,7 @@ def set_server_properties(package_dir_path, host, server_port, gremlin_port):
                      '#port: 8182',
                      'port: %d' % gremlin_port)
 
+    # todo
     if _cfg.is_auth is True:
         graph_conf = package_dir_path + f'/conf/graphs/{_cfg.graph_name}.properties'
         alter_properties(graph_conf,
@@ -90,9 +91,6 @@ def set_server_properties(package_dir_path, host, server_port, gremlin_port):
         alter_properties(rest_conf,
                          '#auth.authenticator=',
                          'auth.authenticator=org.apache.hugegraph.auth.ConfigAuthenticator')
-
-        # alter_properties(gremlin_conf,
-        #                  )
 
 
 def set_hubble_properties(package_dir_path, host, port):
@@ -144,21 +142,13 @@ class Deploy:
         """
         :return:
         """
-        code_dir = 'hugegraph'
-        server_module = 'hugegraph-server'
-        build_dir_prefix = 'apache-hugegraph-incubating'
-        code_dir_path = os.path.join(conf.codebase_path, code_dir)
-        server_module_path = os.path.join(code_dir_path, server_module)
-        re_dir = '^%s-(\\d).(\\d{1,2}).(\\d)$' % build_dir_prefix
-
         is_exists_path(conf.codebase_path)
-        get_code(conf.codebase_path, conf.server_git, code_dir)
-        compile_package(code_dir_path)
+        get_code(conf.codebase_path, conf.server_git, conf.server_local_repo)
+        compile_package(conf.server_path)
+
         # start graph_server
-        package_dir_name = is_match_re(server_module_path, re_dir)
-        package_dir_path = os.path.join(server_module_path, package_dir_name)
-        set_server_properties(package_dir_path, conf.graph_host, conf.server_port, conf.gremlin_port)
-        start_graph(package_dir_path, 'server')
+        set_server_properties(conf.server_gen_dir, conf.graph_host, conf.server_port, conf.gremlin_port)
+        start_graph(conf.server_gen_dir, 'server')
 
     @staticmethod
     def toolchain(conf):

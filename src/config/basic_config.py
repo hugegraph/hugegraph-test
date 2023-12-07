@@ -11,12 +11,16 @@ codebase_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 
 # apache release version
 is_incubating = 'incubating-'
+server_release_version = '1.5.0'
 toolchain_release_version = '1.2.0'
+server_local_repo = 'hugegraph'
 toolchain_local_repo = 'hugegraph-toolchain'
+server_gen_dir = f'hugegraph/hugegraph-server/apache-hugegraph-{is_incubating}{server_release_version}'
 toolchain_gen_dir = f'hugegraph-toolchain/apache-hugegraph-toolchain-{is_incubating}{toolchain_release_version}'
 toolchain_obj_template = 'apache-hugegraph-{tool_name}-' + is_incubating + f'{toolchain_release_version}'
 
 # export
+server_path = os.path.join(codebase_path, server_local_repo)
 toolchain_path = os.path.join(codebase_path, toolchain_local_repo)
 loader_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='loader'))
 hubble_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='hubble'))
