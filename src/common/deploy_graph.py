@@ -146,14 +146,15 @@ class Deploy:
         get_code(conf.codebase_path, conf.server_git, conf.server_local_repo)
         compile_package(conf.server_path)
 
+        gen_dir = os.path.join(conf.codebase_path, conf.server_gen_dir)
         # start graph_server
         set_server_properties(
-            os.path.join(conf.codebase_path, conf.server_gen_dir),
+            gen_dir,
             conf.graph_host,
             conf.server_port,
             conf.gremlin_port
         )
-        start_graph(conf.server_gen_dir, 'server')
+        start_graph(gen_dir, 'server')
 
     @staticmethod
     def toolchain(conf):
