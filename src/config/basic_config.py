@@ -19,7 +19,6 @@ server_gen_dir = f'hugegraph/hugegraph-server/apache-hugegraph-{is_incubating}{s
 toolchain_gen_dir = f'hugegraph-toolchain/apache-hugegraph-toolchain-{is_incubating}{toolchain_release_version}'
 toolchain_obj_template = 'apache-hugegraph-{tool_name}-' + is_incubating + f'{toolchain_release_version}'
 
-# export
 server_path = os.path.join(codebase_path, server_local_repo)
 toolchain_path = os.path.join(codebase_path, toolchain_local_repo)
 loader_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='loader'))
@@ -27,7 +26,6 @@ hubble_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_templ
 tools_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='tools'))
 
 # common
-# todo ci test
 is_auth = False
 is_https = False
 

@@ -147,7 +147,12 @@ class Deploy:
         compile_package(conf.server_path)
 
         # start graph_server
-        set_server_properties(conf.server_gen_dir, conf.graph_host, conf.server_port, conf.gremlin_port)
+        set_server_properties(
+            os.path.join(conf.codebase_path, conf.server_gen_dir),
+            conf.graph_host,
+            conf.server_port,
+            conf.gremlin_port
+        )
         start_graph(conf.server_gen_dir, 'server')
 
     @staticmethod
