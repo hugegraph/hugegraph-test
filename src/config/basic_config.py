@@ -11,7 +11,7 @@ codebase_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 
 # apache release version
 is_incubating = 'incubating-'
-server_release_version = '1.5.0'
+server_release_version = '1.2.0'
 toolchain_release_version = '1.2.0'
 server_local_repo = 'hugegraph'
 toolchain_local_repo = 'hugegraph-toolchain'
