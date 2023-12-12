@@ -84,7 +84,7 @@ def set_server_properties(package_dir_path, host, server_port, gremlin_port):
     if _cfg.is_auth is True:
         graph_conf = package_dir_path + f'/conf/graphs/{_cfg.graph_name}.properties'
         alter_properties(graph_conf,
-                         'gremlin.graph=org.apache.hugegraph.HugeFactory'
+                         'gremlin.graph=org.apache.hugegraph.HugeFactory',
                          'gremlin.graph=org.apache.hugegraph.auth.HugeFactoryAuthProxy')
 
         alter_properties(rest_conf,
