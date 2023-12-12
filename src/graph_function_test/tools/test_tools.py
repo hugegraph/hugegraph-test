@@ -21,6 +21,7 @@ from src.common.tools import target_clear_graph
 from src.common.tools import target_insert_data
 from src.config import basic_config as _cfg
 
+
 class TestTools:
     """
     tools测试
