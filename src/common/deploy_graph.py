@@ -7,6 +7,8 @@ create_time: 2020/4/22 5:17 下午
 import os
 import sys
 
+from config.basic_config import admin_password
+
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../')
 
@@ -118,10 +120,11 @@ def start_graph(package_dir_path, graph_type):
     """
     启动graph包
     """
+    pa = admin_password.get('admin')
     if graph_type == 'server':
         os.system(
             'cd %s '
-            '&& ./bin/init-store.sh '
+            f'&& echo -e "{pa}" | ./bin/init-store.sh '
             '&& ./bin/start-hugegraph.sh' % package_dir_path
         )
     else:
