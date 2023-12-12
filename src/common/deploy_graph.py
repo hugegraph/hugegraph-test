@@ -86,7 +86,7 @@ def set_server_properties(package_dir_path, host, server_port, gremlin_port):
     if _cfg.is_https:
         alter_properties(rest_conf,
                          'restserver.url=http://127.0.0.1:8080',
-                         'restserver.url=https://127.0.0.1:8080h')
+                         'restserver.url=https://127.0.0.1:8080')
 
     if _cfg.is_auth is True:
         graph_conf = package_dir_path + f'/conf/graphs/{_cfg.graph_name}.properties'
