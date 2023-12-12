@@ -76,6 +76,69 @@ jobs:
         run: |
           pytest --html=test.html --capture=tee-sys
 
+  # job: openSource and no auth with https
+  openSource_no_auth_https:
+    name: openSource and no auth with https
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 3
+      matrix:
+        python-version: ["3.10"]
+        java-version: ['8', '11']
+
+    steps:
+      - name: Install Java ${{ matrix.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'adopt'
+
+      - name: cache maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: 'x64'
+
+      - name: cache python dependencies
+        uses: actions/cache@v3
+        id: cache-pip
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: checkout python scripts
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: install python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./requirements.txt
+
+      - name: deploy hugegraph
+        run: |
+          sed -i -e "s/^is_https.*$/is_https = True/g" src/config/basic_config.py
+          python src/deploy_start.py all
+
+      - name: decompress dataset.zip
+        run: |
+          unzip src/config/dataset.zip
+          mv dataset src/config/
+
+      - name: run test cases
+        run: |
+          pytest --html=test.html --capture=tee-sys
 
   # job: openSource and exist auth
   openSource_exist_auth:
