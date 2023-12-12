@@ -10,6 +10,9 @@ import pytest
 import sys
 import time
 
+current_path = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(current_path + '/../../../')
+
 from src.common.tools import run_shell
 from src.common.tools import tools_assert
 from src.common.tools import insert_data
@@ -17,10 +20,6 @@ from src.common.tools import clear_graph
 from src.common.tools import target_clear_graph
 from src.common.tools import target_insert_data
 from src.config import basic_config as _cfg
-
-current_path = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(current_path + '/../../../')
-
 
 class TestTools:
     """
