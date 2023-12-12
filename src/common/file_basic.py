@@ -23,6 +23,11 @@ def alter_properties(file, old_str, new_str):
         os.rename("%s.bak" % file, file)
 
 
+def append_properties(file, add_content):
+    with open(file, mode='a', encoding='utf-8') as f:
+        f.write(add_content)
+
+
 def is_match_re(dir_path, re_rule):
     """
     正则匹配

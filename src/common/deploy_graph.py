@@ -10,7 +10,7 @@ import sys
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../')
 
-from src.common.file_basic import is_match_re
+from src.common.file_basic import is_match_re, append_properties
 from src.common.file_basic import is_exists_path
 from src.common.file_basic import alter_properties
 from src.config import basic_config as _cfg
@@ -81,7 +81,6 @@ def set_server_properties(package_dir_path, host, server_port, gremlin_port):
                      '#port: 8182',
                      'port: %d' % gremlin_port)
 
-    # todo
     if _cfg.is_auth is True:
         graph_conf = package_dir_path + f'/conf/graphs/{_cfg.graph_name}.properties'
         alter_properties(graph_conf,
@@ -90,7 +89,19 @@ def set_server_properties(package_dir_path, host, server_port, gremlin_port):
 
         alter_properties(rest_conf,
                          '#auth.authenticator=',
-                         'auth.authenticator=org.apache.hugegraph.auth.ConfigAuthenticator')
+                         'auth.authenticator=org.apache.hugegraph.auth.StandardAuthenticator')
+
+        alter_properties(rest_conf,
+                         '#auth.graph_store=hugegraph',
+                         'auth.graph_store=hugegraph')
+
+        append_properties(gremlin_conf, '''
+authentication: {
+  authenticator: org.apache.hugegraph.auth.StandardAuthenticator,
+  authenticationHandler: org.apache.hugegraph.auth.WsAndHttpBasicAuthHandler,
+  config: {tokens: conf/rest-server.properties}
+}
+''')
 
 
 def set_hubble_properties(package_dir_path, host, port):
