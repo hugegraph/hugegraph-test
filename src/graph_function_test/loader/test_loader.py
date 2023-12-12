@@ -521,7 +521,9 @@ def test_load_close_print():
     res_assert = InsertData().loader_assert()
     print(res_assert)
     assert res.returncode == 0
-    assert str(stdout, 'utf-8').split('\n')[1] == 'count metrics'
+    # todo exist warning msg in JDK11
+    # assert str(stdout, 'utf-8').split('\n')[1] == 'count metrics'
+    assert 'count metrics' in str(stdout, 'utf-8')
     assert res_assert[0] == 49015
     assert res_assert[1] == 117356
 
@@ -539,7 +541,9 @@ def test_load_help_message():
     res_assert = InsertData().loader_assert()
     print(res_assert)
     assert res.returncode == 0
-    assert str(stdout, 'utf-8').startswith("Usage: <main class> [options]")
+    # todo warning msg in JDK11
+    # assert str(stdout, 'utf-8').startswith("Usage: <main class> [options]")
+    assert "Usage: <main class> [options]" in str(stdout, 'utf-8')
 
 
 if __name__ == "__main__":
