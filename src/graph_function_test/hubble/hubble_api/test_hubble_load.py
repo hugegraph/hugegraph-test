@@ -46,7 +46,6 @@ def init_graph():
         assert code == 200
 
 
-@pytest.mark.skip(reason='hubble load not pass yet now')
 class LoadTest(unittest.TestCase):
     """
     hubble的导入模块API
