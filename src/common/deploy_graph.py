@@ -129,7 +129,7 @@ def start_graph(package_dir_path, graph_type):
     if graph_type == 'server':
         os.system(
             'cd %s '
-            f'&& echo -e "{pa}" | ./bin/init-store.sh '
+            f'&& echo "{pa}" | ./bin/init-store.sh '
             '&& ./bin/start-hugegraph.sh' % package_dir_path
         )
     else:
