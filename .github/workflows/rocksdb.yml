@@ -11,6 +11,7 @@ on:
     - cron: '0 17 */3 * *'
   # 手动触发
   workflow_dispatch:
+permissions: write-all
 
 jobs:
   # job: openSource and no auth
@@ -65,7 +66,7 @@ jobs:
 
       - name: deploy hugegraph
         run: |
-          python src/deploy_start.py all
+          sudo python src/deploy_start.py all
 
       - name: decompress dataset.zip
         run: |
@@ -74,7 +75,7 @@ jobs:
           
       - name: run test cases
         run: |
-          pytest --html=test.html --capture=tee-sys
+          sudo pytest --html=test.html --capture=tee-sys
 
 #  # job: openSource and no auth with https
 #  openSource_no_auth_https:
