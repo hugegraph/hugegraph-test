@@ -48,7 +48,7 @@ test_password = {'tester': '123456'}
 
 # toolchain (includes loader, hubble, tools)
 toolchain_git = {
-    'branch': 'b7095aabab0947fb90b946e0cabb2be200aa658f',
+    'branch': '1d292bef993c63ff4c7763b37692dc30a2a7bcab',
     'url': 'https://github.com/apache/hugegraph-toolchain.git'
 }
 
