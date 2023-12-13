@@ -75,7 +75,7 @@ jobs:
           
       - name: run test cases
         run: |
-          sudo pytest --html=test.html --capture=tee-sys
+          pytest --html=test.html --capture=tee-sys
 
 #  # job: openSource and no auth with https
 #  openSource_no_auth_https:
