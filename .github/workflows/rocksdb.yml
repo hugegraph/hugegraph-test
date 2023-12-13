@@ -66,7 +66,7 @@ jobs:
 
       - name: deploy hugegraph
         run: |
-          sudo python src/deploy_start.py all
+          python src/deploy_start.py all
 
       - name: decompress dataset.zip
         run: |
