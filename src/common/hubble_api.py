@@ -27,7 +27,7 @@ class GraphConnection:
         :return:
         """
         url = "/api/v1.2/graph-connections"
-        code, res = Request(auth=auth).request(method="post", path=url, json=body, types="hubble")
+        code, res = Request().request(method="post", path=url, json=body, types="hubble")
         return code, res
 
     @staticmethod
@@ -52,7 +52,7 @@ class GraphConnection:
         :return:
         """
         url = '/api/v1.2/graph-connections/%d' % graph_id
-        code, res = Request(auth=auth).request(method="put", path=url, types="hubble", json=body)
+        code, res = Request().request(method="put", path=url, types="hubble", json=body)
         return code, res
 
     @staticmethod
@@ -64,7 +64,7 @@ class GraphConnection:
         :return:
         """
         url = '/api/v1.2/graph-connections/%d' % graph_id
-        code, res = Request(auth=auth).request(method="delete", path=url, types="hubble")
+        code, res = Request().request(method="delete", path=url, types="hubble")
         return code, res
 
 
