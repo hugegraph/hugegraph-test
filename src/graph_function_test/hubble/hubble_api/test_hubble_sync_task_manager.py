@@ -60,12 +60,16 @@ class SyncTaskManagerCase(unittest.TestCase):
         :return:
         """
         init_graph()
-        code, res = GraphConnection().add_graph_connect(body={
+        body = {
             "name": _cfg.graph_name + "_test1",
             "graph": _cfg.graph_name,
             "host": _cfg.graph_host,
             "port": _cfg.server_port
-        })
+        }
+        if _cfg.is_auth:
+            body['username'] = 'admin'
+            body['password'] = _cfg.admin_password.get('admin')
+        code, res = GraphConnection().add_graph_connect(body)
         print(code, res)
         self.assertEqual(code, 200, "创建图链接失败")
         self.assertEqual(res['status'], 200, "创建图链接失败")
