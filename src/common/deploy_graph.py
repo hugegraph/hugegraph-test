@@ -142,7 +142,8 @@ def start_graph(package_dir_path, graph_type):
         )
     else:
         os.system(
-            'cd %s '
+            f'chmod -R 755 {package_dir_path}'
+            '&& cd %s '
             '&& ./bin/start-hubble.sh' % package_dir_path
         )
 
@@ -189,7 +190,7 @@ class Deploy:
         get_code(conf.codebase_path, conf.toolchain_git, conf.toolchain_local_repo)
         compile_package(conf.toolchain_path)
         # hubble load need to write files
-        change_hubble_permission(conf.hubble_path)
+        # change_hubble_permission(conf.hubble_path)
 
         # set properties && start hubble
         # set_hubble_properties(hubble_package_dir_name, conf.graph_host, conf.hubble_port)
