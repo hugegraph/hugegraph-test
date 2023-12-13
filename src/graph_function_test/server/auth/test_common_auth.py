@@ -2059,14 +2059,6 @@ class TestCommonAuth(unittest.TestCase):
             else:
                 pass
 
-        code, res = Auth().get_targets()
-        print(code, res)
-
-        # check Authorize--delete
-        code, res = Auth().delete_targets('-44:target_delete_target', auth=user)
-        print(code, res)
-        self.assertEqual(code, 204, msg='Authorize code check fail')
-
         # check unAuthorize--write
         body = {
             'target_url': '%s:%d' % (_cfg.graph_host, _cfg.server_port),
@@ -2076,6 +2068,7 @@ class TestCommonAuth(unittest.TestCase):
                 {'type': 'GREMLIN'}
             ]
         }
+
         code, res = Auth().post_targets(body, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
@@ -2089,6 +2082,11 @@ class TestCommonAuth(unittest.TestCase):
         code, res = Auth().get_targets(auth=user)
         print(code, res)
         self.assertEqual(res['targets'], [], msg='unAuthorize code check fail')
+
+        # check Authorize--delete
+        code, res = Auth().delete_targets('-44:target_delete_target', auth=user)
+        print(code, res)
+        self.assertEqual(code, 204, msg='Authorize code check fail')
 
     def test_all_read(self):
         """
