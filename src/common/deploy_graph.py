@@ -5,6 +5,7 @@ note       : Component deployment begins
 create_time: 2020/4/22 5:17 下午
 """
 import os
+import subprocess
 import sys
 
 from config.basic_config import admin_password
@@ -59,6 +60,10 @@ def compile_package(dir_code_path):
         cmd = 'cd %s && mvn clean package -P stage -DskipTests -ntp' % dir_code_path
         print(cmd)
         os.system(cmd)
+
+def change_hubble_permission(hubble_path):
+    res = subprocess.run(['chmod', '-R', '755', hubble_path], shell=False, capture_output=True, text=True)
+    assert res.returncode == 0
 
 
 def set_server_properties(package_dir_path, host, server_port, gremlin_port):
@@ -180,6 +185,8 @@ class Deploy:
         is_exists_path(conf.codebase_path)
         get_code(conf.codebase_path, conf.toolchain_git, conf.toolchain_local_repo)
         compile_package(conf.toolchain_path)
+        # hubble load need to write files
+        change_hubble_permission(conf.hubble_path)
 
         # set properties && start hubble
         # set_hubble_properties(hubble_package_dir_name, conf.graph_host, conf.hubble_port)
