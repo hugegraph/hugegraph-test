@@ -70,6 +70,10 @@ class TestBase(unittest.TestCase):
             "host": _cfg.graph_host,
             "port": _cfg.server_port
         }
+
+        if _cfg.is_auth:
+            body['username'] = 'admin'
+            body['password'] = _cfg.admin_password.get('admin')
         code, res = GraphConnection().add_graph_connect(body=body)
         self.assertEqual(code, 200, "响应状态码不正确")
         self.assertEqual(res['status'], 200, "添加图链接状态码不正确")
@@ -89,6 +93,9 @@ class TestBase(unittest.TestCase):
             "host": _cfg.graph_host,
             "port": _cfg.server_port
         }
+        if _cfg.is_auth:
+            body['username'] = 'admin'
+            body['password'] = _cfg.admin_password.get('admin')
         code, res = GraphConnection().get_graph_connect()
         graph_id = res['data']['records'][0]['id']
         code, res = GraphConnection().update_graph_connect(body=body, graph_id=graph_id)
@@ -131,6 +138,9 @@ class TestBase(unittest.TestCase):
             "host": _cfg.graph_host,
             "port": _cfg.server_port
         }
+        if _cfg.is_auth:
+            body['username'] = 'admin'
+            body['password'] = _cfg.admin_password.get('admin')
         code, res = GraphConnection().get_graph_connect()
         graph_id = res['data']['records'][0]['id']
         code, res = GraphConnection().update_graph_connect(body=body, graph_id=graph_id)
@@ -152,6 +162,9 @@ class TestBase(unittest.TestCase):
             "host": _cfg.graph_host,
             "port": _cfg.server_port
         }
+        if _cfg.is_auth:
+            body['username'] = 'admin'
+            body['password'] = _cfg.admin_password.get('admin')
         code, res = GraphConnection().get_graph_connect()
         graph_id = res['data']['records'][0]['id']
         code, res = GraphConnection().update_graph_connect(body=body, graph_id=graph_id)
@@ -805,6 +818,9 @@ class TestBase(unittest.TestCase):
             "host": _cfg.graph_host,
             "port": _cfg.server_port
         }
+        if _cfg.is_auth:
+            body['username'] = 'admin'
+            body['password'] = _cfg.admin_password.get('admin')
         code, res = GraphConnection().add_graph_connect(body=body)
         self.assertEqual(code, 200, "添加图链接成功")
 
@@ -849,6 +865,9 @@ class TestBase(unittest.TestCase):
             "host": _cfg.graph_host,
             "port": _cfg.server_port
         }
+        if _cfg.is_auth:
+            body['username'] = 'admin'
+            body['password'] = _cfg.admin_password.get('admin')
         code, res = GraphConnection().add_graph_connect(body=body)
         self.assertEqual(code, 200, "添加图链接失败")
 
