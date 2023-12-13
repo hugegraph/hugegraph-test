@@ -63,7 +63,7 @@ def compile_package(dir_code_path):
 
 
 def change_hubble_permission(hubble_path):
-    res = subprocess.run(['chmod', '-R', '755', hubble_path], shell=False, capture_output=True, text=True)
+    res = subprocess.run(['sudo', 'chmod', '-R', '777', hubble_path], shell=False, capture_output=True, text=True)
     assert res.returncode == 0
 
 
