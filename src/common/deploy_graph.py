@@ -62,9 +62,11 @@ def compile_package(dir_code_path):
         os.system(cmd)
 
 
-def change_hubble_permission(hubble_path):
-    res = subprocess.run(['sudo', 'chmod', '-R', '777', hubble_path], shell=False, capture_output=True, text=True)
+def change_hubble_permission(dir_path):
+    res = subprocess.run(['chmod', '-R', '777', dir_path], shell=False, capture_output=True, text=True)
     assert res.returncode == 0
+    print(f'stdout: ', res.stdout)
+    print(f'stderr: ', res.stderr)
 
 
 def set_server_properties(package_dir_path, host, server_port, gremlin_port):
@@ -187,7 +189,7 @@ class Deploy:
         get_code(conf.codebase_path, conf.toolchain_git, conf.toolchain_local_repo)
         compile_package(conf.toolchain_path)
         # hubble load need to write files
-        change_hubble_permission(conf.hubble_path)
+        change_hubble_permission(conf.toolchain_path)
 
         # set properties && start hubble
         # set_hubble_properties(hubble_package_dir_name, conf.graph_host, conf.hubble_port)
