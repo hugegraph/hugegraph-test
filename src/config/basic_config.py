@@ -6,15 +6,32 @@ create_time: 2020/4/22 5:17 下午
 """
 import os.path
 
-code_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
+# local codebase
+codebase_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 
+# apache release version
+is_incubating = 'incubating-'
+server_release_version = '1.2.0'
+toolchain_release_version = '1.2.0'
+server_local_repo = 'hugegraph'
+toolchain_local_repo = 'hugegraph-toolchain'
+server_gen_dir = f'hugegraph/hugegraph-server/apache-hugegraph-{is_incubating}{server_release_version}'
+toolchain_gen_dir = f'hugegraph-toolchain/apache-hugegraph-toolchain-{is_incubating}{toolchain_release_version}'
+toolchain_obj_template = 'apache-hugegraph-{tool_name}-' + is_incubating + f'{toolchain_release_version}'
+
+server_path = os.path.join(codebase_path, server_local_repo)
+toolchain_path = os.path.join(codebase_path, toolchain_local_repo)
+loader_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='loader'))
+hubble_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='hubble'))
+tools_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='tools'))
+
+# common
 is_auth = False
 is_https = False
 
 # server
 server_git = {
-    # 'branch': 'master',
-    'branch': '20d1e5228e39bd974079891fc713574fb14798c5',
+    'branch': '2c6fcdc719a0afa7e2d1eaddb0c063d152445a8f',
     'url': 'https://github.com/apache/hugegraph.git'
 }
 graph_type = 'open_source'  # open_source || business
@@ -31,7 +48,7 @@ test_password = {'tester': '123456'}
 
 # toolchain (includes loader, hubble, tools)
 toolchain_git = {
-    'branch': 'b066b805630ca591809cfee2da2aae1395fc6b42',
+    'branch': 'd707163b5ad379429edb1ae98802ab59141c50be',
     'url': 'https://github.com/apache/hugegraph-toolchain.git'
 }
 

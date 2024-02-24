@@ -11,6 +11,7 @@ on:
     - cron: '0 17 */3 * *'
   # 手动触发
   workflow_dispatch:
+permissions: write-all
 
 jobs:
   # job: openSource and no auth
@@ -21,12 +22,13 @@ jobs:
       max-parallel: 3
       matrix:
         python-version: ["3.10"]
+        java-version: ['8', '11']
 
     steps:
-      - name: install JDK 8
+      - name: Install Java ${{ matrix.java-version }}
         uses: actions/setup-java@v4
         with:
-          java-version: '8'
+          java-version: ${{ matrix.java-version }}
           distribution: 'adopt'
 
       - name: cache maven repository
@@ -36,15 +38,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v4
-        with:
-          node-version: '16'
-
-      - name: Get Yarn path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -82,36 +75,41 @@ jobs:
           
       - name: run test cases
         run: |
-          pytest --html=test.html --capture=tee-sys
+          pytest --html=test.html --capture=tee-sys || (tail -500 /home/runner/work/hugegraph-test/hugegraph-test/graph/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.2.0/apache-hugegraph-hubble-incubating-1.2.0/logs/hugegraph-hubble.log && exit 1)
 
-
-  # job: openSource and exist auth
-#  openSource_exist_auth:
-#    name: openSource and exist auth
+#  # job: openSource and no auth with https
+#  openSource_no_auth_https:
+#    name: openSource and no auth with https
 #    runs-on: ubuntu-latest
+#    strategy:
+#      max-parallel: 3
+#      matrix:
+#        python-version: ["3.10"]
+#        java-version: ['8', '11']
+#
 #    steps:
-#      - name: install JDK 8
-#        uses: actions/setup-java@v2
+#      - name: Install Java ${{ matrix.java-version }}
+#        uses: actions/setup-java@v4
 #        with:
-#          java-version: '8'
+#          java-version: ${{ matrix.java-version }}
 #          distribution: 'adopt'
 #
 #      - name: cache maven repository
-#        uses: actions/cache@v2
+#        uses: actions/cache@v3
 #        with:
 #          path: ~/.m2/repository
-#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/requirements.txt') }}
 #          restore-keys: |
 #            ${{ runner.os }}-maven-
 #
-#      - name: install python 3.7
-#        uses: actions/setup-python@v2
+#      - name: Set up Python ${{ matrix.python-version }}
+#        uses: actions/setup-python@v4
 #        with:
-#          python-version: '3.7'
+#          python-version: ${{ matrix.python-version }}
 #          architecture: 'x64'
 #
 #      - name: cache python dependencies
-#        uses: actions/cache@v2
+#        uses: actions/cache@v3
 #        id: cache-pip
 #        with:
 #          path: ~/.cache/pip
@@ -120,7 +118,7 @@ jobs:
 #            ${{ runner.os }}-pip-
 #
 #      - name: checkout python scripts
-#        uses: actions/checkout@v2
+#        uses: actions/checkout@v4
 #        with:
 #          fetch-depth: 2
 #
@@ -131,11 +129,8 @@ jobs:
 #
 #      - name: deploy hugegraph
 #        run: |
-#          sed -i -e "s/^is_auth.*$/is_auth = True/g" src/config/basic_config.py
-#          sed -i -e "s/^admin_password.*$/admin_password = {'admin': '123456'}/g" src/config/basic_config.py
-#          sed -i -e "s/^test_password.*$/test_password = {'tester': '123456'}/g" src/config/basic_config.py
+#          sed -i -e "s/^is_https.*$/is_https = True/g" src/config/basic_config.py
 #          python src/deploy_start.py all
-#
 #
 #      - name: decompress dataset.zip
 #        run: |
@@ -145,3 +140,67 @@ jobs:
 #      - name: run test cases
 #        run: |
 #          pytest --html=test.html --capture=tee-sys
+
+  # job: openSource and exist auth
+  openSource_exist_auth:
+    name: openSource and exist auth
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 3
+      matrix:
+        python-version: [ "3.10" ]
+        java-version: [ '8', '11' ]
+
+    steps:
+      - name: Install Java ${{ matrix.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'adopt'
+
+      - name: cache maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: 'x64'
+
+      - name: cache python dependencies
+        uses: actions/cache@v3
+        id: cache-pip
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: checkout python scripts
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: install python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./requirements.txt
+
+      - name: deploy hugegraph
+        run: |
+          sed -i -e "s/^is_auth.*$/is_auth = True/g" src/config/basic_config.py
+          python src/deploy_start.py all
+
+      - name: decompress dataset.zip
+        run: |
+          unzip src/config/dataset.zip
+          mv dataset src/config/
+
+      - name: run test cases
+        run: |
+          pytest --html=test.html --capture=tee-sys

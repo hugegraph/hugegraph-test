@@ -10,15 +10,9 @@ import subprocess
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../../')
-from src.config import basic_config as _cfg
-from src.common.file_basic import is_match_re
-from src.common.server_api import Gremlin
 
-tools_name = is_match_re(
-    _cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0',
-    "^apache-hugegraph-tools-incubating-(\d).(\d{1,2}).(\d)$"
-)
-tools_path = _cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0' + '/' + tools_name
+from src.config import basic_config as _cfg
+from src.common.server_api import Gremlin
 
 
 def run_shell(cmd, graph_name=None, graph_host=None, graph_port=None):
@@ -72,7 +66,7 @@ def run_shell(cmd, graph_name=None, graph_host=None, graph_port=None):
         run_cmd = cmd % (url, graph_name, protocol_cmd, auth_cmd)
 
     print("run_cmd: " + run_cmd)
-    res = subprocess.Popen('cd %s && %s' % (tools_path, run_cmd),
+    res = subprocess.Popen('cd %s && %s' % (_cfg.tools_path, run_cmd),
                            shell=True,
                            stdout=subprocess.PIPE,
                            stderr=subprocess.PIPE)
@@ -167,7 +161,7 @@ def target_insert_data():
               "marko.addEdge('k', vadas);\" " \
               % (url, _cfg.tools_target_graph, target_protocol_cmd, target_auth_cmd)
     print(run_cmd)
-    res = subprocess.Popen('cd %s && %s' % (tools_path, run_cmd),
+    res = subprocess.Popen('cd %s && %s' % (_cfg.tools_path, run_cmd),
                            shell=True,
                            stdout=subprocess.PIPE,
                            stderr=subprocess.PIPE)
@@ -199,9 +193,9 @@ def target_clear_graph():
     run_cmd = "./bin/hugegraph --url %s --graph %s %s %s graph-clear --confirm-message " \
               "\"I'm sure to delete all data\" " \
               % (url, _cfg.tools_target_graph, target_protocol_cmd, target_auth_cmd)
-    print('cd %s' % tools_path)
+    print('cd %s' % _cfg.tools_path)
     print('run_cmd: ' + run_cmd)
-    res = subprocess.Popen('cd %s && %s' % (tools_path, run_cmd),
+    res = subprocess.Popen('cd %s && %s' % (_cfg.tools_path, run_cmd),
                            shell=True,
                            stdout=subprocess.PIPE,
                            stderr=subprocess.PIPE)

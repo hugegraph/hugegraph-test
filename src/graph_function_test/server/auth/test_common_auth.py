@@ -42,14 +42,14 @@ class TestCommonAuth(unittest.TestCase):
     def setUp(self):
         """
         测试case开始
-        :resurn:
+        :return:
         """
         Gremlin().gremlin_post('graph.truncateBackend();', auth=auth)
 
     def test_status_read(self):
         """
         资源读权限
-        :resurn:
+        :return:
         """
         permission_list = [
             {'target_list': [{'type': 'STATUS'}], 'permission': 'READ', 'name': 'status_read'}
@@ -83,7 +83,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_status_write(self):
         """
         资源写权限
-        :resurn:
+        :return:
         """
         permission_list = [
             {'target_list': [{'type': 'STATUS'}], 'permission': 'WRITE', 'name': 'status_write'},
@@ -122,7 +122,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_propertyKey_read(self):
         """
         property_key读权限
-        :resurn:
+        :return:
         """
         # add graph
         Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create()", auth=auth)
@@ -179,7 +179,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_propertyKey_write(self):
         """
         property_key写权限
-        :resurn:
+        :return:
         """
         permission_list = [
             {'target_list': [{'type': 'PROPERTY_KEY'}], 'permission': 'WRITE', 'name': 'propertyKey_write'}
@@ -201,8 +201,8 @@ class TestCommonAuth(unittest.TestCase):
         }
         code, res = Schema().create_property(body, auth=user)
         print(code, res)
-        self.assertEqual(code, 201, 'Authorize code check fail')
-        self.assertEqual(res['name'], body['name'], 'Authorize result check fail')
+        self.assertEqual(code, 202, 'Authorize code check fail')
+        self.assertEqual(res['property_key']['name'], body['name'], 'Authorize result check fail')
 
         # check Unauthorized--read
         code, res = Schema().get_all_properties(auth=user)
@@ -220,7 +220,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_propertyKey_delete(self):
         """
         property_key删权限
-        :resurn:
+        :return:
         """
         # add graph_propertyKey
         body = {
@@ -246,7 +246,7 @@ class TestCommonAuth(unittest.TestCase):
         name = 'test'
         code, res = Schema().delete_property_by_name(name, auth=user)
         print(code, res)
-        self.assertEqual(code, 204, msg='Unauthorized code check fail')
+        self.assertEqual(code, 202, msg='Unauthorized code check fail')
 
         # check Unauthorized--read
         code, res = Schema().get_all_properties(auth=user)
@@ -266,7 +266,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_vertexLabel_read(self):
         """
         vertex_label读权限 有bug
-        :resurn:
+        :return:
         """
         # add graph
         Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();"
@@ -315,7 +315,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_vertexLabel_write(self):
         """
         vertex_label写权限
-        :resurn:
+        :return:
         """
         # add graph
         Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();", auth=auth)
@@ -364,7 +364,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_vertexLabel_delete(self):
         """
         vertex_label删权限
-        :resurn:
+        :return:
         """
         # add graph
         Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();"
@@ -428,7 +428,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_edgeLabel_read(self):
         """
         edge_label读权限
-        :resurn:
+        :return:
         """
         # add graph
         Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();"
@@ -479,7 +479,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_edgeLabel_write(self):
         """
         edge_label写权限
-        :resurn:
+        :return:
         """
         # add graph
         Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();"
@@ -529,7 +529,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_edgeLabel_delete(self):
         """
         vertex_label删权限
-        :resurn:
+        :return:
         """
         # add graph
         Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();"
@@ -593,7 +593,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_indexLabel_vertex_read(self):
         """
         index_label 读权限
-        :resurn:
+        :return:
         """
         # add schema_indexLabel
         Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();"
@@ -651,7 +651,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_indexLabel_vertex_write(self):
         """
         index_label写权限
-        :resurn:
+        :return:
         """
         # add schema_indexLabel
         Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();"
@@ -722,7 +722,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_indexLabel_vertex_delete(self):
         """
         index_label删权限
-        :resurn:
+        :return:
         """
         # add schema_indexLabel
         Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();"
@@ -796,7 +796,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_indexLabel_edge_read(self):
         """
         edge_index_label 读权限
-        :resurn:
+        :return:
         """
         # add schema_indexLabel
         Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();"
@@ -861,7 +861,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_indexLabel_edge_write(self):
         """
         index_label写权限
-        :resurn:
+        :return:
         """
         # add schema_indexLabel
         Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();"
@@ -933,7 +933,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_indexLabel_edge_delete(self):
         """
         index_label删权限
-        :resurn:
+        :return:
         """
         # add schema_indexLabel
         code, res = Gremlin().gremlin_post(
@@ -1003,7 +1003,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_vertex_aggr_read(self):
         """
         vertex_arrg 读权限
-        :resurn:
+        :return:
         """
         # add schema_aggregate
         code, res = Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();"
@@ -1060,7 +1060,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_edge_aggr_read(self):
         """
         edge_aggr 读权限
-        :resurn:
+        :return:
         """
         # add schema_aggregate
         code, res = Gremlin().gremlin_post("graph.schema().propertyKey('name').asText().ifNotExist().create();"
@@ -1117,7 +1117,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_vertex_read(self):
         """
         vertex_read 读权限
-        :resurn:
+        :return:
         """
         # add graph
         InsertData(gremlin='gremlin_alg_01.txt').gremlin_graph()
@@ -1179,7 +1179,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_vertex_write(self):
         """
         basic_operation 写权限
-        :resurn:
+        :return:
         """
         # add graph
         InsertData(gremlin='gremlin_alg_01.txt').gremlin_graph()
@@ -1240,7 +1240,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_vertex_delete(self):
         """
         basic_operation 删除权限
-        :resurn:
+        :return:
         """
         # add graph
         InsertData(gremlin='gremlin_alg_01.txt').gremlin_graph()
@@ -1295,7 +1295,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_edge_read(self):
         """
         edge 读权限
-        :resurn:
+        :return:
         """
         # add graph
         InsertData(gremlin='gremlin_alg_01.txt').gremlin_graph()
@@ -1354,7 +1354,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_edge_write(self):
         """
         edge 写权限
-        :resurn:
+        :return:
         """
         # add graph
         InsertData(gremlin='gremlin_alg_01.txt').gremlin_graph()
@@ -1419,7 +1419,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_edge_delete(self):
         """
         edge 删除权限
-        :resurn:
+        :return:
         """
         # add graph
         InsertData(gremlin='gremlin_alg_01.txt').gremlin_graph()
@@ -1485,7 +1485,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_gremlin_vertex_execute(self):
         """
         basic_operation 读权限
-        :resurn:
+        :return:
         """
         # add graph
         InsertData(gremlin='gremlin_alg_01.txt').gremlin_graph()
@@ -1539,7 +1539,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_gremlin_edge_execute(self):
         """
         edge 读权限
-        :resurn:
+        :return:
         """
         # add graph
         InsertData(gremlin='gremlin_alg_01.txt').gremlin_graph()
@@ -1588,7 +1588,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_var_read(self):
         """
         var 读权限
-        :resurn:
+        :return:
         """
         # premise
         name = 'var'
@@ -1651,7 +1651,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_var_write(self):
         """
         var 写权限
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -1702,7 +1702,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_var_delete(self):
         """
         var 删除权限
-        :resurn:
+        :return:
         """
         # premise
         name = 'var'
@@ -1761,7 +1761,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_task_write_read_contain_grants(self):
         """
         task 写、执行、读权限  用户只能读取自己写的task
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -1814,7 +1814,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_task_read_execute_grants(self):
         """
         task 写、执行、读权限  用户只能读取自己写的task
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -1853,7 +1853,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_task_execute_write_delete(self):
         """
         task 删除、执行权限
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -1917,7 +1917,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_target_read(self):
         """
         target 读权限
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -1963,7 +1963,7 @@ class TestCommonAuth(unittest.TestCase):
         )
 
         # check unAuthorize--delete
-        code, res = Auth().delete_targets('-77:target_read_target', auth=user)
+        code, res = Auth().delete_targets('-44:target_read_target', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
         self.assertEqual(
@@ -1975,7 +1975,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_target_write(self):
         """
         target 写权限
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -2026,7 +2026,7 @@ class TestCommonAuth(unittest.TestCase):
         self.assertEqual(res, {'targets': []}, 'unAuthorize res check fail')
 
         # check unAuthorize--delete
-        code, res = Auth().delete_targets('-77:gremlin', auth=user)
+        code, res = Auth().delete_targets('-44:gremlin', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
         self.assertEqual(
@@ -2038,7 +2038,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_target_delete(self):
         """
         target 删除权限
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -2059,11 +2059,6 @@ class TestCommonAuth(unittest.TestCase):
             else:
                 pass
 
-        # check Authorize--delete
-        code, res = Auth().delete_targets('-77:target_delete_target', auth=user)
-        print(code, res)
-        self.assertEqual(code, 204, msg='Authorize code check fail')
-
         # check unAuthorize--write
         body = {
             'target_url': '%s:%d' % (_cfg.graph_host, _cfg.server_port),
@@ -2073,6 +2068,7 @@ class TestCommonAuth(unittest.TestCase):
                 {'type': 'GREMLIN'}
             ]
         }
+
         code, res = Auth().post_targets(body, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
@@ -2087,10 +2083,15 @@ class TestCommonAuth(unittest.TestCase):
         print(code, res)
         self.assertEqual(res['targets'], [], msg='unAuthorize code check fail')
 
+        # check Authorize--delete
+        code, res = Auth().delete_targets('-44:target_delete_target', auth=user)
+        print(code, res)
+        self.assertEqual(code, 204, msg='Authorize code check fail')
+
     def test_all_read(self):
         """
         all 读权限
-        :resurn:
+        :return:
         """
         # add graph
         InsertData(gremlin='gremlin_alg_01.txt').gremlin_graph()
@@ -2158,7 +2159,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_all_write(self):
         """
         all 写权限
-        :resurn:
+        :return:
         """
         # add graph
         InsertData(gremlin='gremlin_alg_01.txt').gremlin_graph()
@@ -2243,7 +2244,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_all_delete(self):
         """
         all 删除权限
-        :resurn:
+        :return:
         """
         # add graph
         InsertData(gremlin='gremlin_alg_01.txt').gremlin_graph()
@@ -2309,14 +2310,14 @@ class TestCommonAuth(unittest.TestCase):
         self.assertEqual(res['result']['data'], [0], msg='unAuthorize code check fail')
 
         # check unAuthorize-- target_delete
-        code, res = Auth().delete_targets('-77:all_delete_target', auth=user)
+        code, res = Auth().delete_targets('-44:all_delete_target', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='Authorize code check fail')
 
     def test_grant_read(self):
         """
         grant 读权限
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -2349,14 +2350,14 @@ class TestCommonAuth(unittest.TestCase):
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
 
         # check unAuthorize--delete
-        code, res = Auth().delete_accesses('S-69:grant_read_group>-88>11>S-77:grant_read_target', auth=user)
+        code, res = Auth().delete_accesses('S-36:grant_read_group>-55>11>S-44:grant_read_target', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
 
     def test_grant_write_exclude_grants(self):
         """
         grant 写tester用户本身不包含的权限（异常case）
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -2408,20 +2409,20 @@ class TestCommonAuth(unittest.TestCase):
         code, res = Auth().post_groups(body, auth=user)
         print(code, res)
 
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='Authorize code check fail')
         self.assertEqual(
             res['message'],
-            "Permission denied: write Resource{graph=hugegraph,type=GRANT,operated=access(-69:gremlin->-77:gremlin)}",
+            "Permission denied: write Resource{graph=hugegraph,type=GRANT,operated=access(-36:gremlin->-44:gremlin)}",
             'Authorize res check fail'
         )
 
     def test_grant_write_contain_grants(self):
         """
         grant 写tester用户本身不包含的权限
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -2480,11 +2481,11 @@ class TestCommonAuth(unittest.TestCase):
         code, res = Auth().post_groups(body, auth=user)
         print(code, res)
 
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=user)
         print(code, res)
         self.assertEqual(code, 201, msg='Authorize code check fail')
-        self.assertEqual(res['id'], 'S-69:gremlin>-88>18>S-77:gremlin', 'Authorize res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'Authorize res check fail')
 
         # check unAuthorize--read
         code, res = Auth().get_accesses(auth=user)
@@ -2493,19 +2494,19 @@ class TestCommonAuth(unittest.TestCase):
         self.assertEqual(res, {'accesses': []}, msg='unAuthorize code check fail')
 
         # check unAuthorize--delete
-        code, res = Auth().delete_accesses('S-69:gremlin>-88>18>S-77:gremlin', auth=user)
+        code, res = Auth().delete_accesses('S-36:gremlin>-55>18>S-44:gremlin', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
         self.assertEqual(
             res['message'],
-            'Permission denied: delete Resource{graph=hugegraph,type=GRANT,operated=access(-69:gremlin->-77:gremlin)}',
+            'Permission denied: delete Resource{graph=hugegraph,type=GRANT,operated=access(-36:gremlin->-44:gremlin)}',
             'unAuthorize res check fail'
         )
 
     def test_grant_delete_exclude_grants(self):
         """
         grant 删除权限(异常case) admin创建的权限，普通用户没有删除的权利
-        :resurn:
+        :return:
         """
         # premise
         body = {
@@ -2527,11 +2528,11 @@ class TestCommonAuth(unittest.TestCase):
         code, res = Auth().post_groups(body, auth=auth)
         print(code, res)
 
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=auth)
         print(code, res)
         self.assertEqual(code, 201, msg='unAuthorize code check fail')
-        self.assertEqual(res['id'], 'S-69:gremlin>-88>18>S-77:gremlin', 'Authorize res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'Authorize res check fail')
 
         # check role
         permission_list = [
@@ -2554,19 +2555,19 @@ class TestCommonAuth(unittest.TestCase):
                 pass
 
         # check Authorize--delete
-        code, res = Auth().delete_accesses('S-69:gremlin>-88>18>S-77:gremlin', auth=user)
+        code, res = Auth().delete_accesses('S-36:gremlin>-55>18>S-44:gremlin', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='Authorize code check fail')
         self.assertEqual(
             res['message'],
-            "Permission denied: delete Resource{graph=hugegraph,type=GRANT,operated=access(-69:gremlin->-77:gremlin)}",
+            "Permission denied: delete Resource{graph=hugegraph,type=GRANT,operated=access(-36:gremlin->-44:gremlin)}",
             'Authorize result check fail'
         )
 
     def test_grant_delete_contain_grants(self):
         """
         grant 删除权限
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -2633,19 +2634,20 @@ class TestCommonAuth(unittest.TestCase):
         code, res = Auth().post_groups(body, auth=user)
         print(code, res)
 
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=user)
         print(code, res)
         self.assertEqual(code, 201, msg='unAuthorize code check fail')
-        self.assertEqual(res['id'], 'S-69:gremlin>-88>18>S-77:gremlin', 'Authorize res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'Authorize res check fail')
 
-        code, res = Auth().delete_accesses('S-69:gremlin>-88>18>S-77:gremlin', auth=user)
+        code, res = Auth().delete_accesses('S-36:gremlin>-55>18>S-44:gremlin', auth=user)
         print(code, res)
         self.assertEqual(code, 204, msg='Authorize code check fail')
 
         # check unAuthorize--write
-        body = {'group': '-69:gremlin', 'target': '-77:gremlin', 'access_permission': 'EXECUTE'}
+        body = {'group': '-36:gremlin', 'target': '-44:gremlin', 'access_permission': 'EXECUTE'}
         code, res = Auth().post_accesses(body, auth=user)
+
         print(code, res)
         self.assertEqual(code, 201, msg='unAuthorize code check fail')
         self.assertEqual(
@@ -2660,7 +2662,7 @@ class TestCommonAuth(unittest.TestCase):
     def test_userGroup_read(self):
         """
         grant 读权限
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -2699,14 +2701,14 @@ class TestCommonAuth(unittest.TestCase):
         )
 
         # check unAuthorize--delete
-        code, res = Auth().delete_groups('-69:userGroup_read_group', auth=user)
+        code, res = Auth().delete_groups('-36:userGroup_read_group', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
 
     def test_userGroup_write(self):
         """
         grant 写权限
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -2749,14 +2751,14 @@ class TestCommonAuth(unittest.TestCase):
         self.assertEqual(res, {'groups': []}, msg='unAuthorize res check fail')
 
         # check unAuthorize--delete
-        code, res = Auth().delete_groups('-69:gremlin', auth=user)
+        code, res = Auth().delete_groups('-36:gremlin', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
 
     def test_userGroup_delete(self):
         """
         user_group 删除权限  ---- 删除权限依赖写权限
-        :resurn:
+        :return:
         """
         # check role
         permission_list = [
@@ -2778,7 +2780,7 @@ class TestCommonAuth(unittest.TestCase):
                 pass
 
         # check Authorize--delete
-        code, res = Auth().delete_groups('-69:userGroup_delete_group', auth=user)
+        code, res = Auth().delete_groups('-36:userGroup_delete_group', auth=user)
         print(code, res)
         self.assertEqual(code, 204, msg='Authorize code check fail')
 

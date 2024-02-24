@@ -7,8 +7,6 @@ import sys
 import unittest
 import time
 
-import pytest
-
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../../../')
 
@@ -21,6 +19,12 @@ from src.common.hubble_api import File
 from src.common.hubble_api import ID
 from src.common.hubble_api import Step
 from src.common.tools import clear_graph
+
+auth = None
+user = None
+if _cfg.is_auth:
+    auth = _cfg.admin_password
+    user = _cfg.test_password
 
 
 def init_graph():
@@ -46,7 +50,6 @@ def init_graph():
         assert code == 200
 
 
-@pytest.mark.skip(reason='hubble load not pass yet now')
 class LoadTest(unittest.TestCase):
     """
     hubble的导入模块API
@@ -57,13 +60,19 @@ class LoadTest(unittest.TestCase):
         每条case的前提条件
         :return:
         """
-        init_graph()
-        GraphConnection().add_graph_connect(body={
+        body = {
             "name": _cfg.graph_name + "_test1",
             "graph": _cfg.graph_name,
             "host": _cfg.graph_host,
             "port": _cfg.server_port
-        })
+        }
+        if _cfg.is_auth:
+            body['username'] = 'admin'
+            body['password'] = _cfg.admin_password.get('admin')
+        init_graph()
+        code, res = GraphConnection().add_graph_connect(body)
+        print(code, res)
+        assert code == 200
         query = {
             "content": "graph.schema().propertyKey('名称').asText().ifNotExist().create();"
                        "graph.schema().propertyKey('类型').asText().valueSet().ifNotExist().create();"
@@ -78,7 +87,9 @@ class LoadTest(unittest.TestCase):
                        "graph.schema().edgeLabel('属于').link('电影', '类型').properties('发行时间').ifNotExist().create();"
                        "graph.schema().edgeLabel('发行于').link('电影', '年份').ifNotExist().create();"
         }
-        Gremlin().gremlin_post(query=query["content"], host=_cfg.graph_host, port=_cfg.server_port)
+        code, res = Gremlin().gremlin_post(query=query["content"], host=_cfg.graph_host, port=_cfg.server_port, auth=auth)
+        print(code, res)
+        assert code == 200
 
     def tearDown(self):
         """

@@ -6,7 +6,6 @@ create_time: 2021/03/12
 """
 import re
 import os
-import shutil
 
 
 def alter_properties(file, old_str, new_str):
@@ -22,6 +21,11 @@ def alter_properties(file, old_str, new_str):
             f2.write(re.sub(old_str, new_str, line))
         os.remove(file)
         os.rename("%s.bak" % file, file)
+
+
+def append_properties(file, add_content):
+    with open(file, mode='a', encoding='utf-8') as f:
+        f.write(add_content)
 
 
 def is_match_re(dir_path, re_rule):

@@ -10,8 +10,6 @@ import pytest
 import sys
 import time
 
-from common.file_basic import is_match_re
-
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../../')
 
@@ -22,10 +20,6 @@ from src.common.tools import clear_graph
 from src.common.tools import target_clear_graph
 from src.common.tools import target_insert_data
 from src.config import basic_config as _cfg
-
-tools_name = is_match_re(_cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0',
-                         "^apache-hugegraph-tools-incubating-(\d).(\d{1,2}).(\d)$")
-tools_path = _cfg.code_path + '/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.0.0' + '/' + tools_name
 
 
 class TestTools:
@@ -38,7 +32,7 @@ class TestTools:
         查看task列表
         :return:
         """
-        cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s task-list"
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s task-list"
         res = run_shell(cmd)
         stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
@@ -50,7 +44,7 @@ class TestTools:
         查看task列表 (limit 限制)
         :return:
         """
-        cmd = f"{tools_path}/bin/hugegraph --url  %s  --graph %s %s %s task-list --limit 3 "
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url  %s  --graph %s %s %s task-list --limit 3 "
         res = run_shell(cmd)
         stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
@@ -62,7 +56,7 @@ class TestTools:
         查看task列表 (状态为成功)
         :return:
         """
-        cmd = f"{tools_path}/bin/hugegraph --url  %s  --graph %s %s %s task-list  --status success "
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url  %s  --graph %s %s %s task-list  --status success "
         res = run_shell(cmd)
         stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
@@ -74,7 +68,7 @@ class TestTools:
         查看图模式
         :return:
         """
-        cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s graph-mode-get "
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s graph-mode-get "
         res = run_shell(cmd)
         stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
@@ -86,7 +80,7 @@ class TestTools:
         设置图模式 RESTORING
         :return:
         """
-        cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s graph-mode-set -m RESTORING "
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s graph-mode-set -m RESTORING "
         res_restore = run_shell(cmd)
         stdout, stderr = res_restore.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
@@ -105,7 +99,7 @@ class TestTools:
         设置图模式 MERGING
         :return:
         """
-        cmd = f"{tools_path}/bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m MERGING "
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m MERGING "
         res_merging = run_shell(cmd)
         stdout, stderr = res_merging.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
@@ -124,7 +118,7 @@ class TestTools:
         查看图信息
         :return:
         """
-        cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s graph-list "
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s graph-list "
         res = run_shell(cmd)
         stdout, stderr = res.communicate(timeout=120)
         print(' ---> ' + str(stdout) + ' === ' + str(stderr))
@@ -136,7 +130,7 @@ class TestTools:
         清理图 并进行二次确认
         :return:
         """
-        cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s graph-clear --confirm-message " \
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s graph-clear --confirm-message " \
               " \"I'm sure to delete all data\" "
         res = run_shell(cmd)
         stdout, stderr = res.communicate(timeout=120)
@@ -155,7 +149,7 @@ class TestTools:
         clear_graph()
         insert_data()
         # 开始case测试
-        cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s backup -t all --directory ./backup" + str(
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s backup -t all --directory ./backup" + str(
             int(time.time()))
         res = run_shell(cmd)
         stdout, stderr = res.communicate(timeout=120)
@@ -179,7 +173,7 @@ class TestTools:
         clear_graph()
         insert_data()
         # 开始case测试
-        cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s backup " \
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s backup " \
               "-t vertex --directory ./backup_" + str(int(time.time()))
         res = run_shell(cmd)
         stdout, stderr = res.communicate(timeout=120)
@@ -202,7 +196,7 @@ class TestTools:
         clear_graph()
         insert_data()
         # 开始case测试
-        cmd = f"{tools_path}/bin/hugegraph --url  %s --graph %s %s %s backup " \
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url  %s --graph %s %s %s backup " \
               "-t edge --directory ./backup_" + str(int(time.time()))
         res = run_shell(cmd)
         stdout, stderr = res.communicate(timeout=120)
@@ -225,7 +219,7 @@ class TestTools:
         clear_graph()
         insert_data()
         # 开始case测试
-        cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s backup " \
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s backup " \
               "-t vertex_label,edge_label,property_key,index_label " \
               "--directory ./backup_" + str(int(time.time()))
         res = run_shell(cmd)
@@ -250,13 +244,13 @@ class TestTools:
         clear_graph()
         insert_data()
         # 数据备份
-        backup_cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s backup -t all --directory ./" + dir_data
+        backup_cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s backup -t all --directory ./" + dir_data
         backup_res = run_shell(backup_cmd)
         backup_res.communicate(timeout=120)
         # 清空数据
         clear_graph()
         # 设置图模式
-        mode_cmd = f"{tools_path}/bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m RESTORING "
+        mode_cmd = f"{_cfg.tools_path}/bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m RESTORING "
         res_mode = run_shell(mode_cmd)
         res_mode.communicate(timeout=120)
         # 恢复数据
@@ -270,7 +264,7 @@ class TestTools:
         assert res_v == 6
         assert res_e == 8
         # 恢复图模式
-        mode_none = f"{tools_path}/bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m NONE "
+        mode_none = f"{_cfg.tools_path}/bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m NONE "
         res_none = run_shell(mode_none)
         res_none.communicate(timeout=120)
 
@@ -282,7 +276,7 @@ class TestTools:
         clear_graph()
         insert_data()
         # 测试 case
-        cmd = f"{tools_path}/bin/hugegraph --url  %s --graph %s %s %s  " \
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url  %s --graph %s %s %s  " \
               "gremlin-execute --script 'g.V().count()' "
         res = run_shell(cmd)
         stdout, stderr = res.communicate(timeout=120)
@@ -297,7 +291,7 @@ class TestTools:
         clear_graph()
         insert_data()
         # 执行gremlin的job任务
-        gremlin_cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s " \
+        gremlin_cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s " \
                       "gremlin-schedule --script 'g.V().count()' "
         gremlin_res = run_shell(gremlin_cmd)
         stdout, stderr = gremlin_res.communicate(timeout=120)
@@ -305,7 +299,7 @@ class TestTools:
         # 查看task内容
         time.sleep(60)
         task_id = str(stdout, 'utf-8').split('\n')[1].split(': ')[1]
-        task_cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s task-get --task-id " + str(task_id)
+        task_cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s task-get --task-id " + str(task_id)
         task_res = run_shell(task_cmd)
         task_stdout, task_stderr = task_res.communicate(timeout=120)
         print(' ---> ' + str(task_stdout, 'utf-8') + str(task_stderr, 'utf-8'))
@@ -320,14 +314,14 @@ class TestTools:
         :return:
         """
         # 清空图模式
-        res0 = run_shell(f"{tools_path}/bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m NONE ")
+        res0 = run_shell(f"{_cfg.tools_path}/bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m NONE ")
         res0.communicate(timeout=120)
 
         clear_graph()
         insert_data()
         target_clear_graph()
 
-        cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s migrate " \
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s migrate " \
               "--target-url %s " \
               "--target-graph %s " \
               "%s " \
@@ -352,7 +346,7 @@ class TestTools:
         :return:
         """
         # 清空图模式
-        res0 = run_shell(f"{tools_path}/bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m NONE ")
+        res0 = run_shell(f"{_cfg.tools_path}/bin/hugegraph --url  %s --graph %s %s %s  graph-mode-set -m NONE ")
         res0.communicate(timeout=120)
 
         clear_graph()
@@ -360,7 +354,7 @@ class TestTools:
         target_clear_graph()
         target_insert_data()
         # 开始测试case
-        cmd = f"{tools_path}/bin/hugegraph --url %s --graph %s %s %s migrate " \
+        cmd = f"{_cfg.tools_path}/bin/hugegraph --url %s --graph %s %s %s migrate " \
               "--target-url %s " \
               "--target-graph %s " \
               "%s " \
