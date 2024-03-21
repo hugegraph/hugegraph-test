@@ -15,7 +15,7 @@ permissions: write-all
 
 jobs:
   # job: openSource and no auth
-  openSource_no_auth:
+  disable_auth:
     name: openSource and no auth
     runs-on: ubuntu-latest
     strategy:
@@ -78,7 +78,7 @@ jobs:
           pytest --html=test.html --capture=tee-sys || (tail -500 /home/runner/work/hugegraph-test/hugegraph-test/graph/hugegraph-toolchain/apache-hugegraph-toolchain-incubating-1.2.0/apache-hugegraph-hubble-incubating-1.2.0/logs/hugegraph-hubble.log && exit 1)
 
 #  # job: openSource and no auth with https
-#  openSource_no_auth_https:
+#  disable_auth_https:
 #    name: openSource and no auth with https
 #    runs-on: ubuntu-latest
 #    strategy:
@@ -142,7 +142,7 @@ jobs:
 #          pytest --html=test.html --capture=tee-sys
 
   # job: openSource and exist auth
-  openSource_exist_auth:
+  enable_auth:
     name: openSource and exist auth
     runs-on: ubuntu-latest
     strategy:
