@@ -35,15 +35,8 @@ jobs:
         with:
           java-version: ${{ matrix.java-version }}
           distribution: 'adopt'
-          cache: 'maven'
-
-      - name: cache maven repository
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          # TODO: it need check the pom.xml, need refactor the logic
+      #          cache: 'maven'
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -74,6 +67,14 @@ jobs:
       - name: deploy hugegraph
         run: |
           python src/deploy_start.py all
+
+      - name: cache maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
       - name: decompress dataset.zip
         run: |
@@ -166,15 +167,7 @@ jobs:
         with:
           java-version: ${{ matrix.java-version }}
           distribution: 'adopt'
-          cache: 'maven'
-
-      - name: cache maven repository
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+      #          cache: 'maven'
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -206,6 +199,14 @@ jobs:
         run: |
           sed -i -e "s/^is_auth.*$/is_auth = True/g" src/config/basic_config.py
           python src/deploy_start.py all
+
+      - name: cache maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
       - name: decompress dataset.zip
         run: |
