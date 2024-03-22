@@ -15,7 +15,7 @@ cd src
 python --version # ensure version is in 3.8~3.10
 
 # cleanup existed environment and data if you need
-bash ../cleanup.sh
+bash cleanup.sh
 
 ''' 
 Note: modify the configs in basic_config.py before run the test script
