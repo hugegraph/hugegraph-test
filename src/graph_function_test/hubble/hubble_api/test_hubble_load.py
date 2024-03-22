@@ -44,7 +44,7 @@ def init_graph():
         if _cfg.server_backend == 'cassandra':
             clear_graph(graph_name=each_graph, graph_host=each_host, graph_port=each_port)
         else:
-            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用 gremlin 语句进行 truncate 操作
+            Gremlin().gremlin_post('graph.truncateBackend();')  # 使用 gremlin 语句进行 truncate 操作
         # delete graph_connection
         code, res = GraphConnection().delete_graph_connect(each_id)
         assert code == 200
