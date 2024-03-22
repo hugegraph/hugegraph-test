@@ -14,7 +14,7 @@ cd src
 # try python3 if pip is not found, or set alias
 python --version # ensure version is in 3.8~3.10
 
-# cleanup existed environment and data if you need
+# Important: cleanup existed graph service and data if you need
 bash cleanup.sh
 
 ''' 
