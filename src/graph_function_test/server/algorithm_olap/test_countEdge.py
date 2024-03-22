@@ -23,10 +23,10 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
-@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
+@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='社区版已支持 Server-OLAP 算法，等待重构开启')
 class TestCountVertex:
     """
-    接口count_edge：统计边信息，包括图中边数量、各类型的边数量
+    接口 count_edge：统计边信息，包括图中边数量、各类型的边数量
     """
 
     @staticmethod
@@ -37,7 +37,7 @@ class TestCountVertex:
         if _cfg.server_backend == 'cassandra':
             clear_graph()
         else:
-            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用gremlin语句进行truncate操作
+            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用 gremlin 语句进行 truncate 操作
 
         InsertData(gremlin='gremlin_alg_03.txt').gremlin_graph()
 

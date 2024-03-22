@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
 author     : lxb
-note       : olap算法 点统计
+note       : olap 算法 点统计
 create_time: 2020/4/22 5:17 下午
 """
 import pytest
@@ -23,10 +23,10 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
-@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
+@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='社区版已支持 Server-OLAP 算法，等待重构开启')
 class TestCountVertex:
     """
-    接口count_vertex：统计顶点信息，包括图中顶点数量、各类型的顶点数量
+    接口 count_vertex：统计顶点信息，包括图中顶点数量、各类型的顶点数量
     """
 
     @staticmethod
@@ -37,7 +37,7 @@ class TestCountVertex:
         if _cfg.server_backend == 'cassandra':
             clear_graph()
         else:
-            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用gremlin语句进行truncate操作
+            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用 gremlin 语句进行 truncate 操作
 
         InsertData(gremlin='gremlin_alg_03.txt').gremlin_graph()
 

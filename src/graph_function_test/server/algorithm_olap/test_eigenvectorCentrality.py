@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
 author     : lxb
-note       : olap算法 特征向量中心性
+note       : olap 算法 特征向量中心性
 create_time: 2020/4/22 5:17 下午
 """
 import pytest
@@ -23,10 +23,10 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
-@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
+@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='社区版已支持 Server-OLAP 算法，等待重构开启')
 class TestEigenvectorCentrality:
     """
-    接口eigenvector_centrality：特征中心性
+    接口 eigenvector_centrality：特征中心性
     """
 
     @staticmethod
@@ -37,7 +37,7 @@ class TestEigenvectorCentrality:
         if _cfg.server_backend == 'cassandra':
             clear_graph()
         else:
-            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用gremlin语句进行truncate操作
+            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用 gremlin 语句进行 truncate 操作
 
         InsertData(gremlin='gremlin_alg_02.txt').gremlin_graph()
 
