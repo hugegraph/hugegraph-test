@@ -21,7 +21,7 @@ from src.config import basic_config as _cfg
 
 def get_code(pwd, git_obj, code_dir):
     """
-    拉取graph组件的源码：如果本路径有代码库则更新即可；没有代码库则拉取最新代码
+    拉取 graph 组件的源码：如果本路径有代码库则更新即可；没有代码库则拉取最新代码
     :param pwd: 路径
     :param git_obj: git 配置
     :param code_dir:
@@ -29,11 +29,11 @@ def get_code(pwd, git_obj, code_dir):
     branch = git_obj['branch']
     url = git_obj['url']
     if not is_match_re(pwd, code_dir):
-        clone_cmd = 'cd %s && git clone %s && cd %s && git checkout %s' % (pwd, url, code_dir, branch)
+        clone_cmd = 'cd %s && git clone --depth 5 %s && cd %s && git checkout -b %s' % (pwd, url, code_dir, branch)
         print('clone code cmd: ' + clone_cmd)
         os.system(clone_cmd)
     else:
-        pull_cmd = 'cd %s/%s && git checkout %s && git pull' % (pwd, code_dir, branch)
+        pull_cmd = 'cd %s/%s && git checkout -b %s && git pull' % (pwd, code_dir, branch)
         print('pull code cmd: ' + pull_cmd)
         os.system(pull_cmd)
 
@@ -71,10 +71,10 @@ def change_hubble_permission(dir_path):
 
 def set_server_properties(package_dir_path, host, server_port, gremlin_port):
     """
-    修改server组件配置
+    修改 server 组件配置
     :return:
     """
-    # 修改rest-server.properties文件
+    # 修改 rest-server.properties 文件
     rest_conf = package_dir_path + '/conf/rest-server.properties'
     alter_properties(rest_conf,
                      '127.0.0.1:8080',
@@ -82,7 +82,7 @@ def set_server_properties(package_dir_path, host, server_port, gremlin_port):
     alter_properties(rest_conf,
                      '#gremlinserver.url=http://127.0.0.1:8182',
                      'gremlinserver.url=http://%s:%d' % (host, gremlin_port))
-    # 修改gremlin-server.yaml文件
+    # 修改 gremlin-server.yaml 文件
     gremlin_conf = package_dir_path + '/conf/gremlin-server.yaml'
     alter_properties(gremlin_conf,
                      '#host: 127.0.0.1',
@@ -121,7 +121,7 @@ authentication: {
 
 def set_hubble_properties(package_dir_path, host, port):
     """
-    修改hubble组件配置
+    修改 hubble 组件配置
     :return:
     """
     hubble_conf = package_dir_path + '/conf/hugegraph-hubble.properties'
@@ -131,7 +131,7 @@ def set_hubble_properties(package_dir_path, host, port):
 
 def start_graph(package_dir_path, graph_type):
     """
-    启动graph包
+    启动 graph 包
     """
     pa = admin_password.get('admin')
     if graph_type == 'server':
