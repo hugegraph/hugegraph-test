@@ -32,6 +32,8 @@ unzip src/config/dataset.zip -d src/config/
 pytest 
 # OR
 pytest --html=test.html --capture=tee-sys
+# OR only test specified case
+pytest -k test_name
 ```
 
 **Note:** python version must be in `[3.8, 3.10]`
