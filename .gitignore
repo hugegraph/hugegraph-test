@@ -9,7 +9,7 @@ venv/
 __pycache__
 .idea
 # ignore pytest-html report
-.html
+*.html
 
 # 文件过滤
 *.pyc
