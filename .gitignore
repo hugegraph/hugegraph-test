@@ -2,11 +2,14 @@
 
 # 目录过滤
 src/config/dataset/
+src/config/__MACOSX/
 assets/
 graph/
 venv/
 __pycache__
 .idea
+# ignore pytest-html report
+.html
 
 # 文件过滤
 *.pyc
