@@ -73,8 +73,7 @@ jobs:
       - name: run test cases
         run: |
           pytest --html=test.html --capture=tee-sys || 
-          (tail -500 /home/runner/work/hugegraph-test/hugegraph-test/graph/hugegraph-toolchain/apache
-          -hugegraph-toolchain-incubating-*/apache-hugegraph-hubble-incubating-*/logs/hugegraph-hubble.log && exit 1)
+          (tail -500 /home/runner/work/hugegraph-test/hugegraph-test/graph/hugegraph-toolchain/*/*/logs/hugegraph-hubble.log && exit 1)
 
   # job: enable auth test
   enable_auth:

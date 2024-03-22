@@ -24,7 +24,7 @@ Note: modify the configs in basic_config.py before run the test script
 python deploy_start.py all # or 'server' or 'toolchain'
 
 # 2. decompress dataset
-unzip src/config/dataset.zip -d src/config/
+unzip config/dataset.zip -d config/
 
 # 3. run test
 pytest 
