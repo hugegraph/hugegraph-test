@@ -23,7 +23,6 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
-@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='社区版已支持 Server-OLAP 算法，等待重构开启')
 class TestStressCentrality:
     """
     stress_centrality 接口
