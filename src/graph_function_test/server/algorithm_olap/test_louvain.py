@@ -4,7 +4,6 @@ author     : lxb
 note       : olap 算法 louvain 测试
 create_time: 2020/4/22 5:17 下午
 """
-import pytest
 import sys
 import os
 import time

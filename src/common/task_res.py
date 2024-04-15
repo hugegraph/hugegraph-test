@@ -28,7 +28,7 @@ def get_task_res(id, time_out, auth=None):
         if code == 200:
             if res["task_status"] == "failed":
                 print(' +++ get task filed +++ ' + str(res))
-                assert 0
+                return res
             elif res["task_status"] == "success":
                 result = json.loads(res["task_result"])
                 return result

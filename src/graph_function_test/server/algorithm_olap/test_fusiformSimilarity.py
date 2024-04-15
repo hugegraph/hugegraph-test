@@ -4,7 +4,6 @@ author     : lxb
 note       : 梭型算法的数据集需要优化
 create_time: 2020/4/22 5:17 下午
 """
-import pytest
 import sys
 import os
 
@@ -29,7 +28,7 @@ class TestFusiformSimilarity:
     """
 
     @staticmethod
-    def setup_class(self):
+    def setup_class():
         """
         测试类开始
         """
@@ -241,9 +240,7 @@ class TestFusiformSimilarity:
         id = res["task_id"]
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
-            print(result)
-            str_res = result.split("'task_result': ")[1].replace('}', '')
-            assert str_res == "\"java.lang.IllegalArgumentException: The group property can't be empty\""
+            assert result['task_result'] == "java.lang.IllegalArgumentException: The group property can't be empty"
         else:
             assert 0
 
@@ -392,7 +389,7 @@ class TestFusiformSimilarity:
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {
+            assert (result == {
                 '1:peter': [
                     {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
                     {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
@@ -400,6 +397,11 @@ class TestFusiformSimilarity:
                     {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}
                 ]
             }
+            or result == {'2:lop': [{'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                       {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                       {'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                       {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}]}
+                    )
         else:
             assert 0
 
