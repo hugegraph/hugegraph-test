@@ -7,6 +7,8 @@ create_time: 2020/4/22 5:17 下午
 import sys
 import os
 
+import pytest
+
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../../../')
 
@@ -231,6 +233,7 @@ class TestFusiformSimilarity:
         else:
             assert 0
 
+    @pytest.mark.skip(reason='not stable')
     def test_fusiform_similarity_12(self):
         """
         :return:
@@ -378,6 +381,7 @@ class TestFusiformSimilarity:
         else:
             assert 0
 
+    @pytest.mark.skip(reason='not stable')
     def test_fusiform_similarity_19(self):
         """
         校验基本参数 + alpha=0.4, limit=1

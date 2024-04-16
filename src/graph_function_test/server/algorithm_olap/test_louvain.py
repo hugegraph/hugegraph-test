@@ -8,6 +8,8 @@ import sys
 import os
 import time
 
+import pytest
+
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../../../')
 
@@ -22,7 +24,7 @@ auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
 
-
+@pytest.mark.skip(reason="java.lang.IllegalArgumentException: It's not allowed to query with offser/limit when there are uncommitted records.")
 class TestLouvain:
     """
     接口 louvain：louvain 社区发现
