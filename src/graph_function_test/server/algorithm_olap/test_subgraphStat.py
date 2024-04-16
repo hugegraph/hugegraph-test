@@ -4,7 +4,6 @@ author     : lxb
 note       : olap 算法 子图计算
 create_time: 2020/4/22 5:17 下午
 """
-import pytest
 import sys
 import os
 
@@ -23,7 +22,6 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
-@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='社区版已支持 Server-OLAP 算法，等待重构开启')
 class TestSubgraphStat:
     """
     weak_connected_component 接口
@@ -72,7 +70,7 @@ class TestSubgraphStat:
                               'page_ranks': {'D': 0.3024057078508791, 'E': 0.30239649131582375,
                                              'F': 0.27929155083329715, 'B': 0.04625000000000001,
                                              'C': 0.044656249999999995, 'A': 0.024999999999999998},
-                              'cluster_coeffcient': {'edges': 8, 'vertices': 6, 'cluster_coeffcient': 0.3},
+                              'cluster_coefficient': {'edges': 8, 'vertices': 6, 'cluster_coefficient': 0.3},
                               'rings': {'rings_count': 6}}
         else:
             assert 0

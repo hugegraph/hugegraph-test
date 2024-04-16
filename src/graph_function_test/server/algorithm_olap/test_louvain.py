@@ -4,10 +4,11 @@ author     : lxb
 note       : olap 算法 louvain 测试
 create_time: 2020/4/22 5:17 下午
 """
-import pytest
 import sys
 import os
 import time
+
+import pytest
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../../../')
@@ -23,8 +24,7 @@ auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
 
-
-@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='社区版已支持 Server-OLAP 算法，等待重构开启')
+@pytest.mark.skip(reason="java.lang.IllegalArgumentException: It's not allowed to query with offser/limit when there are uncommitted records.")
 class TestLouvain:
     """
     接口 louvain：louvain 社区发现

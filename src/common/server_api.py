@@ -631,14 +631,14 @@ class Algorithm:
         code, res = Request(auth=auth).request(method='post', path=url, json=body)
         return code, res
 
-    def post_cluster_coeffcient(self, body, auth=None):
+    def post_cluster_coefficient(self, body, auth=None):
         """
         聚类系数
         :param auth: 
         :param body:
         :return:
         """
-        url = "/graphs/%s/jobs/algorithm/cluster_coeffcient" % _cfg.graph_name
+        url = "/graphs/%s/jobs/algorithm/cluster_coefficient" % _cfg.graph_name
         code, res = Request(auth=auth).request(method='post', path=url, json=body)
         return code, res
 
