@@ -27,11 +27,11 @@ def get_code(pwd, git_obj, code_dir):
     url = git_obj['url']
     if not is_match_re(pwd, code_dir):
         clone_cmd = 'cd %s && git clone %s && cd %s && git checkout %s' % (pwd, url, code_dir, branch)
-        print('clone code: ' + clone_cmd)
+        print('clone code cmd: ' + clone_cmd)
         os.system(clone_cmd)
     else:
         pull_cmd = 'cd %s/%s && git checkout %s && git pull' % (pwd, code_dir, branch)
-        print('pull code: ' + pull_cmd)
+        print('pull code cmd: ' + pull_cmd)
         os.system(pull_cmd)
 
 
@@ -54,7 +54,7 @@ def compile_package(dir_code_path):
         print(cmd)
         os.system(cmd)
     else:
-        cmd = 'cd %s && mvn clean package -Dmaven.test.skip=true -q | grep \"tar.gz\"' % dir_code_path
+        cmd = 'cd %s && mvn clean package -DskipTests -ntp | grep \"tar.gz\"' % dir_code_path
         print(cmd)
         os.system(cmd)
 
@@ -66,7 +66,7 @@ def set_server_properties(package_dir_path, host, server_port, gremlin_port):
     """
     rest_conf = package_dir_path + '/conf/rest-server.properties'
     gremlin_conf = package_dir_path + '/conf/gremlin-server.yaml'
-    graph_conf= package_dir_path + '/conf/%s' % _cfg.graph_name
+    graph_conf = package_dir_path + '/conf/graphs/%s.properties' % _cfg.graph_name
     # 修改rest-server.properties文件
     alter_properties(rest_conf,
                      '127.0.0.1:8080',
@@ -84,16 +84,17 @@ def set_server_properties(package_dir_path, host, server_port, gremlin_port):
     # 添加权限
     if _cfg.is_auth is True:
         alter_properties(graph_conf,
-                         'gremlin.graph=com.baidu.hugegraph.HugeFactory',
-                         'gremlin.graph=com.baidu.hugegraph.auth.HugeFactoryAuthProxy')
+                         'gremlin.graph=org.apache.hugegraph.HugeFactory',
+                         'gremlin.graph=org.apache.hugegraph.auth.HugeFactoryAuthProxy')
 
-        alter_properties(rest_conf,
-                         '#auth.authenticator=',
-                         'auth.authenticator=com.baidu.hugegraph.auth.StandardAuthenticator')
+        # Comment as not exist in hugegraph.properties
+        # alter_properties(rest_conf,
+        #                  '#auth.authenticator=',
+        #                  'auth.authenticator=com.baidu.hugegraph.auth.StandardAuthenticator')
 
-        alter_properties(gremlin_conf,
-                         'channelizer: org.apache.tinkerpop.gremlin.server.channel.WsAndHttpChannelizer',
-                         'channelizer: org.apache.tinkerpop.gremlin.server.channel.HttpChannelizer')
+        # alter_properties(gremlin_conf,
+        #                  'channelizer: org.apache.tinkerpop.gremlin.server.channel.WsAndHttpChannelizer',
+        #                  'channelizer: org.apache.tinkerpop.gremlin.server.channel.HttpChannelizer')
         ### 后续 gremlin-server.yml 还得添加如下内容
         # authentication: {
         #     authenticator: com.baidu.hugegraph.auth.StandardAuthenticator,
@@ -116,10 +117,12 @@ def start_graph(package_dir_path, graph_type):
     启动graph包
     """
     if graph_type == 'server':
+        server_start_cmd = 'cd %s ' \
+                           '&& ./bin/init-store.sh ' \
+                           '&& ./bin/start-hugegraph.sh' % package_dir_path
+        print(server_start_cmd)
         os.system(
-            'cd %s '
-            '&& ./bin/init-store.sh '
-            '&& ./bin/start-hugegraph.sh' % package_dir_path
+            server_start_cmd
         )
     else:
         os.system(
@@ -146,21 +149,24 @@ class Deploy:
         self.hubble_git = obj.hubble_git
 
     @staticmethod
-    def server(self):
+    def server(conf):
         """
         :return:
         """
-        code_dir = 'hugegraph'
-        code_dir_path = self.code_path + '/' + code_dir
-        re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % code_dir
+        code_dir = 'incubator-hugegraph'
+        server_module = 'hugegraph-server'
+        build_dir_prefix = 'apache-hugegraph-incubating'
+        code_dir_path = os.path.join(conf.code_path, code_dir)
+        server_module_path = os.path.join(code_dir_path, server_module)
+        re_dir = '^%s-(\d).(\d{1,2}).(\d)$' % build_dir_prefix
 
-        is_exists_path(self.code_path)
-        get_code(self.code_path, self.server_git, code_dir)
+        is_exists_path(conf.code_path)
+        get_code(conf.code_path, conf.server_git, code_dir)
         compile_package(code_dir_path)
-        #  start graph_server
-        package_dir_name = is_match_re(code_dir_path, re_dir)
-        package_dir_path = code_dir_path + '/' + package_dir_name
-        set_server_properties(package_dir_path, self.graph_host, self.server_port, self.gremlin_port)
+        # start graph_server
+        package_dir_name = is_match_re(server_module_path, re_dir)
+        package_dir_path = os.path.join(server_module_path, package_dir_name)
+        set_server_properties(package_dir_path, conf.graph_host, conf.server_port, conf.gremlin_port)
         start_graph(package_dir_path, 'server')
 
     @staticmethod

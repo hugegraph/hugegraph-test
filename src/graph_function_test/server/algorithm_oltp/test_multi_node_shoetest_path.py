@@ -17,7 +17,6 @@ from src.common.loader import InsertData
 from src.config import basic_config as _cfg
 from src.common.tools import clear_graph
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
@@ -47,7 +46,7 @@ class TestMultiNodeShortestPath(unittest.TestCase):
         """
         json = {
             "vertices": {
-              "ids": ["1:vadas", "1:peter", "2:ripple"]
+                "ids": ["1:vadas", "1:peter", "2:ripple"]
             },
             "step": {
                 "direction": "BOTH",
@@ -74,4 +73,3 @@ class TestMultiNodeShortestPath(unittest.TestCase):
 
 if __name__ == "__main__":
     pass
-

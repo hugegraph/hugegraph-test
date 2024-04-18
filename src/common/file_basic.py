@@ -30,14 +30,10 @@ def is_match_re(dir_path, re_rule):
     names = os.listdir(dir_path)
     res = ''
     for name in names:
-        print(re_rule)
         match_obj = re.match(r'%s' % re_rule, name)
-        print(match_obj)
         if match_obj is not None:
             res = name
             break
-        else:
-            continue
     return res
 
 
@@ -60,4 +56,3 @@ if __name__ == "__main__":
         "^hugegraph-loader-(\d).(\d{1,2}).(\d)$"
     )
     print(name)
-

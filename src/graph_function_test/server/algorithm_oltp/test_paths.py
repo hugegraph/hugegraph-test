@@ -17,7 +17,6 @@ from src.common.loader import InsertData
 from src.config import basic_config as _cfg
 from src.common.tools import clear_graph
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
@@ -52,11 +51,11 @@ class TestPaths(unittest.TestCase):
         self.assertEqual(
             res,
             {"paths":
-                 [
-                     {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "1:贾代善"]},
-                     {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "1:贾代善"]}
-                  ]
-             }
+                [
+                    {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "1:贾代善"]},
+                    {"objects": ["1:贾宝玉", "2:王夫人", "1:贾政", "2:贾母", "1:贾代善"]}
+                ]
+            }
         )
 
     def test_get_paths_direction_out(self):

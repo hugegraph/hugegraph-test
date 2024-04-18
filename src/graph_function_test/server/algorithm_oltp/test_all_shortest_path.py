@@ -17,7 +17,6 @@ from src.config import basic_config as _cfg
 from src.common.tools import clear_graph
 from src.common.server_api import Graph
 
-
 auth = None
 if _cfg.is_auth:
     auth = _cfg.admin_password
@@ -369,4 +368,3 @@ class TestAllShorttestPath(unittest.TestCase):
 
 if __name__ == "__main__":
     pass
-

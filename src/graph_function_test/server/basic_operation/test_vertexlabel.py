@@ -337,4 +337,3 @@ def test_delete_vertexlabel_by_name():
 
 if __name__ == "__main__":
     pass
-
