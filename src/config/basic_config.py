@@ -14,13 +14,15 @@ is_incubating = 'incubating-'
 # TODO: consider user * instead of fixed version?
 server_release_version = '1.3.0'
 toolchain_release_version = '1.3.0'
-server_local_repo = 'hugegraph'
+server_local_repo = 'hugegraph/hugegraph-server'
 toolchain_local_repo = 'hugegraph-toolchain'
-server_gen_dir = f'hugegraph/hugegraph-server/apache-hugegraph-{is_incubating}{server_release_version}'
+server_gen_dir = f'hugegraph/hugegraph-server/apache-hugegraph-{is_incubating}server-{server_release_version}'
 toolchain_gen_dir = f'hugegraph-toolchain/apache-hugegraph-toolchain-{is_incubating}{toolchain_release_version}'
 toolchain_obj_template = 'apache-hugegraph-{tool_name}-' + is_incubating + f'{toolchain_release_version}'
 
+project_path = os.path.join(codebase_path, 'hugegraph')
 server_path = os.path.join(codebase_path, server_local_repo)
+server_tar_path = os.path.join(codebase_path, 'hugegraph/hugegraph-server', f'apache-hugegraph-{is_incubating}server-{server_release_version}' + '.tar.gz')
 toolchain_path = os.path.join(codebase_path, toolchain_local_repo)
 loader_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='loader'))
 hubble_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='hubble'))
