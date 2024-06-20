@@ -55,11 +55,11 @@ def compile_package(dir_code_path):
               '-Dpackaging=jar | grep -v \"Downloading\|Downloaded\" && ' \
               'mvn clean package -Dmaven.test.skip=true -q | grep \"tar.gz\"' % dir_code_path
         print(cmd)
-        os.system(cmd)
+        subprocess.check_call(cmd, shell=True)
     else:
         cmd = 'cd %s && mvn clean package -P stage -DskipTests -ntp' % dir_code_path
         print(cmd)
-        os.system(cmd)
+        subprocess.check_call(cmd, shell=True)
 
 
 def change_hubble_permission(dir_path):
@@ -147,6 +147,10 @@ def start_graph(package_dir_path, graph_type):
             '&& ./bin/start-hubble.sh' % package_dir_path
         )
 
+def unzip_targz(file_path, file_name):
+    cmd = f'cd {file_path} && tar -zxvf {file_name}'
+    subprocess.check_call(cmd, shell=True)
+
 
 class Deploy:
     """
@@ -172,7 +176,8 @@ class Deploy:
         """
         is_exists_path(conf.codebase_path)
         get_code(conf.codebase_path, conf.server_git, conf.server_local_repo)
-        compile_package(conf.server_path)
+        compile_package(conf.project_path)
+        unzip_targz(conf.server_path, conf.server_tar_path.split('/')[-1])
 
         gen_dir = os.path.join(conf.codebase_path, conf.server_gen_dir)
         # start graph_server
