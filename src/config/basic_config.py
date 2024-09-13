@@ -12,17 +12,17 @@ codebase_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 # apache release version
 is_incubating = 'incubating-'
 # TODO: consider user * instead of fixed version?
-server_release_version = '1.3.0'
+server_release_version = '1.5.0'
 toolchain_release_version = '1.3.0'
 server_local_repo = 'hugegraph/hugegraph-server'
 toolchain_local_repo = 'hugegraph-toolchain'
-server_gen_dir = f'hugegraph/hugegraph-server/apache-hugegraph-{is_incubating}server-{server_release_version}'
+server_gen_dir = f'hugegraph/hugegraph-server/apache-hugegraph-server-{is_incubating}{server_release_version}'
 toolchain_gen_dir = f'hugegraph-toolchain/apache-hugegraph-toolchain-{is_incubating}{toolchain_release_version}'
 toolchain_obj_template = 'apache-hugegraph-{tool_name}-' + is_incubating + f'{toolchain_release_version}'
 
 project_path = os.path.join(codebase_path, 'hugegraph')
 server_path = os.path.join(codebase_path, server_local_repo)
-server_tar_path = os.path.join(codebase_path, 'hugegraph/hugegraph-server', f'apache-hugegraph-{is_incubating}server-{server_release_version}' + '.tar.gz')
+server_tar_path = os.path.join(codebase_path, 'hugegraph/hugegraph-server', f'apache-hugegraph-server-{is_incubating}{server_release_version}' + '.tar.gz')
 toolchain_path = os.path.join(codebase_path, toolchain_local_repo)
 loader_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='loader'))
 hubble_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='hubble'))
@@ -34,8 +34,8 @@ is_https = False
 
 # server, better to use short hash for git (commit)
 server_git = {
-    'branch': '6a4041e',
-    'url': 'https://github.com/apache/hugegraph.git'
+    'branch': 'c88963c',
+    'url': 'https://github.com/apache/incubator-hugegraph.git'
 }
 graph_type = 'open_source'  # open_source || business
 
@@ -51,8 +51,8 @@ test_password = {'tester': '123456'}
 
 # toolchain (includes loader, hubble, tools)
 toolchain_git = {
-    'branch': '169e10d',
-    'url': 'https://github.com/apache/hugegraph-toolchain.git'
+    'branch': '3b58fc6',
+    'url': 'https://github.com/apache/incubator-hugegraph-toolchain.git'
 }
 
 # loader
