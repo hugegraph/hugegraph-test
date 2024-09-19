@@ -8,7 +8,7 @@ import os
 import subprocess
 import sys
 
-from config.basic_config import admin_password
+from src.config.basic_config import admin_password
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../')
@@ -118,6 +118,50 @@ authentication: {
 }
 ''')
 
+def set_pd_properties(package_dir_path, host, grpc_port, rest_port, store_list, raft_port, raft_list):
+    """
+    修改 pd 组件配置
+    :return:
+    """
+    # 修改 application 文件
+    application_conf = package_dir_path + '/conf/application.yml'
+    alter_properties(application_conf,
+                     '8686',
+                     '%d' % grpc_port)
+    alter_properties(application_conf,
+                     '8620',
+                     '%d' % rest_port)
+    new_store_list = ','.join([f"{host}:{port}" for port in store_list])
+    alter_properties(application_conf,
+                     'initial-store-list: 127.0.0.1:8500',
+                     'initial-store-list: %s' % new_store_list)
+    alter_properties(application_conf,
+                     'address: 127.0.0.1:8610',
+                     'address: %s:%d' % (host, raft_port))
+    new_raft_list = ','.join([f"{host}:{port}" for port in raft_list])
+    alter_properties(application_conf,
+                     'peers-list: 127.0.0.1:8610',
+                     'peers-list: %s' % new_raft_list)
+
+def set_store_properties(package_dir_path, host, pd_list, grpc_port, raft_port, rest_port):
+    application_conf = package_dir_path + '/conf/application.yml'
+    new_pd_list = ','.join([f"{host}:{port}" for port in pd_list])
+    alter_properties(application_conf,
+                     'address: localhost:8686',
+                     'address: %s' % new_pd_list)
+    alter_properties(application_conf,
+                     'port: 8500',
+                     'port: %d' % grpc_port)
+    alter_properties(application_conf,
+                     'address: 127.0.0.1:8510',
+                     'address: %s:%d' % (host, raft_port))
+    alter_properties(application_conf,
+                     'address: 127.0.0.1:8610',
+                     'address: %s:%d' % (host, raft_port))
+    alter_properties(application_conf,
+                     'port: 8520',
+                     'port: %d' % rest_port)
+
 
 def set_hubble_properties(package_dir_path, host, port):
     """
@@ -139,6 +183,16 @@ def start_graph(package_dir_path, graph_type):
             'cd %s '
             f'&& echo "{pa}" | ./bin/init-store.sh '
             '&& ./bin/start-hugegraph.sh' % package_dir_path
+        )
+    elif graph_type == 'pd':
+        os.system(
+            'cd %s '
+            '&& ./bin/start-hugegraph-pd.sh' % package_dir_path
+        )
+    elif graph_type == 'store':
+        os.system(
+            'cd %s '
+            '&& ./bin/start-hugegraph-store.sh' % package_dir_path
         )
     else:
         os.system(
@@ -168,6 +222,16 @@ class Deploy:
         self.loader_git = obj.loader_git
         self.tools_git = obj.tools_git
         self.hubble_git = obj.hubble_git
+        self.host = obj.host
+        self.pd_grpc_port = obj.pd_grpc_port
+        self.pd_rest_port = obj.pd_rest_port
+        self.store_list = obj.store_list
+        self.pd_raft_port = obj.pd_raft_port
+        self.raft_list = obj.raft_list
+        self.pd_list = obj.pd_list
+        self.store_grpc_port = obj.store_grpc_port
+        self.store_raft_port = obj.store_raft_port
+        self.store_rest_port = obj.store_rest_port
 
     @staticmethod
     def server(conf):
@@ -188,6 +252,51 @@ class Deploy:
             conf.gremlin_port
         )
         start_graph(gen_dir, 'server')
+
+    @staticmethod
+    def pd(conf):
+        """
+        :return:
+        """
+        is_exists_path(conf.codebase_path)
+        get_code(conf.codebase_path, conf.server_git, conf.pd_local_repo)
+        compile_package(conf.project_path)
+        unzip_targz(conf.pd_path, conf.pd_tar_path.split('/')[-1])
+
+        gen_dir = os.path.join(conf.codebase_path, conf.pd_gen_dir)
+        # start graph_server
+        set_pd_properties(
+            gen_dir,
+            conf.host,
+            conf.pd_grpc_port,
+            conf.pd_rest_port,
+            conf.store_list,
+            conf.pd_raft_port,
+            conf.raft_list
+        )
+        start_graph(gen_dir, 'pd')
+
+    @staticmethod
+    def store(conf):
+        """
+        :return:
+        """
+        is_exists_path(conf.codebase_path)
+        get_code(conf.codebase_path, conf.server_git, conf.store_local_repo)
+        compile_package(conf.project_path)
+        unzip_targz(conf.store_path, conf.store_tar_path.split('/')[-1])
+
+        gen_dir = os.path.join(conf.codebase_path, conf.store_gen_dir)
+        # start graph_server
+        set_store_properties(
+            gen_dir,
+            conf.host,
+            conf.pd_list,
+            conf.store_grpc_port,
+            conf.store_raft_port,
+            conf.store_rest_port
+        )
+        start_graph(gen_dir, 'store')
 
     @staticmethod
     def toolchain(conf):

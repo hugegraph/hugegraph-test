@@ -24,7 +24,13 @@ def graph_deploy(param, conf_obj):
         Deploy.server(conf_obj)
     elif param == 'toolchain':
         Deploy.toolchain(conf_obj)
+    elif param == 'pd':
+        Deploy.pd(conf_obj)
+    elif param == 'store':
+        Deploy.store(conf_obj)
     else:
+        Deploy.pd(conf_obj)
+        Deploy.store(conf_obj)
         Deploy.server(conf_obj)
         Deploy.toolchain(conf_obj)
 
@@ -32,7 +38,7 @@ def graph_deploy(param, conf_obj):
 if __name__ == "__main__":
     param_size = len(sys.argv)
     if param_size == 2 \
-            and sys.argv[1] in ['all', 'server', 'toolchain']:
+            and sys.argv[1] in ['all', 'server', 'toolchain', 'pd', 'store']:
         graph_deploy(sys.argv[1], basic_config)
     else:
         print('failed: 执行脚本参数为[all,server,toolchain]')
