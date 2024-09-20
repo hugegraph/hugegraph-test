@@ -5,6 +5,7 @@ note       : Component deployment begins
 create_time: 2020/4/22 5:17 下午
 """
 import os
+import shutil
 import subprocess
 import sys
 
@@ -205,6 +206,11 @@ def unzip_targz(file_path, file_name):
     cmd = f'cd {file_path} && tar -zxvf {file_name}'
     subprocess.check_call(cmd, shell=True)
 
+def update_backend_properties(file_path, target_path):
+    if(os.path.exists(target_path)):
+        os.remove(target_path)
+    shutil.copy2(file_path, target_path)
+
 
 class Deploy:
     """
@@ -251,6 +257,9 @@ class Deploy:
             conf.server_port,
             conf.gremlin_port
         )
+        config_file_path = os.path.dirname(os.path.realpath(__file__)) + "/../dist/" + conf.server_backend + ".properties"
+        target_path = os.path.join(conf.codebase_path, conf.server_gen_dir + '/conf/graphs/hugegraph.properties')
+        update_backend_properties(config_file_path, target_path)
         start_graph(gen_dir, 'server')
 
     @staticmethod
@@ -309,6 +318,55 @@ class Deploy:
         # set properties && start hubble
         # set_hubble_properties(hubble_package_dir_name, conf.graph_host, conf.hubble_port)
         start_graph(conf.hubble_path, 'hubble')
+
+    @staticmethod
+    def hugegraph(conf):
+        is_exists_path(conf.codebase_path)
+        get_code(conf.codebase_path, conf.server_git, 'incubator-hugegraph')
+        compile_package(conf.project_path)
+
+        unzip_targz(conf.pd_path, conf.pd_tar_path.split('/')[-1])
+        unzip_targz(conf.store_path, conf.store_tar_path.split('/')[-1])
+        unzip_targz(conf.server_path, conf.server_tar_path.split('/')[-1])
+
+        pd_gen_dir = os.path.join(conf.codebase_path, conf.pd_gen_dir)
+        # start graph_server
+        set_pd_properties(
+            pd_gen_dir,
+            conf.host,
+            conf.pd_grpc_port,
+            conf.pd_rest_port,
+            conf.store_list,
+            conf.pd_raft_port,
+            conf.raft_list
+        )
+        start_graph(pd_gen_dir, 'pd')
+
+        store_gen_dir = os.path.join(conf.codebase_path, conf.store_gen_dir)
+        # start graph_server
+        set_store_properties(
+            store_gen_dir,
+            conf.host,
+            conf.pd_list,
+            conf.store_grpc_port,
+            conf.store_raft_port,
+            conf.store_rest_port
+        )
+        start_graph(store_gen_dir, 'store')
+
+        server_gen_dir = os.path.join(conf.codebase_path, conf.server_gen_dir)
+        # start graph_server
+        set_server_properties(
+            server_gen_dir,
+            conf.graph_host,
+            conf.server_port,
+            conf.gremlin_port
+        )
+        config_file_path = os.path.dirname(os.path.realpath(__file__)) + "/../dist/" + conf.server_backend + ".properties"
+        target_path = os.path.join(conf.codebase_path, conf.server_gen_dir + '/conf/graphs/hugegraph.properties')
+        update_backend_properties(config_file_path, target_path)
+        start_graph(server_gen_dir, 'server')
+
 
 
 if __name__ == "__main__":
