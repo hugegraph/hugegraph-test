@@ -31,8 +31,6 @@ def graph_deploy(param, conf_obj):
     elif param == 'hugegraph':
         Deploy.hugegraph(conf_obj)
     else:
-        Deploy.pd(conf_obj)
-        Deploy.store(conf_obj)
         Deploy.server(conf_obj)
         Deploy.toolchain(conf_obj)
 
@@ -41,7 +39,6 @@ if __name__ == "__main__":
     param_size = len(sys.argv)
     if param_size == 2 \
             and sys.argv[1] in ['all', 'server', 'toolchain', 'pd', 'store', 'hugegraph']:
-        basic_config.server_backend = 'rocksdb'
         graph_deploy(sys.argv[1], basic_config)
     elif param_size == 3 \
             and sys.argv[1] in ['all', 'server', 'toolchain', 'pd', 'store', 'hugegraph']\
