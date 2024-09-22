@@ -9,7 +9,7 @@ import shutil
 import subprocess
 import sys
 
-from src.config.basic_config import admin_password
+from config.basic_config import admin_password
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../')
@@ -257,9 +257,9 @@ class Deploy:
             conf.server_port,
             conf.gremlin_port
         )
-        config_file_path = os.path.dirname(os.path.realpath(__file__)) + "/../dist/" + conf.server_backend + ".properties"
-        target_path = os.path.join(conf.codebase_path, conf.server_gen_dir + '/conf/graphs/hugegraph.properties')
-        update_backend_properties(config_file_path, target_path)
+        # config_file_path = os.path.dirname(os.path.realpath(__file__)) + "/../dist/" + conf.server_backend + ".properties"
+        # target_path = os.path.join(conf.codebase_path, conf.server_gen_dir + '/conf/graphs/hugegraph.properties')
+        # update_backend_properties(config_file_path, target_path)
         start_graph(gen_dir, 'server')
 
     @staticmethod
