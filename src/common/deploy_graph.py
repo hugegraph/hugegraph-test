@@ -8,6 +8,7 @@ import os
 import shutil
 import subprocess
 import sys
+import time
 
 from config.basic_config import admin_password
 
@@ -173,6 +174,21 @@ def set_hubble_properties(package_dir_path, host, port):
     alter_properties(hubble_conf, 'server.host=localhost', 'server.host=%s' % host)
     alter_properties(hubble_conf, 'server.port=8088', 'server.port=%d' % port)
 
+def ensure_start(log_file_path, target, interval = 1):
+    while not os.path.exists(log_file_path):
+        time.sleep(interval)
+    with open(log_file_path, 'r') as log_file:
+        log_file.seek(0, 2)
+        while True:
+            line = log_file.readline()
+            if not line:
+                time.sleep(interval)
+                continue
+            # 检查目标语句是否在行中
+            if target in line:
+                return
+
+
 
 def start_graph(package_dir_path, graph_type):
     """
@@ -194,6 +210,11 @@ def start_graph(package_dir_path, graph_type):
         os.system(
             'cd %s '
             '&& ./bin/start-hugegraph-store.sh' % package_dir_path
+        )
+    elif graph_type == 'hugegraph_server':
+        os.system(
+            'cd %s '
+            '&& ./bin/start-hugegraph.sh' % package_dir_path
         )
     else:
         os.system(
@@ -257,9 +278,9 @@ class Deploy:
             conf.server_port,
             conf.gremlin_port
         )
-        # config_file_path = os.path.dirname(os.path.realpath(__file__)) + "/../dist/" + conf.server_backend + ".properties"
-        # target_path = os.path.join(conf.codebase_path, conf.server_gen_dir + '/conf/graphs/hugegraph.properties')
-        # update_backend_properties(config_file_path, target_path)
+        config_file_path = os.path.dirname(os.path.realpath(__file__)) + "/../dist/" + conf.server_backend + ".properties"
+        target_path = os.path.join(conf.codebase_path, conf.server_gen_dir + '/conf/graphs/hugegraph.properties')
+        update_backend_properties(config_file_path, target_path)
         start_graph(gen_dir, 'server')
 
     @staticmethod
@@ -341,6 +362,8 @@ class Deploy:
             conf.raft_list
         )
         start_graph(pd_gen_dir, 'pd')
+        ensure_start(pd_gen_dir + "/logs/hugegraph-pd-stdout.log",
+                     f'Hugegraph-pd started.')
 
         store_gen_dir = os.path.join(conf.codebase_path, conf.store_gen_dir)
         # start graph_server
@@ -353,6 +376,8 @@ class Deploy:
             conf.store_rest_port
         )
         start_graph(store_gen_dir, 'store')
+        ensure_start(store_gen_dir + "/logs/hugegraph-store.log",
+                     f'o.a.h.s.n.StoreNodeApplication - Starting StoreNodeApplication')
 
         server_gen_dir = os.path.join(conf.codebase_path, conf.server_gen_dir)
         # start graph_server
@@ -365,7 +390,7 @@ class Deploy:
         config_file_path = os.path.dirname(os.path.realpath(__file__)) + "/../dist/" + conf.server_backend + ".properties"
         target_path = os.path.join(conf.codebase_path, conf.server_gen_dir + '/conf/graphs/hugegraph.properties')
         update_backend_properties(config_file_path, target_path)
-        start_graph(server_gen_dir, 'server')
+        start_graph(server_gen_dir, 'hugegraph_server')
 
 
 
