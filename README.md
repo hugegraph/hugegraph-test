@@ -23,7 +23,12 @@ Note: modify the configs in basic_config.py before run the test script
 2. modify server/toolchain_git_branch_commit
 3. modify auth/https/serice ports if need..
 '''
-python deploy_start.py all # or 'server' or 'toolchain'
+python deploy_start.py all # or 'server' or 'toolchain' or 'hugegraph'
+
+'''
+Or you can set backend with followed command
+'''
+python deploy_start.py hugegraph hstore # or other backend supported by hugegraph
 
 # 2. decompress dataset
 unzip config/dataset.zip -d config/
