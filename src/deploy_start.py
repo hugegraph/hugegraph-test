@@ -46,5 +46,5 @@ if __name__ == "__main__":
         basic_config.server_backend = sys.argv[2]
         graph_deploy(sys.argv[1], basic_config)
     else:
-        print('failed: 执行脚本参数为[all,server,toolchain, pd, store, hugegraph]')
+        print('failed: 执行脚本参数为[all, hugegraph, toolchain, server, pd, store]')
         exit(1)
