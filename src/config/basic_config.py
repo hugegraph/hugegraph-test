@@ -13,7 +13,7 @@ codebase_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 is_incubating = 'incubating-'
 # TODO: consider user * instead of fixed version?
 hugegraph_release_version = '1.5.0'
-toolchain_release_version = '1.3.0'
+toolchain_release_version = '1.5.0'
 pd_local_repo = 'incubator-hugegraph/hugegraph-pd'
 store_local_repo = 'incubator-hugegraph/hugegraph-store'
 server_local_repo = 'incubator-hugegraph/hugegraph-server'
@@ -71,7 +71,7 @@ store_rest_port = 8520
 
 # toolchain (includes loader, hubble, tools)
 toolchain_git = {
-    'branch': '3b58fc6',
+    'branch': '6156dee',
     'url': 'https://github.com/apache/incubator-hugegraph-toolchain.git'
 }
 
