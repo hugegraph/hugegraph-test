@@ -1029,7 +1029,7 @@ class TestDetailAuth(unittest.TestCase):
         self.assertEqual(res["message"], "User not authorized.", msg="Unauthorized result check fail")
 
         # check Unauthorized--delete
-        edge_id = "S1:peter>2>>S2:lop"
+        edge_id = "S1:peter>2>2>>S2:lop"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg=res)
@@ -1087,7 +1087,7 @@ class TestDetailAuth(unittest.TestCase):
         self.assertEqual(res["message"], "User not authorized.", msg="Unauthorized result check fail")
 
         # check Unauthorized--delete
-        edge_id = "S1:peter>2>>S2:lop"
+        edge_id = "S1:peter>2>2>>S2:lop"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg=res)
@@ -1123,7 +1123,7 @@ class TestDetailAuth(unittest.TestCase):
                 pass
 
         # check Authorize--read
-        edge_id = "S1:peter>2>>S2:lop"
+        edge_id = "S1:peter>2>2>>S2:lop"
         code, res = Edge().get_edge_by_id(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg=res)
@@ -1146,7 +1146,7 @@ class TestDetailAuth(unittest.TestCase):
         self.assertEqual(res["message"], "User not authorized.", msg="Unauthorized result check fail")
 
         # check Unauthorized--delete
-        edge_id = "S1:peter>2>>S2:lop"
+        edge_id = "S1:peter>2>2>>S2:lop"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg=res)
@@ -1246,7 +1246,7 @@ class TestDetailAuth(unittest.TestCase):
                 pass
 
         # check Unauthorized--delete
-        edge_id = "S1:peter>2>>S2:lop"
+        edge_id = "S1:peter>2>2>>S2:lop"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 204)
@@ -1324,7 +1324,7 @@ class TestDetailAuth(unittest.TestCase):
         self.assertEqual(res["message"], "User not authorized.", msg="Unauthorized result check fail")
 
         # check Unauthorized--delete
-        edge_id = "S1:li>1>>S1:wang"
+        edge_id = "S1:li>1>1>>S1:wang"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg=res)
@@ -1381,7 +1381,7 @@ class TestDetailAuth(unittest.TestCase):
         self.assertEqual(res["message"], "User not authorized.", msg="Unauthorized result check fail")
 
         # check Unauthorized--delete
-        edge_id = "S1:peter>2>>S2:lop"
+        edge_id = "S1:peter>2>2>>S2:lop"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg=res)
@@ -1422,7 +1422,7 @@ class TestDetailAuth(unittest.TestCase):
                 pass
 
         # check Unauthorized--delete
-        edge_id = "S1:marko>1>>S1:josh"
+        edge_id = "S1:marko>1>1>>S1:josh"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 204)
@@ -1502,7 +1502,7 @@ class TestDetailAuth(unittest.TestCase):
         self.assertEqual(res["message"], "User not authorized.", msg="Unauthorized result check fail")
 
         # check Unauthorized--delete
-        edge_id = "S1:li>1>>S1:wang"
+        edge_id = "S1:li>1>1>>S1:wang"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg=res)
@@ -1559,7 +1559,7 @@ class TestDetailAuth(unittest.TestCase):
         self.assertEqual(res["message"], "User not authorized.", msg="Unauthorized result check fail")
 
         # check Unauthorized--delete
-        edge_id = "S1:alg>1>>S1:vadas"
+        edge_id = "S1:alg>1>1>>S1:vadas"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg=res)
@@ -1596,7 +1596,7 @@ class TestDetailAuth(unittest.TestCase):
                 pass
 
         # check Unauthorized--delete
-        edge_id = "S1:li>1>>S1:wang"
+        edge_id = "S1:li>1>1>>S1:wang"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 204)
@@ -1773,7 +1773,7 @@ class TestDetailAuth(unittest.TestCase):
                 pass
 
         # check Unauthorized--delete
-        edge_id = "S1:li>1>>S1:wang"
+        edge_id = "S1:li>1>1>>S1:wang"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 204)
@@ -1971,7 +1971,7 @@ class TestDetailAuth(unittest.TestCase):
                 pass
 
         # check Unauthorized--delete
-        edge_id = "S1:o>1>>S1:s"
+        edge_id = "S1:o>1>1>>S1:s"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 204, msg=res)
@@ -2036,7 +2036,7 @@ class TestDetailAuth(unittest.TestCase):
                 pass
 
         # check Unauthorized--delete                                               删除定点报没有此顶点ID
-        edge_id = "S1:o>1>>S1:s"
+        edge_id = "S1:o>1>1>>S1:s"
         code, res = Edge().delete_edge(edge_id, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg=res)
