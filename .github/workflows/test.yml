@@ -7,7 +7,7 @@ on:
   pull_request:
 
   schedule:
-    - cron: '0 17 */3 * *'
+    - cron: '0 17 * * *'
   workflow_dispatch:
 
 permissions: write-all
