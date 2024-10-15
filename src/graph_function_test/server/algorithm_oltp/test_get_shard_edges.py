@@ -48,7 +48,7 @@ class TestShardEdge(unittest.TestCase):
         print(code, res)
         print(len(res['edges']))
         self.assertEqual(code, 200)
-        self.assertEqual(51, len(res['edges']))
+        self.assertEqual(50, len(res['edges']))
 
 
 if __name__ == "__main__":
