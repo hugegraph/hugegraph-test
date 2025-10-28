@@ -1,12 +1,11 @@
 # -*- coding:utf-8 -*-
 """
 author     : lxb
-note       : olap算法 聚类系数
+note       : olap 算法 聚类系数
 create_time: 2020/4/22 5:17 下午
 """
 import sys
 import os
-import pytest
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../../../')
@@ -23,141 +22,140 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
-@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
 class TestClusterCoeffcient:
     """
-    接口cluster_coeffcient：聚类系数
+    接口 cluster_coeffcient：聚类系数
     """
 
     @staticmethod
-    def setup_class(self):
+    def setup_class():
         """
         测试类开始
         """
         if _cfg.server_backend == 'cassandra':
             clear_graph()
         else:
-            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用gremlin语句进行truncate操作
+            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用 gremlin 语句进行 truncate 操作
 
         InsertData(gremlin='gremlin_alg_03.txt').gremlin_graph()
 
-    def test_cluster_coeffcient_01(self):
+    def test_cluster_coefficient_01(self):
         """
         param = []
         :return:
         """
         body = {}
-        code, res = Algorithm().post_cluster_coeffcient(body, auth=auth)
+        code, res = Algorithm().post_cluster_coefficient(body, auth=auth)
         id = res["task_id"]
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'edges': 13, 'vertices': 16, 'cluster_coeffcient': 0.14285714285714285}
+            assert result == {'edges': 13, 'vertices': 16, 'cluster_coefficient': 0.14285714285714285}
         else:
             assert 0
 
-    def test_cluster_coeffcient_02(self):
+    def test_cluster_coefficient_02(self):
         """
         param = [direction]
         :return:
         """
         body = {"direction": "BOTH"}
-        code, res = Algorithm().post_cluster_coeffcient(body, auth=auth)
+        code, res = Algorithm().post_cluster_coefficient(body, auth=auth)
         id = res["task_id"]
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'edges': 13, 'vertices': 16, 'cluster_coeffcient': 0.14285714285714285}
+            assert result == {'edges': 13, 'vertices': 16, 'cluster_coefficient': 0.14285714285714285}
         else:
             assert 0
 
-    def test_cluster_coeffcient_03(self):
+    def test_cluster_coefficient_03(self):
         """
         param = [direction]
         :return:
         """
         body = {"direction": "IN"}
-        code, res = Algorithm().post_cluster_coeffcient(body, auth=auth)
+        code, res = Algorithm().post_cluster_coefficient(body, auth=auth)
         id = res["task_id"]
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'edges_in': 13, 'vertices_in': 9, 'cluster_coeffcient': 0.3333333333333333}
+            assert result == {'edges_in': 13, 'vertices_in': 9, 'cluster_coefficient': 0.3333333333333333}
         else:
             assert 0
 
-    def test_cluster_coeffcient_04(self):
+    def test_cluster_coefficient_04(self):
         """
         param = [direction]
         :return:
         """
         body = {"direction": "OUT"}
-        code, res = Algorithm().post_cluster_coeffcient(body, auth=auth)
+        code, res = Algorithm().post_cluster_coefficient(body, auth=auth)
         id = res["task_id"]
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'edges_out': 13, 'vertices_out': 7, 'cluster_coeffcient': 0.25}
+            assert result == {'edges_out': 13, 'vertices_out': 7, 'cluster_coefficient': 0.25}
         else:
             assert 0
 
-    def test_cluster_coeffcient_05(self):
+    def test_cluster_coefficient_05(self):
         """
         param = [direction, degree]
         :return:
         """
         body = {"direction": "IN", "degree": -1}
-        code, res = Algorithm().post_cluster_coeffcient(body, auth=auth)
+        code, res = Algorithm().post_cluster_coefficient(body, auth=auth)
         id = res["task_id"]
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'edges_in': 13, 'vertices_in': 9, 'cluster_coeffcient': 0.3333333333333333}
+            assert result == {'edges_in': 13, 'vertices_in': 9, 'cluster_coefficient': 0.3333333333333333}
         else:
             assert 0
 
-    def test_cluster_coeffcient_06(self):
+    def test_cluster_coefficient_06(self):
         """
         param = [direction, degree]
         :return:
         """
         body = {"direction": "OUT", "degree": -1}
-        code, res = Algorithm().post_cluster_coeffcient(body, auth=auth)
+        code, res = Algorithm().post_cluster_coefficient(body, auth=auth)
         id = res["task_id"]
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'edges_out': 13, 'vertices_out': 7, 'cluster_coeffcient': 0.25}
+            assert result == {'edges_out': 13, 'vertices_out': 7, 'cluster_coefficient': 0.25}
         else:
             assert 0
 
-    def test_cluster_coeffcient_07(self):
+    def test_cluster_coefficient_07(self):
         """
         param = [direction, degree]
         :return:
         """
         body = {"direction": "OUT", "degree": 1}
-        code, res = Algorithm().post_cluster_coeffcient(body, auth=auth)
+        code, res = Algorithm().post_cluster_coefficient(body, auth=auth)
         id = res["task_id"]
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'edges_out': 13, 'vertices_out': 7, 'cluster_coeffcient': 0.0}
+            assert result == {'edges_out': 13, 'vertices_out': 7, 'cluster_coefficient': 0.0}
         else:
             assert 0
 
-    def test_cluster_coeffcient_08(self):
+    def test_cluster_coefficient_08(self):
         """
         param = [direction, degree]
         :return:
         """
         body = {"direction": "IN", "degree": 1}
-        code, res = Algorithm().post_cluster_coeffcient(body, auth=auth)
+        code, res = Algorithm().post_cluster_coefficient(body, auth=auth)
         id = res["task_id"]
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {'edges_in': 13, 'vertices_in': 9, 'cluster_coeffcient': 0.0}
+            assert result == {'edges_in': 13, 'vertices_in': 9, 'cluster_coefficient': 0.0}
         else:
             assert 0
 

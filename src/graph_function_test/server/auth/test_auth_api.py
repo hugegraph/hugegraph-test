@@ -71,7 +71,7 @@ class Access(unittest.TestCase):
         code, res = Auth().post_accesses(body, auth=auth)
         print(code, res)
         self.assertEqual(code, 201, msg='code check fail')
-        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>-55>18>S-44:gremlin', 'res check fail')
 
     def test_access_delete(self):
         """
@@ -96,7 +96,7 @@ class Access(unittest.TestCase):
         code, res = Auth().get_accesses(auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['accesses'][0]['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'res check fail')
+        self.assertEqual(res['accesses'][0]['id'], 'S-36:gremlin>-55>-55>18>S-44:gremlin', 'res check fail')
 
     def test_access_one(self):
         """
@@ -109,7 +109,7 @@ class Access(unittest.TestCase):
         code, res = Auth().get_access(res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>-55>18>S-44:gremlin', 'res check fail')
 
     def test_access_update(self):
         """
@@ -123,7 +123,7 @@ class Access(unittest.TestCase):
         code, res = Auth().update_accesses(body, res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>-55>18>S-44:gremlin', 'res check fail')
 
 
 @pytest.mark.skipif(_cfg.is_auth is False, reason='hugegraph启动时没有配置权限')
@@ -489,7 +489,7 @@ class Belongs(unittest.TestCase):
         code, res = Auth().post_belongs(body, auth=auth)
         print(code, res)
         self.assertEqual(code, 201, msg='code check fail')
-        self.assertEqual(res['id'], 'S-30:tester>-49>>S-36:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-30:tester>-49>-49>>S-36:gremlin', 'res check fail')
 
     def test_belong_delete(self):
         """
@@ -516,7 +516,7 @@ class Belongs(unittest.TestCase):
         code, res = Auth().get_belongs(auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['belongs'][0]['id'], 'S-30:tester>-49>>S-36:gremlin', 'res check fail')
+        self.assertEqual(res['belongs'][0]['id'], 'S-30:tester>-49>-49>>S-36:gremlin', 'res check fail')
 
     def test_belong_one(self):
         """
@@ -530,7 +530,7 @@ class Belongs(unittest.TestCase):
         code, res = Auth().get_belong(res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], 'S-30:tester>-49>>S-36:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-30:tester>-49>-49>>S-36:gremlin', 'res check fail')
 
     def test_belong_update(self):
         """
@@ -545,7 +545,7 @@ class Belongs(unittest.TestCase):
         code, res = Auth().update_belongs(body, res['id'], auth=auth)
         print(code, res)
         self.assertEqual(code, 200, msg='code check fail')
-        self.assertEqual(res['id'], 'S-30:tester>-49>>S-36:gremlin', 'res check fail')
+        self.assertEqual(res['id'], 'S-30:tester>-49>-49>>S-36:gremlin', 'res check fail')
 
 
 if __name__ == '__main__':

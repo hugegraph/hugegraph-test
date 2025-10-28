@@ -65,7 +65,7 @@ def test_create_edge():
         print(code, res)
         ### 断言
         assert code == 201
-        assert res['id'] == 'S1:marko>1>>S1:vadas'
+        assert res['id'] == 'S1:marko>1>1>>S1:vadas'
     else:
         print('环境初始化失败')
         assert 0

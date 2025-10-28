@@ -45,10 +45,10 @@ class TestEdges(unittest.TestCase):
         :return:
         """
         part_url = "?ids=%s&ids=%s&ids=%s&ids=%s" % (
-            'S1:贾源>1>>S1:贾代善',
-            'S1:贾代善>1>>S1:贾赦',
-            'S1:贾政>5>>S2:王夫人',
-            'S1:贾宝玉>5>>S2:薛宝钗'
+            'S1:贾源>1>1>>S1:贾代善',
+            'S1:贾代善>1>1>>S1:贾赦',
+            'S1:贾政>5>5>>S2:王夫人',
+            'S1:贾宝玉>5>5>>S2:薛宝钗'
         )
         code, res = Traverser().get_edges(part_url, auth=auth)
         print(code, res)

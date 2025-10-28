@@ -1151,7 +1151,7 @@ class TestCommonAuth(unittest.TestCase):
         self.assertEqual(res['id'], '1:marko', msg='Authorize code check fail')
 
         # check unAuthorize--edge read
-        e_id = 'S1:marko>1>>S1:vadas'
+        e_id = 'S1:marko>1>1>>S1:vadas'
         code, res = Edge().get_edge_by_id(e_id, auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
@@ -1324,7 +1324,7 @@ class TestCommonAuth(unittest.TestCase):
                 pass
 
         # check Authorize--read
-        code, res = Edge().get_edge_by_id('S1:marko>1>>S1:vadas', auth=user)
+        code, res = Edge().get_edge_by_id('S1:marko>1>1>>S1:vadas', auth=user)
         print(code, res)
         self.assertEqual(code, 200, msg='Authorize code check fail')
 
@@ -1346,7 +1346,7 @@ class TestCommonAuth(unittest.TestCase):
         self.assertEqual(res['message'], 'User not authorized.', msg='Unauthorized result check fail')
 
         # check unAuthorize-- edge delete
-        code, res = Edge().delete_edge('S1:marko>1>>S1:vadas', auth=user)
+        code, res = Edge().delete_edge('S1:marko>1>1>>S1:vadas', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
         self.assertEqual(res['message'], 'User not authorized.', msg='Unauthorized result check fail')
@@ -1405,13 +1405,13 @@ class TestCommonAuth(unittest.TestCase):
         self.assertEqual(code, 201, msg='Authorize code check fail')
 
         # check unAuthorize--read
-        code, res = Edge().get_edge_by_id('S1:marko>1>>S1:vadas', auth=user)
+        code, res = Edge().get_edge_by_id('S1:marko>1>1>>S1:vadas', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
         self.assertEqual(res['message'], 'User not authorized.', msg='Unauthorized result check fail')
 
         # check unAuthorize--delete
-        code, res = Edge().delete_edge('S1:marko>1>>S1:vadas', auth=user)
+        code, res = Edge().delete_edge('S1:marko>1>1>>S1:vadas', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
         self.assertEqual(res['message'], 'User not authorized.', msg='Unauthorized result check fail')
@@ -1455,7 +1455,7 @@ class TestCommonAuth(unittest.TestCase):
                 pass
 
         # check Authorize--delete
-        code, res = Edge().delete_edge('S1:marko>1>>S1:vadas', auth=user)
+        code, res = Edge().delete_edge('S1:marko>1>1>>S1:vadas', auth=user)
         print(code, res)
         self.assertEqual(code, 204, msg='Authorize code check fail')
 
@@ -2350,7 +2350,7 @@ class TestCommonAuth(unittest.TestCase):
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
 
         # check unAuthorize--delete
-        code, res = Auth().delete_accesses('S-36:grant_read_group>-55>11>S-44:grant_read_target', auth=user)
+        code, res = Auth().delete_accesses('S-36:grant_read_group>-55>-55>11>S-44:grant_read_target', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
 
@@ -2485,7 +2485,7 @@ class TestCommonAuth(unittest.TestCase):
         code, res = Auth().post_accesses(body, auth=user)
         print(code, res)
         self.assertEqual(code, 201, msg='Authorize code check fail')
-        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'Authorize res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>-55>18>S-44:gremlin', 'Authorize res check fail')
 
         # check unAuthorize--read
         code, res = Auth().get_accesses(auth=user)
@@ -2494,7 +2494,7 @@ class TestCommonAuth(unittest.TestCase):
         self.assertEqual(res, {'accesses': []}, msg='unAuthorize code check fail')
 
         # check unAuthorize--delete
-        code, res = Auth().delete_accesses('S-36:gremlin>-55>18>S-44:gremlin', auth=user)
+        code, res = Auth().delete_accesses('S-36:gremlin>-55>-55>18>S-44:gremlin', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='unAuthorize code check fail')
         self.assertEqual(
@@ -2532,7 +2532,7 @@ class TestCommonAuth(unittest.TestCase):
         code, res = Auth().post_accesses(body, auth=auth)
         print(code, res)
         self.assertEqual(code, 201, msg='unAuthorize code check fail')
-        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'Authorize res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>-55>18>S-44:gremlin', 'Authorize res check fail')
 
         # check role
         permission_list = [
@@ -2555,7 +2555,7 @@ class TestCommonAuth(unittest.TestCase):
                 pass
 
         # check Authorize--delete
-        code, res = Auth().delete_accesses('S-36:gremlin>-55>18>S-44:gremlin', auth=user)
+        code, res = Auth().delete_accesses('S-36:gremlin>-55>-55>18>S-44:gremlin', auth=user)
         print(code, res)
         self.assertEqual(code, 403, msg='Authorize code check fail')
         self.assertEqual(
@@ -2638,9 +2638,9 @@ class TestCommonAuth(unittest.TestCase):
         code, res = Auth().post_accesses(body, auth=user)
         print(code, res)
         self.assertEqual(code, 201, msg='unAuthorize code check fail')
-        self.assertEqual(res['id'], 'S-36:gremlin>-55>18>S-44:gremlin', 'Authorize res check fail')
+        self.assertEqual(res['id'], 'S-36:gremlin>-55>-55>18>S-44:gremlin', 'Authorize res check fail')
 
-        code, res = Auth().delete_accesses('S-36:gremlin>-55>18>S-44:gremlin', auth=user)
+        code, res = Auth().delete_accesses('S-36:gremlin>-55>-55>18>S-44:gremlin', auth=user)
         print(code, res)
         self.assertEqual(code, 204, msg='Authorize code check fail')
 

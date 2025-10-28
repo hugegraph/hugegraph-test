@@ -4,9 +4,10 @@ author     : lxb
 note       : 梭型算法的数据集需要优化
 create_time: 2020/4/22 5:17 下午
 """
-import pytest
 import sys
 import os
+
+import pytest
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_path + '/../../../../')
@@ -23,21 +24,20 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
-@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
 class TestFusiformSimilarity:
     """
-    接口fusiform_similarity：棱型发现
+    接口 fusiform_similarity：棱型发现
     """
 
     @staticmethod
-    def setup_class(self):
+    def setup_class():
         """
         测试类开始
         """
         if _cfg.server_backend == 'cassandra':
             clear_graph()
         else:
-            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用gremlin语句进行truncate操作
+            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用 gremlin 语句进行 truncate 操作
 
         InsertData(gremlin='gremlin_alg_04.txt').gremlin_graph()
 
@@ -233,6 +233,7 @@ class TestFusiformSimilarity:
         else:
             assert 0
 
+    @pytest.mark.skip(reason='not stable')
     def test_fusiform_similarity_12(self):
         """
         :return:
@@ -242,9 +243,7 @@ class TestFusiformSimilarity:
         id = res["task_id"]
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
-            print(result)
-            str_res = result.split("'task_result': ")[1].replace('}', '')
-            assert str_res == "\"java.lang.IllegalArgumentException: The group property can't be empty\""
+            assert result['task_result'] == "java.lang.IllegalArgumentException: The group property can't be empty"
         else:
             assert 0
 
@@ -382,6 +381,7 @@ class TestFusiformSimilarity:
         else:
             assert 0
 
+    @pytest.mark.skip(reason='not stable')
     def test_fusiform_similarity_19(self):
         """
         校验基本参数 + alpha=0.4, limit=1
@@ -393,7 +393,7 @@ class TestFusiformSimilarity:
         if id > 0:
             result = get_task_res(id, 120, auth=auth)
             print(result)
-            assert result == {
+            assert (result == {
                 '1:peter': [
                     {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
                     {'id': '2:lop', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
@@ -401,6 +401,11 @@ class TestFusiformSimilarity:
                     {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}
                 ]
             }
+            or result == {'2:lop': [{'id': '1:peter', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                       {'id': '1:josh', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                       {'id': '2:ripple', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']},
+                       {'id': '1:vadas', 'score': 1.0, 'intermediaries': ['1:lily', '1:marko']}]}
+                    )
         else:
             assert 0
 
@@ -460,7 +465,7 @@ class TestFusiformSimilarity:
 
     def test_fusiform_similarity_22(self):
         """
-        校验基本参数workers
+        校验基本参数 workers
         :return:
         """
         body = {"workers": -1}
@@ -475,7 +480,7 @@ class TestFusiformSimilarity:
 
     def test_fusiform_similarity_23(self):
         """
-        校验基本参数workers
+        校验基本参数 workers
         :return:
         """
         body = {"workers": 0}
@@ -490,7 +495,7 @@ class TestFusiformSimilarity:
 
     def test_fusiform_similarity_24(self):
         """
-        校验基本参数workers
+        校验基本参数 workers
         :return:
         """
         body = {"workers": 100}

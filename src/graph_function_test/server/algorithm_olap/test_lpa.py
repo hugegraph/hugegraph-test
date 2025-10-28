@@ -1,7 +1,7 @@
 ### -*- coding:utf-8 -*-
 """
 author     : lxb
-note       : olap算法 lpa社区发现
+note       : olap 算法 lpa 社区发现
 create_time: 2020/4/22 5:17 下午
 """
 import pytest
@@ -23,10 +23,9 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
-@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
 class TestLpa:
     """
-    接口lpa：lpa社区发现 --- 发现社区的结果会一直变化
+    接口 lpa：lpa 社区发现 --- 发现社区的结果会一直变化
     """
 
     def setup(self):
@@ -36,7 +35,7 @@ class TestLpa:
         if _cfg.server_backend == 'cassandra':
             clear_graph()
         else:
-            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用gremlin语句进行truncate操作
+            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用 gremlin 语句进行 truncate 操作
 
         InsertData(gremlin='gremlin_alg_03.txt').gremlin_graph()
 

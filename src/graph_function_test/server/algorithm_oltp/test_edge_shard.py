@@ -50,19 +50,17 @@ class TestEdgeShard(unittest.TestCase):
         self.assertEqual(
             res,
             {
-                'shards': [
-                    {
-                        'start': 'hzE65Y+y5YCZgggBAIcxOuWPsuWFrA==',
-                        'end': 'iLG65yK0ZZQhM9hMwUeanbfg9ucdNXNHUXNMUoA=',
-                        'length': 0
+                'shards':
+                    [{
+                        'end': 'iLG65yK0ZZQhM9hMxQSCR5qdt+D25x01c0dRc0xSgA==',
+                         'length': 0,
+                         'start': 'hzE65Y+y5YCZgggBCAEAhzE65Y+y5YWs'
                     },
-                    {
-                        'start': 'iLG65yK0ZZQhM9hMwUeanbfg9ucdNXNHUXNMUoA=',
-                        'end': 'ijI66LW15aeo5aiYgggEAIoyOui0vuaOouaYpQA=',
-                        'length': 0
-                    }
-                ]
-            }
+                        {'end': 'ijI66LW15aeo5aiYgggECAQAijI66LS+5o6i5pilAA==',
+                         'length': 0,
+                         'start': 'iLG65yK0ZZQhM9hMxQSCR5qdt+D25x01c0dRc0xSgA=='
+                         }
+                    ]}
         )
 
 

@@ -1,10 +1,9 @@
 # -*- coding:utf-8 -*-
 """
 author     : lxb
-note       : olap算法 子图计算
+note       : olap 算法 子图计算
 create_time: 2020/4/22 5:17 下午
 """
-import pytest
 import sys
 import os
 
@@ -23,7 +22,6 @@ if _cfg.is_auth:
     auth = _cfg.admin_password
 
 
-@pytest.mark.skipif(_cfg.graph_type == 'open_source', reason='目前只有商业版支持OLAP算法')
 class TestSubgraphStat:
     """
     weak_connected_component 接口
@@ -36,7 +34,7 @@ class TestSubgraphStat:
         if _cfg.server_backend == 'cassandra':
             clear_graph()
         else:
-            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用gremlin语句进行truncate操作
+            Gremlin().gremlin_post('graph.truncateBackend();')  # 适用 gremlin 语句进行 truncate 操作
 
         InsertData(gremlin='gremlin_alg_03.txt').gremlin_graph()
 
@@ -72,7 +70,7 @@ class TestSubgraphStat:
                               'page_ranks': {'D': 0.3024057078508791, 'E': 0.30239649131582375,
                                              'F': 0.27929155083329715, 'B': 0.04625000000000001,
                                              'C': 0.044656249999999995, 'A': 0.024999999999999998},
-                              'cluster_coeffcient': {'edges': 8, 'vertices': 6, 'cluster_coeffcient': 0.3},
+                              'cluster_coefficient': {'edges': 8, 'vertices': 6, 'cluster_coefficient': 0.3},
                               'rings': {'rings_count': 6}}
         else:
             assert 0
