@@ -12,8 +12,8 @@ codebase_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 # apache release version
 is_incubating = 'incubating-'
 # TODO: consider user * instead of fixed version?
-hugegraph_release_version = '1.5.0'
-toolchain_release_version = '1.5.0'
+hugegraph_release_version = '1.7.0'
+toolchain_release_version = '1.7.0'
 pd_local_repo = 'incubator-hugegraph/hugegraph-pd'
 store_local_repo = 'incubator-hugegraph/hugegraph-store'
 server_local_repo = 'incubator-hugegraph/hugegraph-server'
@@ -42,7 +42,7 @@ is_https = False
 
 # server, better to use short hash for git (commit)
 server_git = {
-    'branch': '7d9943e',
+    'branch': '5b3d295d930bad4dc0ae81373a33011478302509',
     'url': 'https://github.com/apache/incubator-hugegraph.git'
 }
 graph_type = 'open_source'  # open_source || business
