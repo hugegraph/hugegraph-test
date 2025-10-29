@@ -102,12 +102,12 @@ hubble_reuse_server_graph = ''
 
 # JVM内存配置（单位：MB）
 # 默认设置，可通过命令行参数覆盖
-server_jvm_xms = 4096
-server_jvm_xmx = 6144
+server_jvm_xms = 2048
+server_jvm_xmx = 4096
 pd_jvm_xms = 1024
 pd_jvm_xmx = 2048
-store_jvm_xms = 4096
-store_jvm_xmx = 6144
+store_jvm_xms = 2048
+store_jvm_xmx = 4096
 
 if __name__ == "__main__":
     pass
