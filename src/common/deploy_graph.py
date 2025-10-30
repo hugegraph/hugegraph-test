@@ -195,31 +195,41 @@ def start_graph(package_dir_path, graph_type):
     启动 graph 包
     """
     pa = admin_password.get('admin')
-    if graph_type == 'server':
-        os.system(
-            'cd %s '
-            f'&& echo "{pa}" | ./bin/init-store.sh '
-            '&& ./bin/start-hugegraph.sh' % package_dir_path
-        )
+
+    from src.config import basic_config
+
+    if graph_type == 'server' or graph_type == 'hugegraph_server':
+        jvm_opts = f'JAVA_OPTIONS="-Xms{basic_config.server_jvm_xms}m -Xmx{basic_config.server_jvm_xmx}m"'
+        print(f"setting JVM config: {jvm_opts}")
+        if graph_type == 'server':
+            os.system(
+                'cd %s ' 
+                f'&& echo "{pa}" | ./bin/init-store.sh ' 
+                f'&& {jvm_opts} ./bin/start-hugegraph.sh' % package_dir_path
+            )
+        else:
+            os.system(
+                'cd %s ' 
+                f'&& {jvm_opts} ./bin/start-hugegraph.sh' % package_dir_path
+            )
     elif graph_type == 'pd':
+        jvm_opts = f'JAVA_OPTIONS="-Xms{basic_config.pd_jvm_xms}m -Xmx{basic_config.pd_jvm_xmx}m"'
+        print(f"setting JVM config: {jvm_opts}")
         os.system(
-            'cd %s '
-            '&& ./bin/start-hugegraph-pd.sh' % package_dir_path
+            'cd %s ' 
+            f'&& {jvm_opts} ./bin/start-hugegraph-pd.sh' % package_dir_path
         )
     elif graph_type == 'store':
+        jvm_opts = f'JAVA_OPTIONS="-Xms{basic_config.store_jvm_xms}m -Xmx{basic_config.store_jvm_xmx}m"'
+        print(f"setting JVM config: {jvm_opts}")
         os.system(
-            'cd %s '
-            '&& ./bin/start-hugegraph-store.sh' % package_dir_path
-        )
-    elif graph_type == 'hugegraph_server':
-        os.system(
-            'cd %s '
-            '&& ./bin/start-hugegraph.sh' % package_dir_path
+            'cd %s ' 
+            f'&& {jvm_opts} ./bin/start-hugegraph-store.sh' % package_dir_path
         )
     else:
         os.system(
             f'chmod -R 755 {package_dir_path}'
-            '&& cd %s '
+            '&& cd %s ' 
             '&& ./bin/start-hubble.sh' % package_dir_path
         )
 
@@ -288,7 +298,8 @@ class Deploy:
         is_exists_path(conf.codebase_path)
         get_code(conf.codebase_path, conf.server_git, conf.pd_local_repo)
         compile_package(conf.project_path)
-        unzip_targz(conf.pd_path, conf.pd_tar_path.split('/')[-1])
+        # pd doesn't have .tar.gz production
+        # unzip_targz(conf.pd_path, conf.pd_tar_path.split('/')[-1])
 
         gen_dir = os.path.join(conf.codebase_path, conf.pd_gen_dir)
         # start graph_server
@@ -311,7 +322,8 @@ class Deploy:
         is_exists_path(conf.codebase_path)
         get_code(conf.codebase_path, conf.server_git, conf.store_local_repo)
         compile_package(conf.project_path)
-        unzip_targz(conf.store_path, conf.store_tar_path.split('/')[-1])
+        # store doesn't have .tar.gz production
+        # unzip_targz(conf.store_path, conf.store_tar_path.split('/')[-1])
 
         gen_dir = os.path.join(conf.codebase_path, conf.store_gen_dir)
         # start graph_server
@@ -343,8 +355,9 @@ class Deploy:
         get_code(conf.codebase_path, conf.server_git, 'incubator-hugegraph')
         compile_package(conf.project_path)
 
-        unzip_targz(conf.pd_path, conf.pd_tar_path.split('/')[-1])
-        unzip_targz(conf.store_path, conf.store_tar_path.split('/')[-1])
+        # store and pd doesn't have .tar.gz production
+        # unzip_targz(conf.pd_path, conf.pd_tar_path.split('/')[-1])
+        # unzip_targz(conf.store_path, conf.store_tar_path.split('/')[-1])
         unzip_targz(conf.server_path, conf.server_tar_path.split('/')[-1])
 
         pd_gen_dir = os.path.join(conf.codebase_path, conf.pd_gen_dir)

@@ -12,8 +12,8 @@ codebase_path = os.path.dirname(os.path.realpath(__file__)) + "/../../graph"
 # apache release version
 is_incubating = 'incubating-'
 # TODO: consider user * instead of fixed version?
-hugegraph_release_version = '1.5.0'
-toolchain_release_version = '1.5.0'
+hugegraph_release_version = '1.7.0'
+toolchain_release_version = '1.7.0'
 pd_local_repo = 'incubator-hugegraph/hugegraph-pd'
 store_local_repo = 'incubator-hugegraph/hugegraph-store'
 server_local_repo = 'incubator-hugegraph/hugegraph-server'
@@ -37,12 +37,12 @@ hubble_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_templ
 tools_path = os.path.join(codebase_path, toolchain_gen_dir, toolchain_obj_template.format(tool_name='tools'))
 
 # common
-is_auth = False
+is_auth = True
 is_https = False
 
 # server, better to use short hash for git (commit)
 server_git = {
-    'branch': 'c88963c',
+    'branch': '5b3d295d930bad4dc0ae81373a33011478302509',
     'url': 'https://github.com/apache/incubator-hugegraph.git'
 }
 graph_type = 'open_source'  # open_source || business
@@ -71,7 +71,7 @@ store_rest_port = 8520
 
 # toolchain (includes loader, hubble, tools)
 toolchain_git = {
-    'branch': '6156dee',
+    'branch': '852d76a',
     'url': 'https://github.com/apache/incubator-hugegraph-toolchain.git'
 }
 
@@ -99,6 +99,15 @@ hubble_port = 8088
 hubble_reuse_server_host = ''
 hubble_reuse_server_port = ''
 hubble_reuse_server_graph = ''
+
+# JVM内存配置（单位：MB）
+# 默认设置，可通过命令行参数覆盖
+server_jvm_xms = 2048
+server_jvm_xmx = 4096
+pd_jvm_xms = 1024
+pd_jvm_xmx = 2048
+store_jvm_xms = 2048
+store_jvm_xmx = 4096
 
 if __name__ == "__main__":
     pass
